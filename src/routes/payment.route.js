@@ -6,6 +6,13 @@ const paymentRoutes = () => {
 
   router.get('/', paymentController.index);
 
+  router.get('/add', paymentController.addPaymentPage);
+  router.post('/add', paymentController.addPayment);
+
+  router.get('/payment', paymentController.paymentPage);
+  router.post('/payment', paymentController.addTransaction);
+
+  router.get('/payment/show', paymentController.paymentShowPage);
   return router;
 };
 

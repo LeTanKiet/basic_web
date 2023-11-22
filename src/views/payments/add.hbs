@@ -4,15 +4,15 @@
   {{#if error}}
     <p class='error'>{{error}}</p>
   {{/if}}
-  <form action='/payment' method='post'>
+  <form action='/add' method='post'>
     <div class='input-group'>
       <label for='username'>Username:</label>
       <input type='text' id='username' name='username' placeholder='Enter username' required />
     </div>
     <div class='input-group'>
-      <label for='money'>Total Money:</label>
-      <input type='number' id='totalMoney' name='totalMoney' placeholder='Total money' required />
+      <label for='money'>Money:</label>
+      <input type='number' id='money' name='money' placeholder='Enter money' required />
     </div>
-    <button class='add-button' type='submit'>Buy</button>
+    <button class='add-button' type='submit'>Add</button>
   </form>
 </div>

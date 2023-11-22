@@ -36,3 +36,10 @@
 .add-button:hover {
   background-color: #45a049;
 }
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-size: 20px;
+}

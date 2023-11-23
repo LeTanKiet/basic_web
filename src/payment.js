@@ -1,10 +1,11 @@
 import express from 'express';
 const app = express();
 import { usePaymentRoutes } from './routes/index.js';
-import useHandlebars from './hooks/useHandlebars.js';
+import { useHandlebarPayment } from './hooks/useHandlebars.js';
 import useEncoded from './hooks/useEncoded.js';
 
-useHandlebars(app);
+app.use(express.static('src/public'));
+useHandlebarPayment(app);
 useEncoded(app);
 usePaymentRoutes(app);
 

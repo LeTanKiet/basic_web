@@ -3,4 +3,6 @@ const pgp = pgPromise();
 
 import { connectStr } from '../configs/connectStr.js';
 
-export const db = pgp(connectStr);
+const db = pgp(connectStr);
+
+export { db };

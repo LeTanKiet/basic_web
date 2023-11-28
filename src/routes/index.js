@@ -5,10 +5,7 @@ import productRoutes from './product.route.js';
 
 export function useRoutes(app) {
   app.use('/', homeRoutes());
-}
-
-export function useProductRoutes(app) {
-  app.use('/', productRoutes());
+  app.use('/product', productRoutes());
 }
 
 export function usePaymentRoutes(app) {

@@ -1,16 +1,61 @@
 import express from 'express';
-import productController from '../controllers/productController.js';
+import {
+  getAllProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from '../controllers/productController.js';
 
 const productRoutes = () => {
-  const router = express.Router();
+  const productRoutes = express.Router();
 
-  // Routes
-  router.get('/', productController.getAllProducts);
-  router.get('/:id', productController.getProductById);
-  router.post('/', productController.createProduct);
-  router.put('/:id', productController.updateProduct);
-  router.delete('/:id', productController.deleteProduct);
-  return router;
+  productRoutes.get('/', async (req, res) => {
+    try {
+      const products = await getAllProducts();
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  productRoutes.get('/:id', async (req, res) => {
+    console.log('Request Object:', req);
+    try {
+      const product = await getProductById(req.params.id);
+      res.json(product);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  productRoutes.post('/', async (req, res) => {
+    try {
+      const product = await createProduct(req.body);
+      res.status(201).json(product);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  productRoutes.put('/:id', async (req, res) => {
+    try {
+      const updatedProduct = await updateProduct(req.params.id, req.body);
+      res.json(updatedProduct);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  productRoutes.delete('/:id', async (req, res) => {
+    try {
+      await deleteProduct(req.params.id);
+      res.json({ message: 'Product deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  return productRoutes;
 };
 
 export default productRoutes;

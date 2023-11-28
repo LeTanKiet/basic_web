@@ -1,50 +1,55 @@
-import Product from '../models/product.js';
+import { db } from '../models/index.js';
 
-const productController = {
-  getAllProducts: async (req, res) => {
-    try {
-      const products = await Product.findAll();
-      res.json(products);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-
-  getProductById: async (req, res) => {
-    try {
-      const product = await Product.findByPk(req.params.id);
-      res.json(product);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-
-  createProduct: async (req, res) => {
-    try {
-      const product = await Product.create(req.body);
-      res.status(201).json(product);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
-  updateProduct: async (req, res) => {
-    try {
-      await Product.update(req.body, { where: { id: req.params.id } });
-      const updatedProduct = await Product.findByPk(req.params.id);
-      res.json(updatedProduct);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
-  deleteProduct: async (req, res) => {
-    try {
-      await Product.destroy({ where: { id: req.params.id } });
-      res.json({ message: 'Product deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
+const getAllProducts = async () => {
+  try {
+    const products = await db.any('SELECT * FROM products');
+    return products;
+  } catch (error) {
+    throw new Error(`Error getting products: ${error.message}`);
+  }
 };
-export default productController;
+
+const getProductById = async (id) => {
+  try {
+    const product = await db.one('SELECT * FROM products WHERE id = $1', id);
+    return product;
+  } catch (error) {
+    throw new Error(`Error getting product by ID: ${error.message}`);
+  }
+};
+
+const createProduct = async (productData) => {
+  try {
+    const result = await db.one('INSERT INTO products(name, price, description) VALUES($1, $2, $3) RETURNING *', [
+      productData.name,
+      productData.price,
+      productData.description,
+    ]);
+    return result;
+  } catch (error) {
+    throw new Error(`Error creating product: ${error.message}`);
+  }
+};
+
+const updateProduct = async (id, productData) => {
+  try {
+    const result = await db.one(
+      'UPDATE products SET name = $1, price = $2, description = $3 WHERE id = $4 RETURNING *',
+      [productData.name, productData.price, productData.description, id],
+    );
+    return result;
+  } catch (error) {
+    throw new Error(`Error updating product: ${error.message}`);
+  }
+};
+
+const deleteProduct = async (id) => {
+  try {
+    await db.none('DELETE FROM products WHERE id = $1', id);
+    return { message: 'Product deleted successfully' };
+  } catch (error) {
+    throw new Error(`Error deleting product: ${error.message}`);
+  }
+};
+
+export { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct };

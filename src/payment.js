@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 const app = express();
 import { usePaymentRoutes } from './routes/index.js';

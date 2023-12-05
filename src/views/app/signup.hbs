@@ -1,0 +1,49 @@
+<div class='login-form-wrapper'>
+  <div>
+    <img src='/images/logo.png' alt='' />
+  </div>
+
+  <h3>Create an account</h3>
+
+  <form action='/auth/sign-up' method='post' class='row g-4 login-form'>
+    <div class='col-12'>
+      <label>Name<span class='text-danger'>*</span></label>
+      <input name='name' value='{{name}}' type='text' class='form-control' placeholder='Enter name' required />
+    </div>
+
+    <div class='col-12'>
+      <label>Username<span class='text-danger'>*</span></label>
+      <input
+        name='username'
+        value='{{username}}'
+        type='text'
+        class='form-control'
+        placeholder='Enter username'
+        required
+      />
+    </div>
+
+    <div class='col-12'>
+      <label>Password<span class='text-danger'>*</span></label>
+      <input
+        name='password'
+        value='{{password}}'
+        type='password'
+        class='form-control'
+        placeholder='Enter password'
+        required
+      />
+    </div>
+
+    <span style='color: red; margin-top: 8px;'>{{error}}</span>
+
+    <div class='col-12'>
+      <button type='submit' class='btn btn-primary px-4 w-100'>Get started</button>
+    </div>
+
+    <div class='col-12 text-center'>
+      <span>Already have an account?</span>
+      <a href='login'><b class='text-primary'>Login</b></a>
+    </div>
+  </form>
+</div>

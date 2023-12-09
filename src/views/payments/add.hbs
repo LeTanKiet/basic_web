@@ -4,15 +4,18 @@
   {{#if error}}
     <p class='error'>{{error}}</p>
   {{/if}}
-  <form action='/add' method='post'>
+
+  <p>Your Balance: ${{userBalance}}</p>
+
+  <form action='/add/{{userId}}' method='post'>
     <div class='input-group'>
-      <label for='username'>Username:</label>
-      <input type='text' id='username' name='username' placeholder='Enter username' required />
-    </div>
-    <div class='input-group'>
-      <label for='money'>Money:</label>
-      <input type='number' id='money' name='money' placeholder='Enter money' required />
+      <label for='amount'>Amount:</label>
+      <input type='number' id='amount' name='amount' placeholder='Enter amount' required />
     </div>
     <button class='add-button' type='submit'>Add</button>
+  </form>
+
+  <form action='/payment/{{orderId}}' method='get'>
+    <button class='add-button' type='submit'>Back To Payment</button>
   </form>
 </div>

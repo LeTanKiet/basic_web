@@ -1,18 +1,18 @@
-<!-- add.hbs -->
+<!-- payment.hbs -->
 <a href='/'>Back</a>
 <div class='payment-card'>
   {{#if error}}
     <p class='error'>{{error}}</p>
   {{/if}}
-  <form action='/payment' method='post'>
-    <div class='input-group'>
-      <label for='username'>Username:</label>
-      <input type='text' id='username' name='username' placeholder='Enter username' required />
-    </div>
-    <div class='input-group'>
-      <label for='money'>Total Money:</label>
-      <input type='number' id='totalMoney' name='totalMoney' placeholder='Total money' required />
-    </div>
-    <button class='add-button' type='submit'>Buy</button>
+  <h2>Payment for Order #{{orderId}}</h2>
+  <p>Total Payment: ${{totalPayment}}</p>
+  <p>Your Balance: ${{userBalance}}</p>
+
+  <form action='/payment/{{orderId}}' method='post'>
+    <button class='add-button' type='submit'>Pay</button>
+  </form>
+
+  <form action='/add/{{userId}}' method='get'>
+    <button class='add-button' type='submit'>Add Balance</button>
   </form>
 </div>

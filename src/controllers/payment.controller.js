@@ -5,90 +5,139 @@ class paymentController {
     return res.render('home');
   }
 
-  async addPaymentPage(req, res) {
-    return res.render('add');
-  }
-
-  async addPayment(req, res) {
-    const { username, money } = req.body;
+  async addBalancePage(req, res) {
+    const userId = req.params.id;
 
     try {
-      // Check if the user exists and has the role 'USER'
-      const user = await db.oneOrNone('SELECT id FROM "user" WHERE userName = $1 AND role = $2', [username, 'USER']);
+      // Fetch the user details based on user_id
+      const user = await db.oneOrNone('SELECT id, balance FROM "users" WHERE id = $1', [userId]);
 
       if (!user) {
-        return res.render('add', { error: 'Invalid user or user role.' });
+        return res.render('add', { error: 'User not found.' });
       }
 
-      // Check if there is a payment record for the user
-      const existingPayment = await db.oneOrNone('SELECT id, balance FROM "payment" WHERE user_id = $1', [user.id]);
-
-      if (existingPayment) {
-        // If a payment record exists, update the balance
-        const updatedBalance = parseFloat(existingPayment.balance) + parseFloat(money);
-        await db.none('UPDATE "payment" SET balance = $1 WHERE id = $2', [updatedBalance, existingPayment.id]);
-      } else {
-        // If no payment record exists, create a new one
-        await db.none('INSERT INTO "payment" (user_id, balance) VALUES ($1, $2)', [user.id, money]);
-      }
-
-      return res.redirect('/'); // Redirect to the homepage or any other page as needed
+      return res.redirect(`/add/${userId}`);
     } catch (error) {
-      console.error('Error adding payment:', error);
-      return res.render('add', { error: 'An error occurred while adding the payment.' });
+      console.error('Error fetching user balance:', error);
+      return res.render('add', { error: 'Error fetching user balance.' });
+    }
+  }
+
+  async processAddBalance(req, res) {
+    const userId = req.params.id;
+    const { amount } = req.body;
+
+    try {
+      // Fetch the user details based on user_id
+      const user = await db.oneOrNone('SELECT id, balance FROM "users" WHERE id = $1', [userId]);
+
+      if (!user) {
+        return res.render('add', { error: 'User not found.' });
+      }
+
+      const orderId = await db.oneOrNone('SELECT MAX(id) AS highest_order_id FROM "orders" WHERE user_id = $1', [
+        userId,
+      ]);
+
+      console.log(orderId);
+
+      const updatedBalance = parseFloat(user.balance) + parseFloat(amount);
+      await db.none('UPDATE "users" SET balance = $1 WHERE id = $2', [updatedBalance, userId]);
+
+      return res.render('add', { userBalance: user.balance, userId, orderId: orderId.highest_order_id });
+    } catch (error) {
+      console.error('Error adding balance:', error);
+      return res.render('add', { error: 'An error occurred while adding balance.' });
     }
   }
 
   async paymentPage(req, res) {
-    return res.render('payment');
-  }
-
-  async addTransaction(req, res) {
-    const { username, totalMoney } = req.body;
+    const orderId = req.params.id;
 
     try {
-      // Check if the user exists and has the role 'USER'
-      const user = await db.oneOrNone('SELECT id FROM "user" WHERE userName = $1 AND role = $2', [username, 'USER']);
+      // Fetch the order details, including price and user_id
+      const order = await db.oneOrNone('SELECT price, user_id FROM "orders" WHERE id = $1', [orderId]);
+
+      if (!order) {
+        return res.render('error', { error: 'Order not found.' });
+      }
+
+      // Fetch the user details based on user_id from the order
+      const user = await db.oneOrNone('SELECT id, username, balance FROM "users" WHERE id = $1', [order.user_id]);
 
       if (!user) {
-        return res.render('payment', { error: 'Invalid user or user role.' });
+        return res.render('error', { error: 'User not found.' });
       }
 
-      // Check if there is a payment record for the user
-      const payment = await db.oneOrNone('SELECT id, balance FROM "payment" WHERE user_id = $1', [user.id]);
+      const totalPayment = order.price;
 
-      if (!payment || payment.balance < parseFloat(totalMoney)) {
-        // If no payment record exists or insufficient balance, throw an error
-        return res.render('payment', { error: 'Insufficient balance.' });
-      }
-
-      // Deduct the totalMoney from the balance
-      const updatedBalance = parseFloat(payment.balance) - parseFloat(totalMoney);
-      await db.none('UPDATE "payment" SET balance = $1 WHERE id = $2', [updatedBalance, payment.id]);
-
-      // Create a transaction record with a valid purchase value
-      await db.none('INSERT INTO "transaction" (user_id, purchase) VALUES ($1, $2)', [user.id, parseFloat(totalMoney)]);
-
-      return res.redirect('/payment/show'); // Redirect to the payment show page or any other page as needed
+      return res.render('payment', { orderId, totalPayment, userBalance: user.balance, userId: user.id, error: null });
     } catch (error) {
-      console.error('Error adding transaction:', error);
-      return res.render('payment', { error: 'An error occurred while adding the transaction.' });
+      console.error('Error fetching payment detail:', error);
+      return res.render('error', { error: 'Error fetching payment detail.' });
     }
   }
 
-  async paymentShowPage(req, res) {
+  async processPayment(req, res) {
+    const orderId = req.params.id;
     try {
-      // Fetch all users along with their payments and transactions
-      const users = await db.any(
-        'SELECT u.id, u.userName, p.balance, t.purchase FROM "user" u LEFT JOIN "payment" p ON u.id = p.user_id LEFT JOIN "transaction" t ON u.id = t.user_id',
-      );
+      // Fetch the order details, including price and user_id
+      const order = await db.oneOrNone('SELECT price, user_id FROM "orders" WHERE id = $1', [orderId]);
 
-      return res.render('paymentShow', { users });
+      console.log(order);
+
+      if (!order) {
+        return res.render('error', { error: 'Order not found.' });
+      }
+
+      // Fetch the user details based on user_id from the order
+      const user = await db.oneOrNone('SELECT id, balance FROM "users" WHERE id = $1', [order.user_id]);
+
+      if (!user) {
+        return res.render('payment', {
+          orderId,
+          totalPayment: order.price,
+          userBalance: user.balance,
+          error: 'Invalid user.',
+        });
+      }
+
+      // Check if the user has sufficient balance
+      if (user.balance < parseFloat(order.price)) {
+        return res.render('payment', {
+          orderId,
+          totalPayment: order.price,
+          userBalance: user.balance,
+          error: 'Insufficient balance.',
+        });
+      }
+
+      const updatedBalance = parseFloat(user.balance) - parseFloat(order.price);
+      await db.none('UPDATE "users" SET balance = $1 WHERE id = $2', [updatedBalance, user.id]);
+
+      const adminId = 1;
+      const admin = await db.one('SELECT id, balance FROM "users" WHERE id = $1', [adminId]);
+      const adminUpdatedBalance = parseFloat(admin.balance) + parseFloat(order.price);
+      await db.none('UPDATE "users" SET balance = $1 WHERE id = $2', [adminUpdatedBalance, adminId]);
+
+      await db.none('INSERT INTO "transactions" (user_id, purchase) VALUES ($1, $2)', [user.id, order.price]);
+
+      return res.redirect(`/payment/${orderId}/success`);
     } catch (error) {
-      console.error('Error fetching payment information:', error);
-      return res.render('paymentShow', { error: 'Error fetching payment information.' });
+      console.error('Error processing payment:', error);
+      return res.render('payment', {
+        orderId,
+        totalPayment: order.price,
+        userBalance: user.balance,
+        error: 'An error occurred while processing the payment.',
+      });
     }
   }
+
+  async paymentSuccess(req, res) {
+    return res.render('paymentSuccess');
+  }
+  
 }
 
 export default new paymentController();

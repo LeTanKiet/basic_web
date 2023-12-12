@@ -20,7 +20,6 @@ const productRoutes = () => {
   });
 
   productRoutes.get('/:id', async (req, res) => {
-    console.log('Request Object:', req);
     try {
       const product = await getProductById(req.params.id);
       res.json(product);

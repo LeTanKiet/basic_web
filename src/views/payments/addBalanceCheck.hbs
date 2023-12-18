@@ -1,0 +1,14 @@
+<!-- addBalanceCheck.hbs -->
+<a href='/'>Back</a>
+<div class='pin-card'>
+  <h2>Enter PIN</h2>
+  <p>Please enter the PIN sent to your email to proceed with adding balance.</p>
+
+  <form action='/add/{{userId}}/check' method='post'>
+    <div class='input-group'>
+      <label for='pin'>PIN:</label>
+      <input type='number' id='pin' name='pin' placeholder='Enter your PIN' required />
+    </div>
+    <button type='submit' class='add-button'>Verify</button>
+  </form>
+</div>

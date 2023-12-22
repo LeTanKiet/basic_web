@@ -1,16 +1,26 @@
 import bcrypt from 'bcrypt';
 import { db } from '../models/index.js';
-import { SALT_ROUNDS } from '../utils/constants.js';
+import { ROLE, SALT_ROUNDS } from '../utils/constants.js';
 import { clearCookies, createToken, setCookies } from '../utils/common.js';
 
 class AuthController {
+  async signUpPage(req, res) {
+    return res.render('signup');
+  }
+
   async signUp(req, res) {
     try {
-      const { username, password, role } = req.body;
+      const { name, username, password, role = ROLE.user } = req.body;
 
       const existedUser = await db.oneOrNone('select * from "users" where username = $1', username);
       if (existedUser) {
-        return res.status(400).send({ message: 'User existed' });
+        return res.render('signup', {
+          error: 'User existed',
+          name,
+          username,
+          password,
+          role,
+        });
       }
 
       const hashedPassword = bcrypt.hashSync(password, SALT_ROUNDS);
@@ -22,11 +32,15 @@ class AuthController {
       const tokens = createToken(newUser);
       setCookies(res, tokens);
 
-      return res.status(201).json(newUser);
+      return res.redirect('/');
     } catch (error) {
       console.error('error: ', error);
       return res.status(500).send({ message: 'Internal Server Error' });
     }
+  }
+
+  async loginPage(req, res) {
+    return res.render('login');
   }
 
   async login(req, res) {
@@ -36,17 +50,25 @@ class AuthController {
       const existedUser = await db.oneOrNone('select * from "users" where username = $1', username);
 
       if (!existedUser) {
-        return res.status(401).send({ message: 'User not found' });
+        return res.render('login', {
+          error: 'User not found',
+          username,
+          password,
+        });
       }
 
       if (!bcrypt.compareSync(password, existedUser.password)) {
-        return res.status(401).send({ message: 'Password is incorrect!' });
+        return res.render('login', {
+          error: 'Password is incorrect!',
+          username,
+          password,
+        });
       }
 
       const tokens = createToken(existedUser);
       setCookies(res, tokens);
 
-      return res.status(200).json(existedUser);
+      return res.redirect('/');
     } catch (error) {
       console.error('error: ', error);
       return res.status(500).send({ message: 'Internal Server Error' });

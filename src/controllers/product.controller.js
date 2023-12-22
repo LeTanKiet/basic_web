@@ -24,7 +24,7 @@ class productController {
       const products = await db.any('SELECT * FROM products');
       return res.render('product_manager', { products });
     } catch (error) {
-      throw new Error(`Error getting products: ${error.message}`);
+      return res.status(500).json(`Error getting products: ${error.message}`);
     }
   }
 
@@ -34,7 +34,7 @@ class productController {
       const product = await db.one('SELECT * FROM products WHERE id = $1', id);
       return res.json(product);
     } catch (error) {
-      throw new Error(`Error getting product by ID: ${error.message}`);
+      return res.status(500).json(`Error getting product by ID: ${error.message}`);
     }
   }
 

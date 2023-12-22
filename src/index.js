@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser';
 import { useRoutes } from './routes/index.js';
 import useEncoded from './hooks/useEncoded.js';
 import { useHandlebars } from './hooks/useHandlebars.js';
-import { useRoutes } from './routes/index.js';
 
 const PORT = process.env.APP_PORT || 3000;
 

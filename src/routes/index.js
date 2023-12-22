@@ -5,9 +5,7 @@ import productRoutes from './product.route.js';
 
 export function useRoutes(app) {
   app.use('/auth', authRoutes());
-  app.use('/products', productRoutes());
-
-  app.use('/product', productRoutes());
+  app.use('/', productRoutes());
 
   app.use('/', homeRoutes());
 }

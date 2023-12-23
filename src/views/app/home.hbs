@@ -1,3 +1,13 @@
+{{#if user}}
+  <h2>{{user.email}} login</h2>
+
+  <form method='post' action='{{BASE_URL}}/auth/logout'>
+    <button type='submit' class='btn btn-primary'>Logout</button>
+  </form>
+{{else}}
+  <a class='btn btn-primary' href='/auth/login' role='button'>Login</a>
+{{/if}}
+
 {{>hero}}
 
 <div class="container">

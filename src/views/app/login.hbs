@@ -7,15 +7,8 @@
 
   <form action='/auth/login' method='post' class='row g-4 login-form'>
     <div class='col-12'>
-      <label>Username<span class='text-danger'>*</span></label>
-      <input
-        name='username'
-        type='text'
-        class='form-control'
-        placeholder='Enter username'
-        required
-        value='{{username}}'
-      />
+      <label>Email<span class='text-danger'>*</span></label>
+      <input name='email' type='email' class='form-control' placeholder='Enter email' required value='{{email}}' />
     </div>
 
     <div class='col-12'>
@@ -31,12 +24,6 @@
     </div>
 
     <span style='color: red; margin-top: 8px;'>{{error}}</span>
-
-    <div class='col-sm-6'></div>
-
-    <div class='col-sm-6'>
-      <a href='#' class='float-end text-primary'>Forgot Password?</a>
-    </div>
 
     <div class='col-12'>
       <button type='submit' class='btn btn-primary px-4 w-100'>Login</button>

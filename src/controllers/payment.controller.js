@@ -14,7 +14,7 @@ class paymentController {
 
     try {
       // Check if the user exists and has the role 'USER'
-      const user = await db.oneOrNone('SELECT id FROM "user" WHERE userName = $1 AND role = $2', [username, 'USER']);
+      const user = await db.oneOrNone('SELECT id FROM "user" WHERE username = $1 AND role = $2', [username, 'USER']);
 
       if (!user) {
         return res.render('add', { error: 'Invalid user or user role.' });
@@ -48,7 +48,7 @@ class paymentController {
 
     try {
       // Check if the user exists and has the role 'USER'
-      const user = await db.oneOrNone('SELECT id FROM "user" WHERE userName = $1 AND role = $2', [username, 'USER']);
+      const user = await db.oneOrNone('SELECT id FROM "user" WHERE username = $1 AND role = $2', [username, 'USER']);
 
       if (!user) {
         return res.render('payment', { error: 'Invalid user or user role.' });
@@ -80,7 +80,7 @@ class paymentController {
     try {
       // Fetch all users along with their payments and transactions
       const users = await db.any(
-        'SELECT u.id, u.userName, p.balance, t.purchase FROM "user" u LEFT JOIN "payment" p ON u.id = p.user_id LEFT JOIN "transaction" t ON u.id = t.user_id',
+        'SELECT u.id, u.username, p.balance, t.purchase FROM "user" u LEFT JOIN "payment" p ON u.id = p.user_id LEFT JOIN "transaction" t ON u.id = t.user_id',
       );
 
       return res.render('paymentShow', { users });

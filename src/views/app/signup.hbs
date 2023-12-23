@@ -12,15 +12,8 @@
     </div>
 
     <div class='col-12'>
-      <label>Username<span class='text-danger'>*</span></label>
-      <input
-        name='username'
-        value='{{username}}'
-        type='text'
-        class='form-control'
-        placeholder='Enter username'
-        required
-      />
+      <label>Email<span class='text-danger'>*</span></label>
+      <input name='email' value='{{email}}' type='text' class='form-control' placeholder='Enter email' required />
     </div>
 
     <div class='col-12'>
@@ -31,6 +24,18 @@
         type='password'
         class='form-control'
         placeholder='Enter password'
+        required
+      />
+    </div>
+
+    <div class='col-12'>
+      <label>Confirm password<span class='text-danger'>*</span></label>
+      <input
+        name='confirmPassword'
+        value='{{confirmPassword}}'
+        type='confirmPassword'
+        class='form-control'
+        placeholder='Enter confirm password'
         required
       />
     </div>

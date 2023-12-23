@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 export const createToken = (user) => {
   const formattedUser = {
     id: user.id,
-    username: user.username,
+    email: user.email,
     role: user.role,
   };
 

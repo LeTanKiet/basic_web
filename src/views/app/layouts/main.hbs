@@ -15,9 +15,10 @@
   </head>
 
   <body>
+    {{>header}}
+    {{> cart}}
+
     <div class="container">
-      <div class="row">{{>header}}</div>
-      {{> cart}}
       <div class="row">{{{body}}}</div>
       <div class="row">{{>footer}}</div>
     </div>

@@ -5,7 +5,10 @@ import { clearCookies, createToken, setCookies } from '../utils/common.js';
 
 class AuthController {
   async signUpPage(req, res) {
-    return res.render('signup');
+    return res.render('signup', {
+      layout: 'no-header-footer-layout',
+      title: 'Sign up',
+    });
   }
 
   async signUp(req, res) {
@@ -52,7 +55,10 @@ class AuthController {
   }
 
   async loginPage(req, res) {
-    return res.render('login');
+    return res.render('login', {
+      layout: 'no-header-footer-layout',
+      title: 'Login',
+    });
   }
 
   async login(req, res) {

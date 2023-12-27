@@ -3,6 +3,10 @@ class ProductController {
     return res.render('home');
   }
 
+  productPage(req, res) {
+    return res.render('products');
+  }
+
   productDetailPage(req, res) {
     const { id } = req.params;
     console.log('🚀 ~ file: product.controller.js:8 ~ ProductController ~ productDetailPage ~ id:', id);

@@ -1,0 +1,109 @@
+<div class='container'>
+  <h1 class='row d-flex justify-content-center mt-5 mb-3'>Our Products</h1>
+
+  <div class='row'>
+    <aside class='col-md-3 mb-3'>
+      {{! Product types filter }}
+      <div class='card mb-3'>
+
+        <a data-bs-toggle='collapse' href='#collapse_1' role='button' aria-expanded='false' aria-controls='collapse_1'>
+          <h5 class='card-header'>
+            Product Types
+          </h5>
+        </a>
+
+        <div class='collapse show' id='collapse_1'>
+          <div class='card-body'>
+            <form class='pb-3'>
+              <div class='input-group'>
+                <input type='text' class='form-control' placeholder='Search' />
+
+                <div class='input-group-append'>
+                  <button class='btn btn-light' type='button'>Search</button>
+                </div>
+              </div>
+            </form>
+
+            <ul class='list-unstyled'>
+              <li><a href='#'>Table</a></li>
+              <li><a href='#'>Chair</a></li>
+              <li><a href='#'>Couch</a></li>
+              <li><a href='#'>Decoration</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      {{! Price range }}
+      <div class='card mb-3'>
+
+        <a data-bs-toggle='collapse' href='#collapse_2' role='button' aria-expanded='false' aria-controls='collapse_2'>
+          <h5 class='card-header'>
+            Price range
+          </h5>
+        </a>
+
+        <div class='collapse' id='collapse_2'>
+          <div class='card-body'>
+            <input type='range' class='custom-range' min='0' max='100' name='' />
+            <div class='form-row'>
+              <div class='form-group col-md-6'>
+                <label>Min</label>
+                <input class='form-control' placeholder='$0' type='number' />
+              </div>
+              <div class='form-group text-right col-md-6'>
+                <label>Max</label>
+                <input class='form-control' placeholder='$1,0000' type='number' />
+              </div>
+            </div>
+            <!-- form-row.// -->
+            <button class='btn btn-block btn-primary'>Apply</button>
+          </div>
+        </div>
+
+      </div>
+
+      {{! Color filter }}
+      <div class='card mb-3'>
+
+        <a data-bs-toggle='collapse' href='#collapse_3' role='button' aria-expanded='false' aria-controls='collapse_3'>
+          <h5 class='card-header'>
+            Color
+          </h5>
+        </a>
+
+        <div class='collapse' id='collapse_3'>
+          <div class='card-body'>
+            <ul class='list-unstyled'>
+              <li><a href='#'>Cadmium Red</a></li>
+              <li><a href='#'>Antique Gold</a></li>
+              <li><a href='#'>Dark Academia</a></li>
+              <li><a href='#'>Deco Silver</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      {{! TODO: Material filter }}
+      {{! TODO: Country of Origin filter }}
+    </aside>
+
+    <main class='col-md-9'>
+      <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+        <div class="col">{{>product-card}}</div>
+      </div>
+    </main>
+  </div>
+</div>

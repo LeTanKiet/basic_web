@@ -18,14 +18,12 @@
 
   <body>
     {{>header}}
+    
     {{>cart}}
 
-    <div class="container">
-      <div class="row">{{{body}}}</div>
+    {{{body}}}
 
-      <hr class="mt-5 mb-3">
-      <div class="row">{{>footer}}</div>
-    </div>
+    {{>footer}}
 
     {{!-- Bootstrap JS CDN --}}
     <script

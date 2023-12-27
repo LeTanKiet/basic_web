@@ -1,11 +1,11 @@
 <nav class='navbar navbar-expand-lg bg-body-tertiary'>
   <div class='container container-fluid'>
-    {{! logo }}
+    {{! Logo }}
     <a class='navbar-brand' href='/'>
       <img src='/images/Logo.svg' alt='Fusion Furni' />
     </a>
 
-    {{! toggle button to show/hide navbar items when the screen size is small }}
+    {{! Toggle button to show/hide navbar items when the screen size is small }}
     <button
       class='navbar-toggler'
       type='button'
@@ -33,9 +33,9 @@
         </li>
       </ul>
 
-      {{! if user is logged in, show cart and logout button }}
+      {{! If user is logged in, show cart and logout button }}
       {{#if user}}
-        {{! cart button & logout button wrapper }}
+        {{! Cart button & logout button wrapper }}
         <div class='d-flex justify-content-around'>
           {{! TODO: redirect to user detail page }}
           <a href='#' class='btn btn-light rounded-pill'>
@@ -53,9 +53,8 @@
             </svg>
           </a>
 
-          {{! cart button }}
+          {{! Cart button }}
           <button
-            {{! class='btn btn-outline-primary mx-2 rounded-5' }}
             class='btn btn-light mx-2 rounded-pill'
             type='button'
             data-bs-toggle='offcanvas'
@@ -76,7 +75,7 @@
             </svg>
           </button>
 
-          {{! logout button }}
+          {{! Logout button }}
           <form method='post' action='{{BASE_URL}}/auth/logout'>
             <button class='btn btn-secondary rounded-pill' type='submit'>
               <svg
@@ -100,7 +99,7 @@
           </form>
         </div>
       {{else}}
-        <a class='btn btn-primary fw-bold' role='button' href='/auth/login'>Log in</a>
+        <a class='btn btn-primary' role='button' href='/auth/login'>Log in</a>
       {{/if}}
     </div>
   </div>

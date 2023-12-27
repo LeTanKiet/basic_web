@@ -4,16 +4,16 @@
   <div class='row'>
     {{! Filter panel }}
     <aside class='col-md-3 mb-3'>
-      {{! Product types filter }}
+      {{! Categories filter }}
       <div class='card mb-3'>
 
         {{! Card header }}
         <a
           data-bs-toggle='collapse'
-          href='#collapse_product_types'
+          href='#collapse_categories'
           role='button'
           aria-expanded='false'
-          aria-controls='collapse_product_types'
+          aria-controls='collapse_categories'
           class='text-decoration-none'
         >
           <h5 class='card-header'>
@@ -32,12 +32,12 @@
               />
             </svg>
 
-            Product types
+            Categories
           </h5>
         </a>
 
         {{! Card body }}
-        <div class='collapse show' id='collapse_product_types'>
+        <div class='collapse show' id='collapse_categories'>
           <div class='card-body'>
             {{! Search bar }}
             <form class='d-flex pb-3' role='search'>
@@ -61,16 +61,19 @@
             </form>
 
             <ul class='list-unstyled'>
-              <li><a href='#'>Table</a></li>
-              <li><a href='#'>Chair</a></li>
-              <li><a href='#'>Couch</a></li>
-              <li><a href='#'>Decoration</a></li>
+              <li><a href='#'>Desks</a></li>
+              <li><a href='#'>Dresses</a></li>
+              <li><a href='#'>Sofas</a></li>
+              <li><a href='#'>Armchairs</a></li>
+              <li><a href='#'>Beds</a></li>
+              <li><a href='#'>Nightstands</a></li>
+              <li><a href='#'>Bookcases</a></li>
             </ul>
           </div>
         </div>
 
       </div>
-      {{! END OF Product types filter }}
+      {{! END OF Categories filter }}
 
       {{! Price range slider }}
       <div class='card mb-3'>

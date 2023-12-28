@@ -19,11 +19,7 @@
         }, 350);
     }),
       $('.search-popup').on('click', function (b) {
-        ($(b.target).is('.search-popup-close') ||
-          $(b.target).is('.search-popup-close svg') ||
-          $(b.target).is('.search-popup-close path') ||
-          $(b.target).is('.search-popup')) &&
-          (b.preventDefault(), $(this).removeClass('is-visible'));
+        $(b.target).is('.search-popup') && (b.preventDefault(), $(this).removeClass('is-visible'));
       }),
       $(document).keyup(function (b) {
         '27' === b.which && $('.search-popup').removeClass('is-visible');

@@ -1,21 +1,26 @@
 <!-- add.hbs -->
-<a href='/'>Back</a>
-<div class='payment-card'>
-  {{#if error}}
-    <p class='error'>{{error}}</p>
-  {{/if}}
+<div class='container d-flex justify-content-center align-items-center' style='height: 100vh;'>
+  <div class='card payment-card' style='width: 400px; border: 1px solid #ccc;'>
+    <div class='card-body'>
+      {{#if error}}
+        <div class='alert alert-danger' role='alert'>{{error}}</div>
+      {{/if}}
 
-  <p>Your Balance: ${{userBalance}}</p>
+      <h5 class='card-title text-center'>Your Balance: ${{userBalance}}</h5>
 
-  <form action='/add/{{userId}}/send-pin' method='post'>
-    <div class='input-group'>
-      <label for='amount'>Amount:</label>
-      <input type='number' id='amount' name='amount' placeholder='Enter amount' required />
+      <form action='/add/{{userId}}/send-pin' method='post'>
+        <div class='mb-3'>
+          <label for='amount' class='form-label'>Amount:</label>
+          <div class='input-group'>
+            <input type='number' class='form-control' id='amount' name='amount' placeholder='Enter amount' required />
+            <button class='btn btn-primary' type='submit'>Add</button>
+          </div>
+        </div>
+      </form>
+
+      <form action='/payment/{{orderId}}' method='get'>
+        <button class='btn btn-secondary' type='submit'>Back To Payment</button>
+      </form>
     </div>
-    <button class='add-button' type='submit'>Add</button>
-  </form>
-
-  <form action='/payment/{{orderId}}' method='get'>
-    <button class='add-button' type='submit'>Back To Payment</button>
-  </form>
+  </div>
 </div>

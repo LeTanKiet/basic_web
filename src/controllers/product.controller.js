@@ -1,10 +1,16 @@
-class ProductController {
-  index(req, res) {
-    return res.render('home');
-  }
+import { db } from '../models/index.js';
 
-  productPage(req, res) {
-    return res.render('products');
+class ProductController {
+  async index(req, res) {
+    const { userId } = req.context;
+    const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+    // Query the database for all products
+    const products = await db.any('select * from "products"');
+
+    return res.render('products', {
+      user,
+      products,
+    });
   }
 
   productDetailPage(req, res) {

@@ -60,9 +60,11 @@
 
   <div class='card-detail d-flex justify-content-between align-items-baseline pt-3 gap-2'>
     <h4 class='title text-capitalize fw-semibold'>
-      <a href='#'>Modern Loveseat Couch</a>
+      {{! <a href='#'>Modern Loveseat Couch</a> }}
+      <a href='/products/{{id}}'>{{name}}</a>
     </h4>
 
-    <h4 class='price'>$50</h4>
+    {{! <h4 class='price'>$50</h4> }}
+    <h4 class='price'>${{price}}</h4>
   </div>
 </div>

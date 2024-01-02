@@ -8,7 +8,7 @@
 
       <h5 class='card-title text-center'>Your Balance: ${{userBalance}}</h5>
 
-      <form action='/add/{{userId}}/send-pin' method='post'>
+      <form action='/add/{{paymentId}}/send-pin' method='post'>
         <div class='mb-3'>
           <label for='amount' class='form-label'>Amount:</label>
           <div class='input-group'>
@@ -17,10 +17,11 @@
           </div>
         </div>
       </form>
-
-      <form action='/payment/{{orderId}}' method='get'>
-        <button class='btn btn-secondary' type='submit'>Back To Payment</button>
-      </form>
+      {{#if orderId}}
+        <form action='/payment/{{orderId}}' method='get'>
+          <button class='btn btn-secondary' type='submit'>Back To Payment</button>
+        </form>
+      {{/if}}
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@ class SendPinEmail {
     });
 
     await transporter.sendMail({
-      from: '"Your Service" <noreply@yourservice.com>',
+      from: '"Basic Web" <noreply@yourservice.com>',
       to: user.email,
       subject: 'Your PIN',
       text: `Your PIN is: ${pin}`,

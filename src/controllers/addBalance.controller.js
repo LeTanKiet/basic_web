@@ -7,88 +7,95 @@ class AddBalanceController {
   }
 
   async addBalancePage(req, res) {
-    const userId = req.params.id;
+    const paymentId = req.params.id;
 
     try {
-      const user = await db.oneOrNone('SELECT id, balance FROM "users" WHERE id = $1', [userId]);
+      const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE payment_id = $1', [paymentId]);
 
-      if (!user) {
+      if (!payment_user) {
         return res.render('add', { error: 'User not found.' });
       }
 
-      const orderId = await db.oneOrNone('SELECT MAX(id) AS highest_order_id FROM "orders" WHERE user_id = $1', [
-        userId,
-      ]);
-
-      return res.render('add', { userBalance: user.balance, userId, orderId: orderId.highest_order_id });
+      return res.render('add', {
+        userBalance: payment_user.balance,
+        orderId: req.session.orderId ? orderId : null,
+        paymentId: paymentId,
+      });
     } catch (error) {
       return res.render('add', { error: 'Error fetching user balance.' });
     }
   }
 
   async SendPin(req, res) {
-    const userId = req.params.id;
+    const paymentId = req.params.id;
     const { amount } = req.body;
 
+    const { user_id } = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE payment_id = $1', [paymentId]);
     req.session.amount = amount;
 
     try {
-      await SendPinEmail.sendPinEmail(userId);
-      res.redirect(`/add/${userId}/check`);
+      await SendPinEmail.sendPinEmail(user_id);
+      res.redirect(`/add/${paymentId}/check`);
     } catch (error) {
       return res.render('add', { error: 'An error occurred while sending the PIN.' });
     }
   }
 
-  async addBalanceToUser(userId, amount) {
+  async addBalanceToUser(paymentId, user_id, amount) {
     try {
-      const user = await db.oneOrNone('SELECT balance FROM "users" WHERE id = $1', [userId]);
-      if (!user) {
+      const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE payment_id = $1', [paymentId]);
+      if (!payment_user) {
         throw new Error('User not found');
       }
 
-      const newBalance = parseFloat(user.balance) + parseFloat(amount);
+      const newBalance = parseFloat(payment_user.balance) + parseFloat(amount);
 
-      await db.none('UPDATE "users" SET balance = $1 WHERE id = $2', [newBalance, userId]);
+      await db.none('UPDATE "payment_users" SET balance = $1 WHERE payment_id = $2', [newBalance, paymentId]);
 
-      await db.none('DELETE FROM "pins" WHERE user_id = $1', [userId]);
+      await db.none('DELETE FROM "pins" WHERE user_id = $1', [user_id]);
     } catch (error) {
       throw error;
     }
   }
 
   async addBalanceCheckPage(req, res) {
-    const userId = req.params.id;
+    const paymentId = req.params.id;
 
     try {
-      res.render('addBalanceCheck', { userId });
+      res.render('addBalanceCheck', { paymentId });
     } catch (error) {
       res.render('error', { error: 'An error occurred.' });
     }
   }
 
   async processAddBalanceCheck(req, res) {
-    const userId = req.params.id;
+    const paymentId = req.params.id;
     const { pin } = req.body;
 
     try {
-      const pinRecord = await db.oneOrNone('SELECT pin FROM pins WHERE user_id = $1', [userId]);
+      const { user_id } = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE payment_id = $1', [paymentId]);
+
+      if (!user_id) {
+        return res.render('addBalanceCheck', { error: 'User not found.' });
+      }
+
+      const pinRecord = await db.oneOrNone('SELECT pin FROM pins WHERE user_id = $1', [user_id]);
 
       if (!pinRecord || pinRecord.pin !== pin) {
-        console.error('No PIN record found for user:', userId);
-        return res.render('addBalanceCheck', { error: 'Invalid PIN.', userId });
+        console.error('No PIN record found for user:', user_id);
+        return res.render('addBalanceCheck', { error: 'Invalid PIN.', user_id });
       }
 
       const amount = req.session.amount;
 
       if (!amount) {
-        return res.render('addBalanceCheck', { error: 'Session expired or invalid.', userId });
+        return res.render('addBalanceCheck', { error: 'Session expired or invalid.', user_id });
       }
 
-      await this.addBalanceToUser(userId, amount);
-      return res.redirect(`/add/${userId}/success`);
+      await this.addBalanceToUser(paymentId, user_id, amount);
+      return res.redirect(`/add/${paymentId}/success`);
     } catch (error) {
-      return res.render('addBalanceCheck', { error: 'An error occurred while verifying the PIN.', userId });
+      return res.render('addBalanceCheck', { error: 'An error occurred while verifying the PIN.', paymentId });
     }
   }
 

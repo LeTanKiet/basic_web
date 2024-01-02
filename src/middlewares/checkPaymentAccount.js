@@ -4,7 +4,7 @@ export async function checkPaymentAccount(req, res, next) {
   const userId = 2;
 
   try {
-    const paymentUser = await db.oneOrNone('SELECT * FROM payment_users WHERE id = $1', [userId]);
+    const paymentUser = await db.oneOrNone('SELECT * FROM payment_users WHERE user_id = $1', [userId]);
 
     if (!paymentUser) {
       req.session.returnTo = req.originalUrl;

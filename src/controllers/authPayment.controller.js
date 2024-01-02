@@ -10,11 +10,11 @@ class AuthPaymentController {
     const userId = 2;
     const paymentId = uuidv4();
 
-    await db.none('INSERT INTO payment_users (id, payment_id, payment_method, balance) VALUES ($1, $2, $3, $4)', [
-      userId,
+    await db.none('INSERT INTO payment_users (payment_id, payment_method, balance, user_id) VALUES ($1, $2, $3, $4)', [
       paymentId,
       'defaultMethod',
       0,
+      userId,
     ]);
     const redirectTo = req.session.returnTo || '/';
     delete req.session.returnTo;

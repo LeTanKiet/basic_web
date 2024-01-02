@@ -27,6 +27,8 @@ class paymentController {
         return res.render('error', { error: 'User not found.' });
       }
 
+      req.session.orderId = orderId;
+
       const totalPayment = order.price;
 
       return res.render('payment', { orderId, totalPayment, userBalance: user.balance, userId: user.id, error: null });
@@ -94,7 +96,6 @@ class paymentController {
 
   async processPayment(orderId) {
     try {
-
       const order = await db.oneOrNone('SELECT price, user_id FROM "orders" WHERE id = $1', [orderId]);
       if (!order) throw new Error('Order not found');
 
@@ -121,7 +122,6 @@ class paymentController {
       ]);
 
       await db.none('DELETE FROM pins WHERE user_id = $1', [order.user_id]);
-
     } catch (error) {
       console.error('Error processing payment:', error);
       return error.message || 'An error occurred while processing the payment.';

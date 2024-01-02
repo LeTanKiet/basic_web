@@ -1,0 +1,55 @@
+<div class='login-form-wrapper'>
+  {{! Fusion Furni logo }}
+  <a href='/'>
+    <img src='/images/Logo.svg' alt='Fusion Furni' width='130' />
+  </a>
+
+  <h3>Create an account</h3>
+
+  <form action='/auth/sign-up' method='post' class='row g-4 login-form'>
+    <div class='col-12'>
+      <label>Name<span class='text-danger'>*</span></label>
+      <input name='name' value='{{name}}' type='text' class='form-control' placeholder='Enter name' required />
+    </div>
+
+    <div class='col-12'>
+      <label>Email<span class='text-danger'>*</span></label>
+      <input name='email' value='{{email}}' type='text' class='form-control' placeholder='Enter email' required />
+    </div>
+
+    <div class='col-12'>
+      <label>Password<span class='text-danger'>*</span></label>
+      <input
+        name='password'
+        value='{{password}}'
+        type='password'
+        class='form-control'
+        placeholder='Enter password'
+        required
+      />
+    </div>
+
+    <div class='col-12'>
+      <label>Confirm password<span class='text-danger'>*</span></label>
+      <input
+        name='confirmPassword'
+        value='{{confirmPassword}}'
+        type='password'
+        class='form-control'
+        placeholder='Enter confirm password'
+        required
+      />
+    </div>
+
+    <span style='color: red; margin-top: 8px;'>{{error}}</span>
+
+    <div class='col-12'>
+      <button type='submit' class='btn btn-primary px-4 w-100'>Get started</button>
+    </div>
+
+    <div class='col-12 text-center'>
+      <span>Already have an account?</span>
+      <a href='login'><b class='text-primary'>Login</b></a>
+    </div>
+  </form>
+</div>

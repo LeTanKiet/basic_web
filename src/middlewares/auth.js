@@ -5,7 +5,7 @@ export function authentication(req, res, next) {
   const accessToken = req.cookies['access_token'];
   const refreshToken = req.cookies['refresh_token'];
 
-  if (!accessToken) return res.status(401).send({ message: 'Unauthorized' });
+  if (!accessToken) return res.render('home', { user: null });
 
   try {
     const decoded = jwt.verify(accessToken, process.env.AT_SECRET);
@@ -20,7 +20,7 @@ export function authentication(req, res, next) {
     if (newAccessToken) {
       return next();
     } else {
-      return res.status(401).send({ message: 'Unauthorized' });
+      return res.render('home', { user: null });
     }
   }
 }

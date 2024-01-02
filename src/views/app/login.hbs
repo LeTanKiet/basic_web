@@ -1,0 +1,38 @@
+<div class='login-form-wrapper'>
+  {{! Fusion Furni logo }}
+  <a href='/'>
+    <img src='/images/Logo.svg' alt='Fusion Furni' width='130' />
+  </a>
+
+  <h3>Login to your account</h3>
+
+  <form action='/auth/login' method='post' class='row g-4 login-form'>
+    <div class='col-12'>
+      <label>Email<span class='text-danger'>*</span></label>
+      <input name='email' type='email' class='form-control' placeholder='Enter email' required value='{{email}}' />
+    </div>
+
+    <div class='col-12'>
+      <label>Password<span class='text-danger'>*</span></label>
+      <input
+        name='password'
+        type='password'
+        class='form-control'
+        placeholder='Enter password'
+        required
+        value='{{password}}'
+      />
+    </div>
+
+    <span style='color: red; margin-top: 8px;'>{{error}}</span>
+
+    <div class='col-12'>
+      <button type='submit' class='btn btn-primary px-4 w-100'>Login</button>
+    </div>
+
+    <div class='col-12 text-center'>
+      <span>Don’t have an account?</span>
+      <a href='sign-up'><b class='text-primary'>Sign up</b></a>
+    </div>
+  </form>
+</div>

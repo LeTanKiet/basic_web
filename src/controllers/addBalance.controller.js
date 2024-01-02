@@ -12,13 +12,15 @@ class AddBalanceController {
     try {
       const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE id = $1', [paymentId]);
 
+      console.log('payment_user:', payment_user);
+
       if (!payment_user) {
         return res.render('add', { error: 'User not found.' });
       }
 
       return res.render('add', {
         userBalance: payment_user.balance,
-        orderId: req.session.orderId ? orderId : null,
+        orderId: req.session.orderId ? req.session.orderId : null,
         paymentId: paymentId,
       });
     } catch (error) {

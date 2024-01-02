@@ -1,52 +1,92 @@
 import bcrypt from 'bcrypt';
 import { db } from '../models/index.js';
-import { SALT_ROUNDS } from '../utils/constants.js';
+import { ROLE, SALT_ROUNDS } from '../utils/constants.js';
 import { clearCookies, createToken, setCookies } from '../utils/common.js';
 
 class AuthController {
+  async signUpPage(req, res) {
+    return res.render('signup', {
+      layout: 'no-header-footer-layout',
+      title: 'Sign up',
+    });
+  }
+
   async signUp(req, res) {
     try {
-      const { username, password, role } = req.body;
+      const { name, email, password, confirmPassword, role = ROLE.user } = req.body;
 
-      const existedUser = await db.oneOrNone('select * from "users" where username = $1', username);
+      if (confirmPassword !== password) {
+        return res.render('signup', {
+          error: 'Confirm password not match',
+          name,
+          email,
+          password,
+          confirmPassword,
+          role,
+        });
+      }
+
+      const existedUser = await db.oneOrNone('select * from "users" where email = $1', email);
       if (existedUser) {
-        return res.status(400).send({ message: 'User existed' });
+        return res.render('signup', {
+          error: 'User existed',
+          name,
+          email,
+          password,
+          confirmPassword,
+          role,
+        });
       }
 
       const hashedPassword = bcrypt.hashSync(password, SALT_ROUNDS);
       const newUser = await db.oneOrNone(
-        'INSERT INTO "users" (username, password, role) VALUES ($1, $2, $3) RETURNING *',
-        [username, hashedPassword, role],
+        'INSERT INTO "users" (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *',
+        [name, email, hashedPassword, role],
       );
 
       const tokens = createToken(newUser);
       setCookies(res, tokens);
 
-      return res.status(201).json(newUser);
+      return res.redirect('/');
     } catch (error) {
       console.error('error: ', error);
       return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
 
+  async loginPage(req, res) {
+    return res.render('login', {
+      layout: 'no-header-footer-layout',
+      title: 'Login',
+    });
+  }
+
   async login(req, res) {
     try {
-      const { username, password } = req.body;
+      const { email, password } = req.body;
 
-      const existedUser = await db.oneOrNone('select * from "users" where username = $1', username);
+      const existedUser = await db.oneOrNone('select * from "users" where email = $1', email);
 
       if (!existedUser) {
-        return res.status(401).send({ message: 'User not found' });
+        return res.render('login', {
+          error: 'User not found',
+          email,
+          password,
+        });
       }
 
       if (!bcrypt.compareSync(password, existedUser.password)) {
-        return res.status(401).send({ message: 'Password is incorrect!' });
+        return res.render('login', {
+          error: 'Password is incorrect!',
+          email,
+          password,
+        });
       }
 
       const tokens = createToken(existedUser);
       setCookies(res, tokens);
 
-      return res.status(200).json(existedUser);
+      return res.redirect('/');
     } catch (error) {
       console.error('error: ', error);
       return res.status(500).send({ message: 'Internal Server Error' });
@@ -55,7 +95,7 @@ class AuthController {
 
   async logout(req, res) {
     clearCookies(res);
-    return res.status(200).send({ message: 'Success' });
+    return res.redirect('/');
   }
 
   async getMe(req, res) {

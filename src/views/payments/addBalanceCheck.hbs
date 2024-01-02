@@ -1,5 +1,8 @@
 <!-- addBalanceCheck.hbs -->
 <a href='/'>Back</a>
+{{#if error}}
+  <div class='alert alert-danger' role='alert'>{{error}}</div>
+{{/if}}
 <div class='pin-card'>
   <h2>Enter PIN</h2>
   <p>Please enter the PIN sent to your email to proceed with adding balance.</p>

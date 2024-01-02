@@ -1,17 +1,19 @@
 import express from 'express';
 import paymentController from '../controllers/payment.controller.js';
+import addBalanceController from '../controllers/addBalance.controller.js';
 
 const paymentRoutes = () => {
   const router = express.Router();
 
   router.get('/', paymentController.index);
 
-  router.get('/add/:id', paymentController.addBalancePage);
-  router.post('/add/:id/send-pin', paymentController.sendPinWithEmail);
+  router.get('/add/:id', addBalanceController.addBalancePage);
+  router.post('/add/:id/send-pin', addBalanceController.SendPin);
 
-  router.get('/add/:id/check', paymentController.addBalanceCheckPage);
-  router.post('/add/:id/check', paymentController.processAddBalanceCheck);
-  router.get('/add/:id/success', paymentController.addBalanceSuccess);
+  router.get('/add/:id/check', addBalanceController.addBalanceCheckPage);
+  router.post('/add/:id/check', addBalanceController.processAddBalanceCheck);
+
+  router.get('/add/:id/success', addBalanceController.addBalanceSuccess);
 
   router.get('/payment/:id', paymentController.paymentPage);
   router.post('/payment/:id/send-pin', paymentController.sendPaymentPin);

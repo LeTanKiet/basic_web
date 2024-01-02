@@ -7,21 +7,29 @@ const paymentRoutes = () => {
 
   router.get('/', paymentController.index);
 
-  router.get('/add/:id', addBalanceController.addBalancePage);
-  router.post('/add/:id/send-pin', addBalanceController.SendPin);
+  // router.get('/add/:id', addBalanceController.addBalancePage);
+  // router.post('/add/:id/send-pin', addBalanceController.SendPin);
 
-  router.get('/add/:id/check', addBalanceController.addBalanceCheckPage);
-  router.post('/add/:id/check', addBalanceController.processAddBalanceCheck);
+  // router.get('/add/:id/check', addBalanceController.addBalanceCheckPage);
+  // router.post('/add/:id/check', addBalanceController.processAddBalanceCheck);
 
-  router.get('/add/:id/success', addBalanceController.addBalanceSuccess);
+  // router.get('/add/:id/success', addBalanceController.addBalanceSuccess);
 
-  router.get('/payment/:id', paymentController.paymentPage);
-  router.post('/payment/:id/send-pin', paymentController.sendPaymentPin);
+  // router.get('/payment/:id', paymentController.paymentPage);
+  // router.post('/payment/:id/send-pin', paymentController.sendPaymentPin);
 
-  router.get('/payment/:id/check', paymentController.paymentCheckPage);
-  router.post('/payment/:id/check', paymentController.processPaymentCheck);
+  // router.get('/payment/:id/check', paymentController.paymentCheckPage);
+  // router.post('/payment/:id/check', paymentController.processPaymentCheck);
 
-  router.get('/payment/:id/success', paymentController.paymentSuccess);
+  // router.get('/payment/:id/success', paymentController.paymentSuccess);
+
+  router.get('/:id', paymentController.paymentPage);
+  router.post('/:id/send-pin', paymentController.sendPaymentPin);
+
+  router.get('/:id/check', paymentController.paymentCheckPage);
+  router.post('/:id/check', paymentController.processPaymentCheck);
+
+  router.get('/:id/success', paymentController.paymentSuccess);
   return router;
 };
 

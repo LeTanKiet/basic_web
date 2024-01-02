@@ -1,6 +1,9 @@
 import homeRoutes from '../routes/home.route.js';
 import authRoutes from './auth.route.js';
 import paymentRoutes from './payment.route.js';
+import authPaymentRoutes from './authPayment.route.js';
+import addBalanceRoutes from './addBalance.route.js';
+import { checkPaymentAccount } from '../middlewares/checkPaymentAccount.js';
 
 export function useRoutes(app) {
   app.use('/auth', authRoutes());
@@ -9,5 +12,8 @@ export function useRoutes(app) {
 }
 
 export function usePaymentRoutes(app) {
-  app.use('/', paymentRoutes());
+  app.use('/add', checkPaymentAccount, addBalanceRoutes());
+  app.use('/payment', checkPaymentAccount, paymentRoutes());
+
+  app.use('/auth', authPaymentRoutes());
 }

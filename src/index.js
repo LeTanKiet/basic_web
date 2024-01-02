@@ -5,9 +5,9 @@ import cookieParser from 'cookie-parser';
 import { useRoutes } from './routes/index.js';
 import useEncoded from './hooks/useEncoded.js';
 import { useHandlebars } from './hooks/useHandlebars.js';
+import { BASE_URL } from './utils/constants.js';
 
-const PORT = process.env.APP_PORT || 3000;
-
+app.locals.BASE_URL = BASE_URL;
 app.use(cookieParser());
 app.use(express.static('src/public'));
 useHandlebars(app);

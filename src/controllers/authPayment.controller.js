@@ -8,10 +8,10 @@ class AuthPaymentController {
 
   async createPaymentAccount(req, res) {
     const userId = 2;
-    const paymentId = uuidv4();
+    const id = uuidv4();
 
-    await db.none('INSERT INTO payment_users (payment_id, payment_method, balance, user_id) VALUES ($1, $2, $3, $4)', [
-      paymentId,
+    await db.none('INSERT INTO payment_users (id, payment_method, balance, user_id) VALUES ($1, $2, $3, $4)', [
+      id,
       'defaultMethod',
       0,
       userId,

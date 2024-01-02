@@ -10,7 +10,7 @@ class AddBalanceController {
     const paymentId = req.params.id;
 
     try {
-      const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE payment_id = $1', [paymentId]);
+      const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE id = $1', [paymentId]);
 
       if (!payment_user) {
         return res.render('add', { error: 'User not found.' });
@@ -30,7 +30,7 @@ class AddBalanceController {
     const paymentId = req.params.id;
     const { amount } = req.body;
 
-    const { user_id } = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE payment_id = $1', [paymentId]);
+    const { user_id } = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE id = $1', [paymentId]);
     req.session.amount = amount;
 
     try {
@@ -43,14 +43,20 @@ class AddBalanceController {
 
   async addBalanceToUser(paymentId, user_id, amount) {
     try {
-      const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE payment_id = $1', [paymentId]);
+      const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE id = $1', [paymentId]);
       if (!payment_user) {
         throw new Error('User not found');
       }
 
       const newBalance = parseFloat(payment_user.balance) + parseFloat(amount);
 
-      await db.none('UPDATE "payment_users" SET balance = $1 WHERE payment_id = $2', [newBalance, paymentId]);
+      await db.none('UPDATE "payment_users" SET balance = $1 WHERE id = $2', [newBalance, paymentId]);
+
+      await db.none('INSERT INTO "transactions" (payment_id, amount, type) VALUES ($1, $2, $3)', [
+        paymentId,
+        amount,
+        'add',
+      ]);
 
       await db.none('DELETE FROM "pins" WHERE user_id = $1', [user_id]);
     } catch (error) {
@@ -73,7 +79,7 @@ class AddBalanceController {
     const { pin } = req.body;
 
     try {
-      const { user_id } = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE payment_id = $1', [paymentId]);
+      const { user_id } = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE id = $1', [paymentId]);
 
       if (!user_id) {
         return res.render('addBalanceCheck', { error: 'User not found.' });
@@ -93,7 +99,7 @@ class AddBalanceController {
       }
 
       await this.addBalanceToUser(paymentId, user_id, amount);
-      return res.redirect(`/add/${paymentId}/success`);
+      return res.redirect(`/add/${paymentId}`);
     } catch (error) {
       return res.render('addBalanceCheck', { error: 'An error occurred while verifying the PIN.', paymentId });
     }

@@ -21,17 +21,25 @@ class paymentController {
         return res.render('error', { error: 'Order not found.' });
       }
 
-      const user = await db.oneOrNone('SELECT id, balance FROM "users" WHERE id = $1', [order.user_id]);
+      const payment_user = await db.oneOrNone('SELECT id, balance FROM "payment_users" WHERE user_id = $1', [
+        order.user_id,
+      ]);
 
-      if (!user) {
-        return res.render('error', { error: 'User not found.' });
+      if (!payment_user) {
+        return res.render('error', { error: 'Payment User not found.' });
       }
 
       req.session.orderId = orderId;
 
       const totalPayment = order.price;
 
-      return res.render('payment', { orderId, totalPayment, userBalance: user.balance, userId: user.id, error: null });
+      return res.render('payment', {
+        orderId,
+        totalPayment,
+        userBalance: payment_user.balance,
+        paymentId: payment_user.id,
+        error: null,
+      });
     } catch (error) {
       console.error('Error fetching payment detail:', error);
       return res.render('error', { error: 'Error fetching payment detail.' });
@@ -99,23 +107,30 @@ class paymentController {
       const order = await db.oneOrNone('SELECT price, user_id FROM "orders" WHERE id = $1', [orderId]);
       if (!order) throw new Error('Order not found');
 
-      const user = await db.oneOrNone('SELECT id, balance FROM "users" WHERE id = $1', [order.user_id]);
-      if (!user) throw new Error('User not found');
+      const payment_user = await db.oneOrNone('SELECT id, balance FROM "payment_users" WHERE user_id = $1', [
+        order.user_id,
+      ]);
 
-      if (parseFloat(user.balance) < parseFloat(order.price)) {
+      if (!payment_user) throw new Error('Payment User not found');
+
+      if (parseFloat(payment_user.balance) < parseFloat(order.price)) {
         throw new Error('Insufficient balance');
       }
 
-      const updatedBalance = parseFloat(user.balance) - parseFloat(order.price);
-      await db.none('UPDATE "users" SET balance = $1 WHERE id = $2', [updatedBalance, user.id]);
+      const updatedBalance = parseFloat(payment_user.balance) - parseFloat(order.price);
 
-      const adminId = 1;
-      const admin = await db.one('SELECT id, balance FROM "users" WHERE id = $1', [adminId]);
+      await db.none('UPDATE "payment_users" SET balance = $1 WHERE id = $2', [updatedBalance, payment_user.id]);
+
+      const adminId = 'admin_id';
+
+      const admin = await db.one('SELECT balance FROM "payment_users" WHERE id = $1', [adminId]);
+
       const adminUpdatedBalance = parseFloat(admin.balance) + parseFloat(order.price);
-      await db.none('UPDATE "users" SET balance = $1 WHERE id = $2', [adminUpdatedBalance, adminId]);
 
-      await db.none('INSERT INTO "transactions" (user_id, amount, type, order_id) VALUES ($1, $2, $3, $4)', [
-        user.id,
+      await db.none('UPDATE "payment_users" SET balance = $1 WHERE id = $2', [adminUpdatedBalance, adminId]);
+
+      await db.none('INSERT INTO "transactions" (payment_id, amount, type, order_id) VALUES ($1, $2, $3, $4)', [
+        payment_user.id,
         order.price,
         'payment',
         orderId,

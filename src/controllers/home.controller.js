@@ -6,10 +6,13 @@ class HomeController {
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
     // Query top 4 products by sold
     const topProducts = await db.any('select * from "products" order by "sold" desc limit 4');
+    // TODO: Query all categories from the database
+    const categories = ['Desks', 'Dresses', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
 
     return res.render('home', {
       user,
       topProducts,
+      categories,
     });
   }
 

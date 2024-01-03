@@ -6,10 +6,13 @@ class ProductController {
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
     // Query the database for all products
     const products = await db.any('select * from "products"');
+    // TODO: Query all categories from the database
+    const categories = ['Desks', 'Dresses', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
 
     return res.render('products', {
       user,
       products,
+      categories,
     });
   }
 

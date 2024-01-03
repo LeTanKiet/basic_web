@@ -1,27 +1,22 @@
 <div class='search-popup'>
   <div class='search-popup-container'>
 
-    <form role='search' method='get' class='search-form' action=''>
+    <form action='/results' method='get' class='search-form'>
       <input
         type='search'
         id='search-form'
         class='search-field'
         placeholder='Type and press Enter'
-        value=''
-        name='search'
+        name='search_query'
       />
     </form>
 
     <h5 class='cat-list-title'>Browse categories</h5>
 
     <ul class='cat-list'>
-      <li class='cat-list-item'><a href='#'>Desks</a></li>
-      <li class='cat-list-item'><a href='#'>Dresses</a></li>
-      <li class='cat-list-item'><a href='#'>Sofas</a></li>
-      <li class='cat-list-item'><a href='#'>Armchairs</a></li>
-      <li class='cat-list-item'><a href='#'>Beds</a></li>
-      <li class='cat-list-item'><a href='#'>Nightstands</a></li>
-      <li class='cat-list-item'><a href='#'>Bookcases</a></li>
+      {{#each categories}}
+        <li class='cat-list-item'><a href='/results?search_query={{this}}'>{{this}}</a></li>
+      {{/each}}
     </ul>
 
   </div>

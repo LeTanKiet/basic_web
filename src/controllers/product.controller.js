@@ -7,12 +7,21 @@ class ProductController {
     // Query the database for all products
     const products = await db.any('select * from "products"');
     // TODO: Query all categories from the database
-    const categories = ['Desks', 'Dresses', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
+    const categories = ['Desks', 'Dresser', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
+    // TODO: Query all colors from the database
+    const colors = ['Cadmium Red', 'Antique Gold', 'Dark Academia', 'Deco Silver'];
+    // TODO: Query all materials from the database
+    const materials = ['Wood', 'Cotton', 'Leather', 'Glass'];
+    // TODO: Query all countryOfOrigin from the database
+    const countryOfOrigin = ['Poland', 'Germany', 'Italy', 'Viet Nam'];
 
     return res.render('products', {
       user,
       products,
       categories,
+      colors,
+      materials,
+      countryOfOrigin,
     });
   }
 

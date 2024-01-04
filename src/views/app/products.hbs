@@ -39,35 +39,13 @@
         {{! Card body }}
         <div class='collapse show' id='collapse_categories'>
           <div class='card-body'>
-            {{! Search bar }}
-            <form class='d-flex pb-3' role='search'>
-              <input class='form-control me-2' type='search' placeholder='Search product types' aria-label='Search' />
-
-              <button class='btn btn-outline-success' type='submit'>
-                {{! Magnifying glass icon }}
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='16'
-                  height='16'
-                  fill='currentColor'
-                  class='bi bi-search'
-                  viewBox='0 0 16 16'
-                >
-                  <path
-                    d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'
-                  />
-                </svg>
-              </button>
-            </form>
-
             <ul class='list-unstyled'>
-              <li><a href='#'>Desks</a></li>
-              <li><a href='#'>Dresses</a></li>
-              <li><a href='#'>Sofas</a></li>
-              <li><a href='#'>Armchairs</a></li>
-              <li><a href='#'>Beds</a></li>
-              <li><a href='#'>Nightstands</a></li>
-              <li><a href='#'>Bookcases</a></li>
+              {{#each categories}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
             </ul>
           </div>
         </div>
@@ -161,7 +139,7 @@
               />
             </svg>
 
-            Color
+            Colors
           </h5>
         </a>
 
@@ -169,10 +147,12 @@
         <div class='collapse' id='collapse_color'>
           <div class='card-body'>
             <ul class='list-unstyled'>
-              <li><a href='#'>Cadmium Red</a></li>
-              <li><a href='#'>Antique Gold</a></li>
-              <li><a href='#'>Dark Academia</a></li>
-              <li><a href='#'>Deco Silver</a></li>
+              {{#each colors}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
             </ul>
           </div>
         </div>
@@ -208,7 +188,7 @@
               />
             </svg>
 
-            Material
+            Materials
           </h5>
         </a>
 
@@ -216,14 +196,12 @@
         <div class='collapse' id='collapse_material'>
           <div class='card-body'>
             <ul class='list-unstyled'>
-              <li><a href='#'>Wood</a></li>
-              <li><a href='#'>Cotton</a></li>
-              <li><a href='#'>Leather</a></li>
-              <li><a href='#'>Glass</a></li>
-              <li><a href='#'>Metal</a></li>
-              <li><a href='#'>Plastic</a></li>
-              <li><a href='#'>Bamboo</a></li>
-              <li><a href='#'>Marble</a></li>
+              {{#each materials}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
             </ul>
           </div>
         </div>
@@ -267,12 +245,12 @@
         <div class='collapse' id='collapse_countries'>
           <div class='card-body'>
             <ul class='list-unstyled'>
-              <li><a href='#'>Poland</a></li>
-              <li><a href='#'>Germany</a></li>
-              <li><a href='#'>Italy</a></li>
-              <li><a href='#'>Viet Nam</a></li>
-              <li><a href='#'>United States</a></li>
-              <li><a href='#'>China</a></li>
+              {{#each countryOfOrigin}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
             </ul>
           </div>
         </div>
@@ -285,7 +263,7 @@
     <main class='col-md-9'>
       <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
         {{#each products}}
-          <div class="col">{{>product-card this}}</div>
+          <div class='col'>{{>product-card this}}</div>
         {{/each}}
       </div>
     </main>

@@ -7,7 +7,7 @@ class HomeController {
     // Query top 4 products by sold
     const topProducts = await db.any('select * from "products" order by "sold" desc limit 4');
     // TODO: Query all categories from the database
-    const categories = ['Desks', 'Dresses', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
+    const categories = ['Desks', 'Dresser', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
 
     return res.render('home', {
       user,

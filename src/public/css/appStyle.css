@@ -103,8 +103,7 @@ body {
 }
 
 .header {
-  background-color: #333;
-  color: #fff;
+  color: #00000;
   padding: 20px;
   text-align: center;
   display: flex;
@@ -150,9 +149,11 @@ button {
 }
 
 table {
-  width: 60%;
+  width: 90%;
+  border: 1px solid #ddd;
   border-collapse: collapse;
   margin: auto;
+  margin-bottom: 20px;
 }
 
 th,

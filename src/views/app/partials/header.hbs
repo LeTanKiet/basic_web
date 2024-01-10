@@ -1,11 +1,11 @@
-<nav class='navbar navbar-expand-lg bg-body-tertiary'>
+<nav id='navbar' class='navbar navbar-expand-lg bg-body-tertiary'>
   <div class='container container-fluid'>
-    {{! logo }}
+    {{! Logo }}
     <a class='navbar-brand' href='/'>
       <img src='/images/Logo.svg' alt='Fusion Furni' />
     </a>
 
-    {{! toggle button to show/hide navbar items when the screen size is small }}
+    {{! Toggle button to show/hide navbar items when the screen size is small }}
     <button
       class='navbar-toggler'
       type='button'
@@ -19,24 +19,43 @@
     </button>
 
     <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-      <ul class='navbar-nav me-auto mb-2 mb-lg-0 fs-5 fw-semibold'>
+      <ul class='navbar-nav me-auto mb-2 mb-lg-0 fw-semibold'>
         <li class='nav-item'>
           <a class='nav-link active' aria-current='page' href='/'>Home</a>
         </li>
 
         <li class='nav-item'>
-          <a class='nav-link' href='#'>All products</a>
+          <a class='nav-link' href='/products'>All products</a>
         </li>
 
         <li class='nav-item'>
-          <a class='nav-link' href='#'>Search</a>
+          <a class='search-button nav-link' href='#'>Search</a>
         </li>
       </ul>
 
-      {{! if user is logged in, show cart and logout button }}
+      {{! If user is logged in, show cart and logout button }}
       {{#if user}}
-        {{! cart button & logout button wrapper }}
+        {{! Buttons wrapper }}
         <div class='d-flex justify-content-around'>
+
+          {{! Search button }}
+          <a href='#' class='search-button btn btn-light rounded-pill'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='25'
+              height='25'
+              fill='currentColor'
+              class='bi bi-search-heart'
+              viewBox='0 0 16 16'
+            >
+              <path d='M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018' />
+              <path
+                d='M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11'
+              />
+            </svg>
+          </a>
+
+          {{! User button }}
           {{! TODO: redirect to user detail page }}
           <a href='#' class='btn btn-light rounded-pill'>
             <svg
@@ -53,9 +72,8 @@
             </svg>
           </a>
 
-          {{! cart button }}
+          {{! Cart button }}
           <button
-            {{! class='btn btn-outline-primary mx-2 rounded-5' }}
             class='btn btn-light mx-2 rounded-pill'
             type='button'
             data-bs-toggle='offcanvas'
@@ -76,7 +94,7 @@
             </svg>
           </button>
 
-          {{! logout button }}
+          {{! Logout button }}
           <form method='post' action='{{BASE_URL}}/auth/logout'>
             <button class='btn btn-secondary rounded-pill' type='submit'>
               <svg
@@ -98,9 +116,10 @@
               </svg>
             </button>
           </form>
+
         </div>
       {{else}}
-        <a class='btn btn-primary fw-bold' role='button' href='/auth/login'>Log in</a>
+        <a class='btn btn-primary' role='button' href='/auth/login'>Log in</a>
       {{/if}}
     </div>
   </div>

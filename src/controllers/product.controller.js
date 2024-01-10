@@ -1,19 +1,18 @@
 import { db } from '../models/index.js';
+import { categories, colors, materials, countryOfOrigin } from '../utils/constants.js';
 
 class ProductController {
   async index(req, res) {
     const { userId } = req.context;
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+
     // Query the database for all products
     const products = await db.any('select * from "products"');
-    // TODO: Query all categories from the database
-    const categories = ['Desks', 'Dresser', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
-    // TODO: Query all colors from the database
-    const colors = ['Cadmium Red', 'Antique Gold', 'Dark Academia', 'Deco Silver'];
-    // TODO: Query all materials from the database
-    const materials = ['Wood', 'Cotton', 'Leather', 'Glass'];
-    // TODO: Query all countryOfOrigin from the database
-    const countryOfOrigin = ['Poland', 'Germany', 'Italy', 'Viet Nam'];
+
+    // TODO: Query all categories from the database instead of using the constants
+    // TODO: Query all colors from the database instead of using the constants
+    // TODO: Query all materials from the database instead of using the constants
+    // TODO: Query all countryOfOrigin from the database instead of using the constants
 
     return res.render('products', {
       user,

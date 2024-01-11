@@ -1,0 +1,21 @@
+<div class='container vh-100'>
+  <div class='row pt-5 pb-5'>
+    {{! If there is a search query, show the number of results found. If not, show a message to the user. }}
+    {{#if searchQuery}}
+      <h1 class='text-center'>We found {{results.length}} result(s) for '{{searchQuery}}'</h1>
+    {{else}}
+      <h1 class='text-center'>You didn't enter any search query</h1>
+    {{/if}}
+  </div>
+
+  {{! If there are results, show them in a grid. If not, show a message to the user. }}
+  {{#if results.length}}
+    <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4'>
+      {{#each results}}
+        <div class='col'>{{> product-card this}}</div>
+      {{/each}}
+    </div>
+  {{else}}
+    <h3 class='text-center'>Please try again with a different query</h3>
+  {{/if}}
+</div>

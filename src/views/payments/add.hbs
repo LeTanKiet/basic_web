@@ -1,18 +1,27 @@
 <!-- add.hbs -->
-<a href='/'>Back</a>
-<div class='payment-card'>
-  {{#if error}}
-    <p class='error'>{{error}}</p>
-  {{/if}}
-  <form action='/add' method='post'>
-    <div class='input-group'>
-      <label for='username'>Username:</label>
-      <input type='text' id='username' name='username' placeholder='Enter username' required />
+<div class='container d-flex justify-content-center align-items-center' style='height: 100vh;'>
+  <div class='card payment-card' style='width: 400px; border: 1px solid #ccc;'>
+    <div class='card-body'>
+      {{#if error}}
+        <div class='alert alert-danger' role='alert'>{{error}}</div>
+      {{/if}}
+
+      <h5 class='card-title text-center'>Your Balance: ${{userBalance}}</h5>
+
+      <form action='/add/{{paymentId}}/send-pin' method='post'>
+        <div class='mb-3'>
+          <label for='amount' class='form-label'>Amount:</label>
+          <div class='input-group'>
+            <input type='number' class='form-control' id='amount' name='amount' placeholder='Enter amount' required />
+            <button class='btn btn-primary' type='submit'>Add</button>
+          </div>
+        </div>
+      </form>
+      {{#if orderId}}
+        <form action='/payment/{{orderId}}' method='get'>
+          <button class='btn btn-secondary' type='submit'>Back To Payment</button>
+        </form>
+      {{/if}}
     </div>
-    <div class='input-group'>
-      <label for='money'>Money:</label>
-      <input type='number' id='money' name='money' placeholder='Enter money' required />
-    </div>
-    <button class='add-button' type='submit'>Add</button>
-  </form>
+  </div>
 </div>

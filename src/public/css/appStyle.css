@@ -249,3 +249,11 @@ label {
   }
 }
 /** END OF Product card **/
+
+/** Cart item **/
+@media (max-width: 768px) {
+  .cart-item {
+    max-width: 70%;
+  }
+}
+/** END OF Cart item **/

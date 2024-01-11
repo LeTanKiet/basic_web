@@ -6,8 +6,7 @@
   </div>
 
   <div class='offcanvas-body d-flex flex-column justify-content-between'>
-    <div class='products d-flex flex-column align-items-center overflow-y-scroll'>
-{{>cart-item}}
+    <div class='products-container d-flex flex-column align-items-center overflow-y-scroll'>
     </div>
 
     <div>
@@ -16,9 +15,12 @@
 
       {{! Total price & clear-cart button }}
       <div class='d-flex justify-content-between align-items-baseline'>
-        <h5 class='totalPrice'>Total: <span style='color:#85BB65;' class='fw-bolder'>$ 123</span></h5>
+        <h5 id='total-price'>
+          Total:
+          <span style='color:#85BB65;' class='fw-bolder'></span>
+        </h5>
 
-        <button class='clearCart btn btn-outline-danger'>
+        <button id='remove-all' class='clearCart btn btn-outline-danger'>
           <i class='bi bi-trash fs-5'></i>
         </button>
       </div>

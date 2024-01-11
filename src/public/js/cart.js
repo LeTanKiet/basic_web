@@ -25,21 +25,50 @@ $(document).ready(function () {
     updateCartDisplay();
   });
 
+  // Function to calculate and display total price
+  function updateTotalPrice() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let totalPrice = cart.reduce((total, product) => total + parseFloat(product.price), 0);
+    $('#total-price span').text(`$ ${totalPrice.toFixed(2)}`);
+  }
+
+  // Function to remove all products from cart
+  function removeAllProducts() {
+    localStorage.removeItem('cart');
+    $('.products-container').empty();
+    updateTotalPrice();
+  }
+
+  // Event listener for a button to remove all products
+  $('#remove-all').click(removeAllProducts);
+
+  // Event listener for buttons to remove individual products
+  $('.products-container').on('click', '.remove-product', function() {
+    let id = $(this).data('id');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(product => product.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartDisplay();
+    updateTotalPrice();
+  });
+
   function updateCartDisplay() {
     // Get the cart from local storage
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     // Get the offcanvas body
-    const offcanvasBody = $('.offcanvas-body');
+    const productsContainer = $('.products-container');
 
     // Clear the offcanvas body
-    offcanvasBody.empty();
+    productsContainer.empty();
 
     // Loop through the cart items
     cart.forEach(function (product) {
       // Append the cart item HTML to the offcanvas body
-      offcanvasBody.append(createCartItemHtml(product));
+      productsContainer.append(createCartItemHtml(product));
     });
+
+    updateTotalPrice();
   }
 
   function createCartItemHtml(product) {
@@ -59,7 +88,7 @@ $(document).ready(function () {
                 <h5 class='card-title'>${product.name}</h5>
                 <h5 class='card-title' style='color:#85BB65;'>${product.price}</h5>
               </div>
-              <i class='bi bi-trash fs-5'></i>
+              <button class="remove-product" data-id="${product.id}"><i class='bi bi-trash fs-5'></i></button>
             </div>
           </div>
         </div>

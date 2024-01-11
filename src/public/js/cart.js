@@ -29,13 +29,16 @@ $(document).ready(function () {
   function updateTotalPrice() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let totalPrice = cart.reduce((total, product) => total + parseFloat(product.price), 0);
+    
     $('#total-price span').text(`$ ${totalPrice.toFixed(2)}`);
   }
 
   // Function to remove all products from cart
   function removeAllProducts() {
     localStorage.removeItem('cart');
+
     $('.products-container').empty();
+
     updateTotalPrice();
   }
 
@@ -43,11 +46,14 @@ $(document).ready(function () {
   $('#remove-all').click(removeAllProducts);
 
   // Event listener for buttons to remove individual products
-  $('.products-container').on('click', '.remove-product', function() {
-    let id = $(this).data('id');
+  $('.products-container').on('click', '.remove-product', function () {
+    let id = $(this).data('id').toString();
+
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = cart.filter(product => product.id !== id);
+    cart = cart.filter((product) => product.id !== id);
+
     localStorage.setItem('cart', JSON.stringify(cart));
+
     updateCartDisplay();
     updateTotalPrice();
   });

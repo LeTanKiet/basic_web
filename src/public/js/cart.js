@@ -29,7 +29,7 @@ $(document).ready(function () {
   function updateTotalPrice() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let totalPrice = cart.reduce((total, product) => total + parseFloat(product.price), 0);
-    
+
     $('#total-price span').text(`$ ${totalPrice.toFixed(2)}`);
   }
 
@@ -94,7 +94,7 @@ $(document).ready(function () {
                 <h5 class='card-title'>${product.name}</h5>
                 <h5 class='card-title' style='color:#85BB65;'>${product.price}</h5>
               </div>
-              <button class="remove-product" data-id="${product.id}"><i class='bi bi-trash fs-5'></i></button>
+              <button class="remove-product btn border-0" data-id="${product.id}"><i class='bi bi-trash fs-5'></i></button>
             </div>
           </div>
         </div>

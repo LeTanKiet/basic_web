@@ -5,9 +5,12 @@ import { authentication } from '../middlewares/auth.js';
 const productRoutes = () => {
   const router = express.Router();
 
-  router.get('/', authentication, productController.index);
-  router.get('/:id', authentication, productController.productDetailPage);
-
+  // router.get('/', authentication, productController.index);
+  router.get('/', productController.getAllProducts);
+  router.get('/:id', productController.getProductById);
+  router.post('/', productController.createProduct);
+  router.put('/:id', productController.updateProduct);
+  router.delete('/:id', productController.deleteProduct);
   return router;
 };
 

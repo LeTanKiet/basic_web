@@ -5,6 +5,9 @@ import adminRoutes from './admin.route.js';
 import authRoutes from './auth.route.js';
 import authPaymentRoutes from './authPayment.route.js';
 import paymentRoutes from './payment.route.js';
+import authPaymentRoutes from './authPayment.route.js';
+import addBalanceRoutes from './addBalance.route.js';
+import { checkPaymentAccount } from '../middlewares/checkPaymentAccount.js';
 
 export function useRoutes(app) {
   app.use('/auth', authRoutes());

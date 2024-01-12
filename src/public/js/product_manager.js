@@ -1,37 +1,37 @@
 function openModal() {
-  document.getElementById('addProductModal').style.display = 'flex';
+  $('#addProductModal').css('display', 'flex');
 }
 
 function closeModal() {
-  document.getElementById('addProductModal').style.display = 'none';
+  $('#addProductModal').css('display', 'none');
 }
 
 function openEditModal(productId) {
   fetch(`/admin/products/${productId}`)
-    .then(response => response.json())
-    .then(product => {
-      document.getElementById('editProductId').value = product.id;
-      document.getElementById('editProductName').value = product.name;
-      document.getElementById('editProductPrice').value = product.price;
-      document.getElementById('editProductDescription').value = product.description;
-      document.getElementById('editProductImage').value = product.image;
-      document.getElementById('editProductModal').style.display = 'flex';
+    .then((response) => response.json())
+    .then((product) => {
+      $('#editProductId').val(product.id);
+      $('#editProductName').val(product.name);
+      $('#editProductPrice').val(product.price);
+      $('#editProductDescription').val(product.description);
+      $('#editProductImage').val(product.image);
+      $('#editProductModal').css('display', 'flex');
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error fetching product details:', error);
     });
 }
 
 function closeEditModal() {
-  document.getElementById('editProductModal').style.display = 'none';
+  $('#editProductModal').css('display', 'none');
 }
 
 function saveEditedProduct() {
-  const productId = document.getElementById('editProductId').value;
-  const editedProductName = document.getElementById('editProductName').value;
-  const editedProductPrice = document.getElementById('editProductPrice').value;
-  const editedProductDescription = document.getElementById('editProductDescription').value;
-  const editedProductImage = document.getElementById('editProductImage').value;
+  const productId = $('#editProductId').val();
+  const editedProductName = $('#editProductName').val();
+  const editedProductPrice = $('#editProductPrice').val();
+  const editedProductDescription = $('#editProductDescription').val();
+  const editedProductImage = $('#editProductImage').val();
 
   fetch(`/admin/products/${productId}`, {
     method: 'PUT',
@@ -45,18 +45,18 @@ function saveEditedProduct() {
       image: editedProductImage,
     }),
   })
-    .then(response => response.json())
-    .then(editedProduct => {
+    .then((response) => response.json())
+    .then((editedProduct) => {
       closeEditModal();
       location.reload(true);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error updating product:', error);
     });
 }
 
 function deleteProductConfirmation(productId) {
-  var confirmDelete = confirm("Are you sure you want to delete this product?");
+  var confirmDelete = confirm('Are you sure you want to delete this product?');
   if (confirmDelete) {
     deleteProduct(productId);
   }
@@ -66,22 +66,22 @@ function deleteProduct(productId) {
   fetch(`/admin/products/${productId}`, {
     method: 'DELETE',
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error(`Error deleting product: ${response.statusText}`);
       }
       location.reload(true);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
     });
 }
 
 function addProduct(event) {
-  const productName = document.getElementById('productName').value;
-  const productPrice = document.getElementById('productPrice').value;
-  const productDescription = document.getElementById('productDescription').value;
-  const productImage = document.getElementById('productImage').value;
+  const productName = $('#productName').val();
+  const productPrice = $('#productPrice').val();
+  const productDescription = $('#productDescription').val();
+  const productImage = $('#productImage').val();
 
   fetch('/admin/products', {
     method: 'POST',
@@ -95,11 +95,11 @@ function addProduct(event) {
       image: productImage,
     }),
   })
-    .then(response => response.json())
-    .then(newProduct => {
+    .then((response) => response.json())
+    .then((newProduct) => {
       location.reload(true);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error adding product:', error);
     });
 

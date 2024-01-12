@@ -7,9 +7,6 @@ import authPaymentRoutes from './authPayment.route.js';
 import paymentRoutes from './payment.route.js';
 import productRoutes from './product.route.js';
 import searchRoutes from './search.route.js';
-import authPaymentRoutes from './authPayment.route.js';
-import addBalanceRoutes from './addBalance.route.js';
-import { checkPaymentAccount } from '../middlewares/checkPaymentAccount.js';
 
 export function useRoutes(app) {
   app.use('/auth', authRoutes());

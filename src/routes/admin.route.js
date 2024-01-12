@@ -9,7 +9,7 @@ const AdminRoutes = () => {
     res.render('admin_dashboard');
   });
   router.use('/products', productRoutes());
-  router.use("/categories", categoryRoutes());
+  router.use('/categories', categoryRoutes());
 
   return router;
 };

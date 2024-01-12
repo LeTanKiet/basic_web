@@ -93,6 +93,40 @@ class AuthController {
     }
   }
 
+  async loginWithGoogle(req, res) {
+    try {
+      const { profile } = req;
+      const name = profile.displayName;
+      const email = profile.emails[0].value;
+      const role = ROLE.user;
+
+      const existedUser = await db.oneOrNone('select * from "users" where email = $1', email);
+
+      if (existedUser) {
+        const tokens = createToken(existedUser);
+        setCookies(res, tokens);
+        return res.redirect('/');
+      }
+
+      const newUser = await db.oneOrNone(
+        'INSERT INTO "users" (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *',
+        [name, email, '', role],
+      );
+
+      const tokens = createToken(newUser);
+      setCookies(res, tokens);
+
+      return res.redirect('/');
+    } catch (error) {
+      console.error('error: ', error);
+      return res.status(500).send({ message: 'Internal Server Error' });
+    }
+  }
+
+  async loginWithFacebook(req, res) {
+    res.redirect('/');
+  }
+
   async logout(req, res) {
     clearCookies(res);
     return res.redirect('/');

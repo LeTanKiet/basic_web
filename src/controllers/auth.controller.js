@@ -13,7 +13,7 @@ class AuthController {
 
   async signUp(req, res) {
     try {
-      const { name, email, password, confirmPassword, role = ROLE.user } = req.body;
+      const { name, email, password, confirmPassword, role } = req.body;
 
       if (confirmPassword !== password) {
         return res.render('signup', {

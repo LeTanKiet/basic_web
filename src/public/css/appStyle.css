@@ -459,3 +459,9 @@ button[type='button']:hover {
   height: 100%;
   object-fit: cover;
 }
+
+.role-group {
+  display: inline-flex;
+  gap: 32px;
+  margin-left: 32px;
+}

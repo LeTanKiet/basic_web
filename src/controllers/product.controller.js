@@ -1,7 +1,27 @@
 import { db } from '../models/index.js';
-class productController {
-  index(req, res) {
-    res.render('home');
+import { categories, colors, materials, countryOfOrigin } from '../utils/constants.js';
+
+class ProductController {
+  async index(req, res) {
+    const { userId } = req.context;
+    const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+
+    // Query the database for all products
+    const products = await db.any('select * from "products"');
+
+    // TODO: Query all categories from the database instead of using the constants
+    // TODO: Query all colors from the database instead of using the constants
+    // TODO: Query all materials from the database instead of using the constants
+    // TODO: Query all countryOfOrigin from the database instead of using the constants
+
+    return res.render('products', {
+      user,
+      products,
+      categories,
+      colors,
+      materials,
+      countryOfOrigin,
+    });
   }
 
   productDetailPage(req, res) {
@@ -43,21 +63,21 @@ class productController {
     try {
       const result = await db.one(
         'INSERT INTO products(name, price, description, image) VALUES($1, $2, $3, $4) RETURNING *',
-        [productData.name, productData.price, productData.description, productData.image]
+        [productData.name, productData.price, productData.description, productData.image],
       );
       return res.status(201).json(result);
     } catch (error) {
       return res.status(500).json({ error: `Error creating product: ${error.message}` });
     }
   }
-  
+
   async updateProduct(req, res) {
     const { id } = req.params;
     const productData = req.body;
     try {
       const result = await db.one(
         'UPDATE products SET name = $1, price = $2, description = $3, image = $4 WHERE id = $5 RETURNING *',
-        [productData.name, productData.price, productData.description, productData.image, id]
+        [productData.name, productData.price, productData.description, productData.image, id],
       );
       return res.status(200).json(result);
     } catch (error) {

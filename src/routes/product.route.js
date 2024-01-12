@@ -4,6 +4,7 @@ import productController from '../controllers/product.controller.js';
 const productRoutes = () => {
   const router = express.Router();
 
+  router.get('/', authentication, productController.index);
   router.get('/', productController.getAllProducts);
   router.get('/:id', productController.getProductById);
   router.post('/', productController.createProduct);

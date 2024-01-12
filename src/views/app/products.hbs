@@ -1,0 +1,271 @@
+<div class='container'>
+  <h1 class='row d-flex justify-content-center mt-5 mb-3'>Our Products</h1>
+
+  <div class='row'>
+    {{! Filter panel }}
+    <aside class='col-md-3 mb-3'>
+      {{! Categories filter }}
+      <div class='card mb-3'>
+
+        {{! Card header }}
+        <a
+          data-bs-toggle='collapse'
+          href='#collapse_categories'
+          role='button'
+          aria-expanded='false'
+          aria-controls='collapse_categories'
+          class='text-decoration-none'
+        >
+          <h5 class='card-header'>
+            {{! Chevron icon }}
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              fill='currentColor'
+              class='bi bi-chevron-expand'
+              viewBox='0 0 16 16'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z'
+              />
+            </svg>
+
+            Categories
+          </h5>
+        </a>
+
+        {{! Card body }}
+        <div class='collapse show' id='collapse_categories'>
+          <div class='card-body'>
+            <ul class='list-unstyled'>
+              {{#each categories}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      {{! END OF Categories filter }}
+
+      {{! Price range slider }}
+      <div class='card mb-3'>
+
+        {{! Card header }}
+        <a
+          data-bs-toggle='collapse'
+          href='#collapse_price'
+          role='button'
+          aria-expanded='false'
+          aria-controls='collapse_price'
+          class='text-decoration-none'
+        >
+          <h5 class='card-header'>
+            {{! Chevron icon }}
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              fill='currentColor'
+              class='bi bi-chevron-expand'
+              viewBox='0 0 16 16'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z'
+              />
+            </svg>
+
+            Price range
+          </h5>
+        </a>
+
+        {{! Card body }}
+        <div class='collapse' id='collapse_price'>
+          <div class='card-body'>
+            {{! Range slider }}
+            <input type='range' class='custom-range' min='0' max='100' name='' />
+
+            <div class='form-row mt-4'>
+              <div class='form-group col-md-6'>
+                <label>Min</label>
+                <input class='form-control' placeholder='$0' type='number' />
+              </div>
+
+              <div class='form-group text-right col-md-6'>
+                <label>Max</label>
+                <input class='form-control' placeholder='$1,0000' type='number' />
+              </div>
+            </div>
+
+            {{! Apply button }}
+            <button class='btn btn-primary mt-4'>Apply</button>
+          </div>
+        </div>
+
+      </div>
+      {{! END OF Price range slider }}
+
+      {{! Color filter }}
+      <div class='card mb-3'>
+
+        {{! Card header }}
+        <a
+          data-bs-toggle='collapse'
+          href='#collapse_color'
+          role='button'
+          aria-expanded='false'
+          aria-controls='collapse_color'
+          class='text-decoration-none'
+        >
+          <h5 class='card-header'>
+            {{! Chevron icon }}
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              fill='currentColor'
+              class='bi bi-chevron-expand'
+              viewBox='0 0 16 16'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z'
+              />
+            </svg>
+
+            Colors
+          </h5>
+        </a>
+
+        {{! Card body }}
+        <div class='collapse' id='collapse_color'>
+          <div class='card-body'>
+            <ul class='list-unstyled'>
+              {{#each colors}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      {{! END OF Color filter }}
+
+      {{! Material filter }}
+      <div class='card mb-3'>
+
+        {{! Card header }}
+        <a
+          data-bs-toggle='collapse'
+          href='#collapse_material'
+          role='button'
+          aria-expanded='false'
+          aria-controls='collapse_material'
+          class='text-decoration-none'
+        >
+          <h5 class='card-header'>
+            {{! Chevron icon }}
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              fill='currentColor'
+              class='bi bi-chevron-expand'
+              viewBox='0 0 16 16'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z'
+              />
+            </svg>
+
+            Materials
+          </h5>
+        </a>
+
+        {{! Card body }}
+        <div class='collapse' id='collapse_material'>
+          <div class='card-body'>
+            <ul class='list-unstyled'>
+              {{#each materials}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      {{! END OF Material filter }}
+
+      {{! TODO: Country of origin filter }}
+      <div class='card mb-3'>
+
+        {{! Card header }}
+        <a
+          data-bs-toggle='collapse'
+          href='#collapse_countries'
+          role='button'
+          aria-expanded='false'
+          aria-controls='collapse_countries'
+          class='text-decoration-none'
+        >
+          <h5 class='card-header'>
+            {{! Chevron icon }}
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              fill='currentColor'
+              class='bi bi-chevron-expand'
+              viewBox='0 0 16 16'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z'
+              />
+            </svg>
+
+            Country of origin
+          </h5>
+        </a>
+
+        {{! Card body }}
+        <div class='collapse' id='collapse_countries'>
+          <div class='card-body'>
+            <ul class='list-unstyled'>
+              {{#each countryOfOrigin}}
+                <li>
+                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      {{! END OF Country of origin filter }}
+    </aside>
+
+    {{! Product grid }}
+    <main class='col-md-9'>
+      <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
+        {{#each products}}
+          <div class='col'>{{>product-card this}}</div>
+        {{/each}}
+      </div>
+    </main>
+  </div>
+</div>

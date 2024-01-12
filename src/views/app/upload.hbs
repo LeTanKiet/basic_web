@@ -1,0 +1,16 @@
+<form method='POST' action='/file/upload' enctype='multipart/form-data'>
+  <div>
+    <label>Select your picture:</label>
+    <input type='file' name='upload_image' />
+  </div>
+  <div>
+    <button type='submit' name='btn_upload'>Upload</button>
+  </div>
+
+  <span>{{message}}</span>
+  {{#if filename}}
+    <img src='/uploads/{{filename}}' width='120' />
+    <hr />
+    <a href='/file/upload/test'>Upload another image</a>
+  {{/if}}
+</form>

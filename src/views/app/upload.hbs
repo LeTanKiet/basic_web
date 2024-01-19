@@ -1,7 +1,9 @@
 <form method='POST' action='/file/upload' enctype='multipart/form-data'>
   <div>
     <label>Select your picture:</label>
-    <input type='file' name='upload_image' />
+    <input  id="upload_file"  type='file' name='upload_image' onchange="getImagePreview(event)"/>
+
+    <div id="image-preview"></div>
   </div>
   <div>
     <button type='submit' name='btn_upload'>Upload</button>

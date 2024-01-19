@@ -22,15 +22,19 @@
   </head>
 
   <body>
-    {{>header}}
+    <div id="root">
+      {{>header}}
 
-    {{>search-popup}}
+      {{>search-popup}}
 
-    {{>cart}}
+      {{>cart}}
 
-    {{{body}}}
+      <div id="content">
+        {{{body}}}
+      </div>
 
-    {{>footer}}
+      {{>footer}}
+    </div>
 
     {{!-- Bootstrap JS CDN --}}
     <script

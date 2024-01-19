@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { db } from '../models/index.js';
 import { ROLE, SALT_ROUNDS } from '../utils/constants.js';
 import { clearCookies, createToken, setCookies } from '../utils/common.js';
+import SendPinEmail from '../models/sendPinEmail.js';
 
 class AuthController {
   async signUpPage(req, res) {
@@ -37,6 +38,39 @@ class AuthController {
           role,
         });
       }
+
+      const pin = await SendPinEmail.sendPinEmailByEmail(email);
+
+      req.session.user = req.body;
+      req.session.pin = pin;
+
+      return res.redirect('/auth/confirm');
+    } catch (error) {
+      console.error('error: ', error);
+      return res.status(500).send({ message: 'Internal Server Error' });
+    }
+  }
+
+  async confirmEmailPage(req, res) {
+    return res.render('confirm_email', {
+      layout: 'no-header-footer-layout',
+    });
+  }
+
+  async confirmEmail(req, res) {
+    try {
+      const { user, pin: sessionPin } = req.session;
+      const { pin } = req.body;
+
+      if (Number(pin) !== Number(sessionPin)) {
+        return res.render('confirm_email', {
+          layout: 'no-header-footer-layout',
+          pin,
+          error: 'Pin is incorrect!',
+        });
+      }
+
+      const { name, email, password, role } = user;
 
       const hashedPassword = bcrypt.hashSync(password, SALT_ROUNDS);
       const newUser = await db.oneOrNone(

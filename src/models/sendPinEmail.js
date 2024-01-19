@@ -32,6 +32,28 @@ class SendPinEmail {
       text: `Your PIN is: ${pin}`,
     });
   }
+
+  static async sendPinEmailByEmail(email) {
+    const pin = Math.floor(100000 + Math.random() * 900000);
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      secure: true,
+      auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
+    await transporter.sendMail({
+      from: '"Basic Web" <noreply@yourservice.com>',
+      to: email,
+      subject: 'Your PIN',
+      text: `Please enter this pin to active your account: ${pin}`,
+    });
+
+    return pin;
+  }
 }
 
 export default SendPinEmail;

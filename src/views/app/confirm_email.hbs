@@ -1,0 +1,15 @@
+<div class='login-form-wrapper p-2 p-md-0'>
+  <h3>Confirm your account</h3>
+
+  <form action='/auth/confirm' method='post' class='row g-4 login-form'>
+    <div class='col-12'>
+      <input name='pin' type='pin' class='form-control' placeholder='Enter your pin' required value='{{pin}}' />
+    </div>
+
+    <span style='color: red; margin-top: 8px;'>{{error}}</span>
+
+    <div class='col-12'>
+      <button type='submit' class='btn btn-primary px-4 w-100'>Confirm</button>
+    </div>
+  </form>
+</div>

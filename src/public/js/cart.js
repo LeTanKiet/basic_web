@@ -10,13 +10,21 @@ $(document).ready(function () {
     const image = productCard.find('.image-holder img').attr('src');
 
     // Create a product object
-    const product = { id, name, price, image };
+    const product = { id, name, price, image, amount: 1 };
 
     // Get the current cart from local storage
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Add the product to the cart
-    cart.push(product);
+    // Check if the product is already in the cart
+    const existingProduct = cart.find((item) => item.id === product.id);
+
+    if (existingProduct) {
+      // If the product is already in the cart, increment the amount
+      existingProduct.amount += 1;
+    } else {
+      // If the product is not in the cart, add it
+      cart.push(product);
+    }
 
     // Save the cart back to local storage
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -91,7 +99,7 @@ $(document).ready(function () {
           <div class='col-md-8'>
             <div class='card-body d-flex align-items-start justify-content-between'>
               <div>
-                <h5 class='card-title'>${product.name}</h5>
+                <h5 class='card-title'>${product.name} (${product.amount})</h5>
                 <h5 class='card-title' style='color:#85BB65;'>${product.price}</h5>
               </div>
               <button class="remove-product btn border-0" data-id="${product.id}"><i class='bi bi-trash fs-5'></i></button>

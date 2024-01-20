@@ -39,9 +39,34 @@ class CustomerProductController {
 
     // Query the database for the products on the current page
     const products = await db.any('select * from "products" order by id limit $1 offset $2', [productsPerPage, offset]);
+    
+    // An array representing all pages: [1, 2, ..., totalPages]
+    let pageNumbersArray = [];
 
-    // Create an array representing all pages: [1, 2, ..., totalPages]
-    const pageNumbersArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+    // Limit the number of pages shown to 7
+    if (totalPages <= 7) {
+      // If total pages is less than or equal to 7, show all pages
+      pageNumbersArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+    } else {
+      // If total pages is more than 7
+      if (currentPage <= 4) {
+        // If current page is less than or equal to 4, show the first 7 pages
+        pageNumbersArray = Array.from({ length: 7 }, (_, i) => i + 1);
+
+        pageNumbersArray.push('...');
+      } else if (currentPage > totalPages - 4) {
+        // If current page is in the last 4 pages, show last 7 pages
+        pageNumbersArray = Array.from({ length: 7 }, (_, i) => totalPages - 7 + i + 1);
+
+        pageNumbersArray.unshift('...');
+      } else {
+        // If current page is in the middle, show 3 pages on either side of the current page
+        pageNumbersArray = Array.from({ length: 7 }, (_, i) => currentPage - 4 + i + 1);
+
+        pageNumbersArray.unshift('...');
+        pageNumbersArray.push('...');
+      }
+    }
 
     return res.render('products', {
       user,

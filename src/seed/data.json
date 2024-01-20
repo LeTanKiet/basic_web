@@ -1,0 +1,32 @@
+{
+  "categories": [
+    { "name": "Desk", "description": "Default description" },
+    { "name": "Dresser", "description": "Default description" },
+    { "name": "Sofas", "description": "Default description" },
+    { "name": "Armchairs", "description": "Default description" },
+    { "name": "Beds", "description": "Default description" },
+    { "name": "Nightstands", "description": "Default description" },
+    { "name": "Bookcases", "description": "Default description" }
+  ],
+  "colors": [
+    { "name": "Neutral", "description": "Default description" },
+    { "name": "Earthy Greens", "description": "Default description" },
+    { "name": "Bold Blues", "description": "Default description" },
+    { "name": "Warm Terracottas", "description": "Default description" },
+    { "name": "Monochromatic Grays", "description": "Default description" }
+  ],
+  "materials": [
+    { "name": "Wood", "description": "Default description" },
+    { "name": "Cotton", "description": "Default description" },
+    { "name": "Textile", "description": "Default description" },
+    { "name": "Leather", "description": "Default description" },
+    { "name": "Glass", "description": "Default description" }
+  ],
+  "countryOfOrigin": [
+    { "name": "China", "description": "Default description" },
+    { "name": "Poland", "description": "Default description" },
+    { "name": "Germany", "description": "Default description" },
+    { "name": "Italy", "description": "Default description" },
+    { "name": "Viet Nam", "description": "Default description" }
+  ]
+}

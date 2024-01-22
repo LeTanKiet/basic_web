@@ -275,9 +275,6 @@
             </a>
           </li>
 
-          {{!-- {{#each pageNumbersArray}}
-            <li class='page-item{{#if (eq this ../currentPage)}} active{{/if}}'><a class='page-link' href='?page={{this}}'>{{this}}</a></li>
-          {{/each}} --}}
           {{#each pageNumbersArray}}
             {{#if (eq this '...')}}
               <li class='page-item disabled'><a class='page-link'>{{this}}</a></li>

@@ -39,7 +39,7 @@ class CustomerProductController {
 
     // Query the database for the products on the current page
     const products = await db.any('select * from "products" order by id limit $1 offset $2', [productsPerPage, offset]);
-    
+
     // An array representing all pages: [1, 2, ..., totalPages]
     let pageNumbersArray = [];
 
@@ -81,20 +81,55 @@ class CustomerProductController {
     });
   }
 
-  productDetailPage(req, res) {
-    const { id } = req.params;
-    console.log('🚀 ~ file: product.controller.js:8 ~ ProductController ~ productDetailPage ~ id:', id);
+  async productDetailPage(req, res) {
+    const { userId } = req.context;
+    const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
-    // TODO: get product detail
-    const temp = {
-      name: 'Product name',
-      description:
-        "This stylish piece seamlessly blends sleek design with plush cushioning, creating a chic focal point for any room. Crafted for both aesthetic appeal and relaxation, this loveseat is more than furniture—it's a statement.",
-      price: 50,
-    };
+    const { id } = req.params;
+
+    // Query product detail from database
+    const product = await db.one(
+      `
+        SELECT 
+          products.name, 
+          products.description, 
+          products.price, 
+          products.image, 
+          products.sold, 
+          products.id_category,
+          categories.name AS category, 
+          colors.name AS color, 
+          materials.name AS material, 
+          countryoforigin.name AS countryoforigin
+        FROM 
+          products
+        INNER JOIN categories ON products.id_category = categories.id
+        INNER JOIN colors ON products.id_color = colors.id
+        INNER JOIN materials ON products.id_material = materials.id
+        INNER JOIN countryOfOrigin ON products.id_countryoforigin = countryoforigin.id
+        WHERE 
+          products.id = $1
+      `,
+      [id],
+    );
+
+    // Get products in the same category with the current product
+    const relatedProducts = await db.any(
+      `
+        SELECT products.* 
+        FROM products
+        WHERE 
+          products.id_category = $1 AND
+          products.id <> $2
+        LIMIT 5
+      `,
+      [product.id_category, id],
+    );
 
     return res.render('product_detail', {
-      product: temp,
+      user,
+      product: product,
+      relatedProducts: relatedProducts,
     });
   }
 }

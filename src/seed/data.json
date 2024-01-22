@@ -28,5 +28,18 @@
     { "name": "Germany", "description": "Default description" },
     { "name": "Italy", "description": "Default description" },
     { "name": "Viet Nam", "description": "Default description" }
+  ],
+  "products": [
+    {
+      "name": "Bed",
+      "description": "A 76inch x 80inch bed.",
+      "price": 559,
+      "image": "image_url",
+      "sold": 14,
+      "category": "Beds",
+      "color": "Neutral",
+      "material": "Wood",
+      "country": "Italy"
+    }
   ]
 }

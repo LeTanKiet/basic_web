@@ -21,7 +21,7 @@ class CustomerProductController {
     }
 
     // Define the number of products per page
-    const productsPerPage = 4;
+    const productsPerPage = 12;
 
     // Query the database for the total number of products
     const totalProducts = await db.one('select count(*) from "products"', [], (data) => Number(data.count));

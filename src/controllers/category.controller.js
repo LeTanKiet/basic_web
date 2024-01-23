@@ -28,10 +28,10 @@ class CategoryController {
     console.log(req.body);
     const categoryData = req.body;
     try {
-      const result = await db.one(
-        'INSERT INTO categories(name, description) VALUES($1, $2) RETURNING *',
-        [categoryData.name, categoryData.description]
-      );
+      const result = await db.one('INSERT INTO categories(name, description) VALUES($1, $2) RETURNING *', [
+        categoryData.name,
+        categoryData.description,
+      ]);
       return res.status(201).json(result);
     } catch (error) {
       return res.status(500).json({ error: `Error creating category: ${error.message}` });
@@ -43,10 +43,11 @@ class CategoryController {
     const { id } = req.params;
     const categoryData = req.body;
     try {
-      const result = await db.one(
-        'UPDATE categories SET name = $1, description = $2 WHERE id = $3 RETURNING *',
-        [categoryData.name, categoryData.description, id]
-      );
+      const result = await db.one('UPDATE categories SET name = $1, description = $2 WHERE id = $3 RETURNING *', [
+        categoryData.name,
+        categoryData.description,
+        id,
+      ]);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(500).json({ error: `Error updating category: ${error.message}` });

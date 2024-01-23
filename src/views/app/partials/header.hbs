@@ -19,17 +19,29 @@
     </button>
 
     <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-      <ul class='navbar-nav me-auto mb-2 mb-lg-0 fs-5 fw-semibold'>
-        <li class='nav-item'>
+      <ul class='navbar-nav me-auto mb-2 mb-lg-0 fw-medium'>
+
+        <li class='nav-item' style='margin-right: 6rem;'>
+          <form action='/results' method='get' class='d-flex align-items-center'>
+            <input
+              type='search'
+              id='search-form'
+              class='search-field form-control me-2'
+              placeholder='Type and press Enter'
+              name='search_query'
+              value='{{searchQuery}}'
+              style='width: 50rem;'
+            />
+            <button class='btn btn-outline-success' type='submit'>Search</button>
+          </form>
+        </li>
+
+        <li class='nav-item' style='float: right'>
           <a class='nav-link active' aria-current='page' href='/'>Home</a>
         </li>
 
         <li class='nav-item'>
-          <a class='nav-link' href='/products'>All products</a>
-        </li>
-
-        <li class='nav-item'>
-          <a class='search-button nav-link' href='#'>Search</a>
+          <a class='nav-link' href='/products'>Products</a>
         </li>
       </ul>
 
@@ -37,83 +49,27 @@
       {{#if user}}
         {{! Buttons wrapper }}
         <div class='d-flex justify-content-around'>
-
-          {{! Search button }}
-          <a href='#' class='search-button btn btn-light rounded-pill'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='25'
-              height='25'
-              fill='currentColor'
-              class='bi bi-search-heart'
-              viewBox='0 0 16 16'
-            >
-              <path d='M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018' />
-              <path
-                d='M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11'
-              />
-            </svg>
-          </a>
-
           {{! User button }}
           {{! TODO: redirect to user detail page }}
-          <a href='#' class='btn btn-light rounded-pill'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='25'
-              height='25'
-              fill='currentColor'
-              class='bi bi-person'
-              viewBox='0 0 16 16'
-            >
-              <path
-                d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z'
-              />
-            </svg>
+          <a href='#' class='btn border-0'>
+            <i class='bi bi-person fs-4 align-bottom'></i>
           </a>
 
           {{! Cart button }}
           <button
-            class='btn btn-light mx-2 rounded-pill'
+            class='btn border-0 mx-2'
             type='button'
             data-bs-toggle='offcanvas'
             data-bs-target='#offcanvasRight'
             aria-controls='offcanvasRight'
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='25'
-              height='25'
-              fill='currentColor'
-              class='bi bi-cart3'
-              viewBox='0 0 16 16'
-            >
-              <path
-                d='M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2'
-              />
-            </svg>
+            <i class='bi bi-cart2 fs-4'></i>
           </button>
 
           {{! Logout button }}
           <form method='post' action='{{BASE_URL}}/auth/logout'>
-            <button class='btn btn-secondary rounded-pill' type='submit'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='25'
-                height='25'
-                fill='currentColor'
-                class='bi bi-box-arrow-right'
-                viewBox='0 0 16 16'
-              >
-                <path
-                  fill-rule='evenodd'
-                  d='M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z'
-                />
-                <path
-                  fill-rule='evenodd'
-                  d='M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'
-                />
-              </svg>
+            <button class='btn border-0' type='submit'>
+              <i class='bi bi-box-arrow-right fs-4'></i>
             </button>
           </form>
 
@@ -123,4 +79,5 @@
       {{/if}}
     </div>
   </div>
+  <div>
 </nav>

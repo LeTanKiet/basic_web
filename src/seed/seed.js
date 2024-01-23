@@ -35,6 +35,7 @@ const seed = async () => {
 
     // Insert products
     for (let product of seedData.products) {
+      // Get the ids of the categories, colors, materials and countryOfOrigin
       const category = await db.one('SELECT id FROM categories WHERE name = $1', [product.category]);
       const color = await db.one('SELECT id FROM colors WHERE name = $1', [product.color]);
       const material = await db.one('SELECT id FROM materials WHERE name = $1', [product.material]);

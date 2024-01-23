@@ -4,31 +4,40 @@
       "name": "Sofa",
       "description": "Explore our range of comfortable and stylish sofas, crafted with precision to suit every home and lifestyle."
     },
-    { "name": "Sample", "description": "Default" },
-    { "name": "Sample", "description": "Default" },
-    { "name": "Sample", "description": "Default" },
-    { "name": "Sample", "description": "Default" }
+    {
+      "name": "Bed",
+      "description": "Discover our collection of cozy and durable beds, designed for a restful night's sleep."
+    },
+    {
+      "name": "Desk",
+      "description": "Browse our selection of functional and stylish desks, perfect for work or study."
+    },
+    { "name": "Chair", "description": "Explore our variety of chairs, combining comfort with style for any space." },
+    {
+      "name": "Bookcase",
+      "description": "Discover our range of bookcases, perfect for showcasing your favorite books and decor."
+    }
   ],
   "colors": [
     { "name": "Black", "description": "A classic and sophisticated shade." },
     { "name": "White", "description": "A clean and minimalist color." },
     { "name": "Brown", "description": "A warm and earthy tone." },
     { "name": "Green", "description": "A vibrant and refreshing hue." },
-    { "name": "Sample", "description": "Default" }
+    { "name": "Beige", "description": "A light and neutral color, offering a touch of warmth and simplicity." }
   ],
   "materials": [
-    { "name": "Corduroy Fabric", "description": "Default" },
-    { "name": "Linen", "description": "Default" },
-    { "name": "Leather", "description": "Default" },
-    { "name": "Wool", "description": "Default" },
-    { "name": "Sample", "description": "Default" }
+    { "name": "Corduroy Fabric", "description": "A textured fabric known for its unique pattern and durability." },
+    { "name": "Leather", "description": "A premium material known for its durability and timeless appeal." },
+    { "name": "Wood", "description": "A versatile material known for its natural beauty and durability." },
+    { "name": "Metal", "description": "A strong and durable material known for its sleek finish." },
+    { "name": "Linen", "description": "A natural and breathable material, known for its lightweight and freshness." }
   ],
   "countryOfOrigin": [
-    { "name": "China", "description": "Default" },
-    { "name": "Poland", "description": "Default" },
-    { "name": "Germany", "description": "Default" },
-    { "name": "Italy", "description": "Default" },
-    { "name": "Viet Nam", "description": "Default" }
+    { "name": "China", "description": "Known for its mass production and cost-effective manufacturing." },
+    { "name": "Poland", "description": "Renowned for its high-quality craftsmanship and innovative designs." },
+    { "name": "Germany", "description": "Famous for its precision engineering and high-quality standards." },
+    { "name": "Italy", "description": "Home to a rich history of craftsmanship and design." },
+    { "name": "Viet Nam", "description": "Renowned for its skilled artisans and quality materials." }
   ],
   "products": [
     {
@@ -50,7 +59,7 @@
       "sold": 32,
       "category": "Sofa",
       "color": "White",
-      "material": "Linen",
+      "material": "Corduroy Fabric",
       "country": "Germany"
     },
     {
@@ -62,7 +71,7 @@
       "category": "Sofa",
       "color": "Brown",
       "material": "Leather",
-      "country": "Germany"
+      "country": "Italy"
     },
     {
       "name": "Edmundo 75'' Square Arm Sofa",
@@ -85,6 +94,270 @@
       "color": "Black",
       "material": "Leather",
       "country": "Italy"
+    },
+    {
+      "name": "Hana 52.40'' Upholstered Loveseat",
+      "description": "This collection features a timeless modern design in a beautiful beige fabric to fit any room with the versatility you want.",
+      "price": 399,
+      "image": "/images/sofa.png",
+      "sold": 19,
+      "category": "Sofa",
+      "color": "Beige",
+      "material": "Linen",
+      "country": "Italy"
+    },
+    {
+      "name": "Ellensburg 76'' Square Arm Sleeper Convertible Sofa",
+      "description": "This Ellensburg 76'' Square Arm Sleeper brings effortless mid-century-inspired style to your space and instantly turns your living room into a guest room. You can push the two separate back cushions partially or down, to create an ideal spot for a nap or a twin bed.",
+      "price": 189,
+      "image": "/images/sofa.png",
+      "sold": 27,
+      "category": "Sofa",
+      "color": "Black",
+      "material": "Corduroy Fabric",
+      "country": "China"
+    },
+    {
+      "name": "Bradlie Solid Wood Platform Storage Bed",
+      "description": "Introducing a timeless and traditional pine bed frame featuring a captivating horizontal slatted and hollow headboard design. This modern classic exudes an everlasting appeal that never goes out of style.",
+      "price": 250,
+      "image": "/images/bed.png",
+      "sold": 21,
+      "category": "Bed",
+      "color": "Brown",
+      "material": "Linen",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Morrisa Metal Bed",
+      "description": "Experience the luxurious metal platform bed with a beautifully curved metal headboard. Its sleek and modern design adds elegance and sophistication to your space.",
+      "price": 157,
+      "image": "/images/bed.png",
+      "sold": 32,
+      "category": "Bed",
+      "color": "White",
+      "material": "Metal",
+      "country": "Poland"
+    },
+    {
+      "name": "Karo Upholstered Metal Wingback Storage Bed",
+      "description": "The bed frame is the most practical item in the bedroom. Our upholstered bed not only allows for storage but also comes with a charging station and RBG LED light to meet your various needs.",
+      "price": 223,
+      "image": "/images/bed.png",
+      "sold": 8,
+      "category": "Bed",
+      "color": "Black",
+      "material": "Linen",
+      "country": "Poland"
+    },
+    {
+      "name": "Tufted Upholstered Low Profile Platform Bed",
+      "description": "Exquisite button tufted headboard with a wingback design can match a variety of bedroom styles. The fabric material has strong breathability and is skin-friendly.",
+      "price": 165,
+      "image": "/images/bed.png",
+      "sold": 20,
+      "category": "Bed",
+      "color": "White",
+      "material": "Metal",
+      "country": "China"
+    },
+    {
+      "name": "Kingery Standard Bed",
+      "description": "Give your bedroom or guest room an instant upgrade with this classic low profile bed. Slats and center legs are included for added stability.",
+      "price": 710,
+      "image": "/images/bed.png",
+      "sold": 7,
+      "category": "Bed",
+      "color": "Brown",
+      "material": "Corduroy Fabric",
+      "country": "Poland"
+    },
+    {
+      "name": "Aristia Bed",
+      "description": "This Wood Platform Bed Frame is beautifully simple and works well with any style of home decor. The frame and legs are made of wood to support your memory foam, latex, or spring mattress.",
+      "price": 235,
+      "image": "/images/bed.png",
+      "sold": 7,
+      "category": "Bed",
+      "color": "Beige",
+      "material": "Linen",
+      "country": "Italy"
+    },
+    {
+      "name": "Whetzel 42'' Desk",
+      "description": "This clean-lined writing desk is an ideal workspace in your home office. It's built from solid and engineered wood, and it rests on an X-frame with a trestle base for a modern look.",
+      "price": 710,
+      "image": "/images/desk.png",
+      "sold": 23,
+      "category": "Desk",
+      "color": "White",
+      "material": "Wood",
+      "country": "Germany"
+    },
+    {
+      "name": "Whiddon 60'' Desk",
+      "description": "This writing desk pairs a minimal silhouette with a mixed-material look for the right industrial design in your home office. Four open shelves give you room for books, equipment, and office supplies, so your desktop stays uncluttered.",
+      "price": 289,
+      "image": "/images/desk.png",
+      "sold": 34,
+      "category": "Desk",
+      "color": "Black",
+      "material": "Metal",
+      "country": "Germany"
+    },
+    {
+      "name": "Proulx 59'' Desk",
+      "description": "This sleek rectangular writing table delivers a place to work without a fuss. Your new work surface has a distressed finish in medium brown, and sits on a black trestle base made from engineered wood.",
+      "price": 219,
+      "image": "/images/desk.png",
+      "sold": 21,
+      "category": "Desk",
+      "color": "Black",
+      "material": "Wood",
+      "country": "Germany"
+    },
+    {
+      "name": "Cylan Height Adjustable Desk With Double-layer",
+      "description": "The double-layer electric standing desk boasts a unique design that maximizes your workspace and gives you ample room to store your items. Made from high-quality particleboard, this desk is incredibly strong and durable, supporting weights of up to 176 pounds.",
+      "price": 186,
+      "image": "/images/desk.png",
+      "sold": 12,
+      "category": "Desk",
+      "color": "Green",
+      "material": "Wood",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Ramapo 62.99'' Desk",
+      "description": "A simple but well-designed desk can make your daily work more creative. The large desktop easily accommodates two monitors, even a printer, and other working equipment.",
+      "price": 175,
+      "image": "/images/desk.png",
+      "sold": 10,
+      "category": "Desk",
+      "color": "Brown",
+      "material": "Wood",
+      "country": "Italy"
+    },
+    {
+      "name": "Angeleen Ghost Chair with Gold Metal Base - Hospitality Seating - Accent and Side Chair",
+      "description": "Rejuvenate your home with modern seating that will be a lovely addition as an accent chair in your living room, den, library, or sitting room.",
+      "price": 102,
+      "image": "/images/chair.png",
+      "sold": 27,
+      "category": "Chair",
+      "color": "White",
+      "material": "Metal",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Euclid Upholstered Accent Chair with Metal Legs",
+      "description": "Add this side chair to your living room ensemble and give it some contemporary glam appeal. It's crafted from solid and engineered wood and wrapped in foam-filled velvet upholstery for a luxe look.",
+      "price": 149,
+      "image": "/images/chair.png",
+      "sold": 27,
+      "category": "Chair",
+      "color": "Green",
+      "material": "Metal",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Giove Faux Leather Barrel Chair",
+      "description": "This popular design would make every single person fall in love which adds a pop of pattern and inviting style to any space in your home with this chair.",
+      "price": 157,
+      "image": "/images/chair.png",
+      "sold": 38,
+      "category": "Chair",
+      "color": "Beige",
+      "material": "Leather",
+      "country": "Italy"
+    },
+    {
+      "name": "Percy Faux Leather Wingback Chair",
+      "description": "This accent chair brings a rustic touch to your bedroom, living room, or reading nook. It's made of engineered wood with an espresso finish and faux leather upholstery.",
+      "price": 114,
+      "image": "/images/chair.png",
+      "sold": 29,
+      "category": "Chair",
+      "color": "Brown",
+      "material": "Leather",
+      "country": "Italy"
+    },
+    {
+      "name": "25.6'' W Linen Blend Armchair",
+      "description": "This modern chair can provide ample seating when guests are over, perfect for a small space. The cushions you sit on are nice and firm.",
+      "price": 149,
+      "image": "/images/chair.png",
+      "sold": 29,
+      "category": "Chair",
+      "color": "Beige",
+      "material": "Linen",
+      "country": "Italy"
+    },
+    {
+      "name": "Pettit Faux Leather Recliner",
+      "description": "DS Primary Product Style: Traditional, fully Reclined Depth - Front to Back: 62.6 Inches.",
+      "price": 159,
+      "image": "/images/chair.png",
+      "sold": 18,
+      "category": "Chair",
+      "color": "Green",
+      "material": "Leather",
+      "country": "China"
+    },
+    {
+      "name": "Cardali Bookcase",
+      "description": "Give your living room look or bedroom a spot to stage your favorite novels, artful accents, or framed family photos with this versatile bookcase.",
+      "price": 74,
+      "image": "/images/bookcase.png",
+      "sold": 40,
+      "category": "Bookcase",
+      "color": "Brown",
+      "material": "Wood",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Ciqala Ladder Bookcase",
+      "description": "This 4-tier ladder shelf is designed in a modern industrial style. The minimalist tiered storage style adds satisfaction and convenience to life. The industrial design adopts a metal frame structure.",
+      "price": 67,
+      "image": "/images/bookcase.png",
+      "sold": 45,
+      "category": "Bookcase",
+      "color": "Black",
+      "material": "Metal",
+      "country": "Germany"
+    },
+    {
+      "name": "Amiogho Bookcase",
+      "description": "Tree bookshelf, bookcase, bamboo book rack, storage shelves in the living room, free-standing books holder organizer, space saver for home, office, kid's room black.",
+      "price": 59,
+      "image": "/images/bookcase.png",
+      "sold": 29,
+      "category": "Bookcase",
+      "color": "White",
+      "material": "Wood",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Oreilly 62.2''H x 23.6''W Wood Etagere Bookcase",
+      "description": "This etagere bookcase completes your living room or bedroom with a modern look and plenty of storage space. Its frame is crafted from metal in a smooth black hue and an openwork, industrial style.",
+      "price": 62,
+      "image": "/images/bookcase.png",
+      "sold": 20,
+      "category": "Bookcase",
+      "color": "Green",
+      "material": "Metal",
+      "country": "China"
+    },
+    {
+      "name": "Doyno Bookcase",
+      "description": "The Bush Furniture universal small 2-shelf bookcase provides a versatile organization solution that makes it easy to show off your library or brighten up the room with pictures and decorations.",
+      "price": 149,
+      "image": "/images/bookcase.png",
+      "sold": 37,
+      "category": "Bookcase",
+      "color": "Beige",
+      "material": "Wood",
+      "country": "China"
     }
   ]
 }

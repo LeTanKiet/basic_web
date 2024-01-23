@@ -1,15 +1,22 @@
 import { db } from '../models/index.js';
-import { categories, colors, materials, countryOfOrigin } from '../utils/constants.js';
 
 class CustomerProductController {
   async index(req, res) {
     const { userId } = req.context;
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
-    // TODO: Query all categories from the database instead of using the constants
-    // TODO: Query all colors from the database instead of using the constants
-    // TODO: Query all materials from the database instead of using the constants
-    // TODO: Query all countryOfOrigin from the database instead of using the constants
+    // Query all categories from the database
+    const categoriesObj = await db.any('select name from "categories"');
+    const categories = categoriesObj.map((category) => category.name);
+    // Query all colors from the database
+    const colorsObj = await db.any('select name from "colors"');
+    const colors = colorsObj.map((category) => category.name);
+    // Query all materials from the database
+    const materialsObj = await db.any('select name from "materials"');
+    const materials = materialsObj.map((category) => category.name);
+    // Query all countryOfOrigin from the database
+    const countryOfOriginObj = await db.any('select name from "countryoforigin"');
+    const countryOfOrigin = countryOfOriginObj.map((category) => category.name);
 
     // Pagination
 
@@ -38,7 +45,12 @@ class CustomerProductController {
     const offset = (currentPage - 1) * productsPerPage;
 
     // Query the database for the products on the current page
-    const products = await db.any('select * from "products" order by id limit $1 offset $2', [productsPerPage, offset]);
+    // const products = await db.any('select * from "products" order by id limit $1 offset $2', [productsPerPage, offset]);
+    const products = await db.any(
+      'SELECT products.*, categories.name AS category FROM "products" INNER JOIN "categories" ON products.id_category = categories.id ORDER BY products.id LIMIT $1 OFFSET $2',
+      [productsPerPage, offset],
+    );
+    console.log(products);
 
     // An array representing all pages: [1, 2, ..., totalPages]
     let pageNumbersArray = [];
@@ -85,6 +97,10 @@ class CustomerProductController {
     const { userId } = req.context;
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
+    // Query all categories from the database
+    const categoriesObj = await db.any('select name from "categories"');
+    const categories = categoriesObj.map((category) => category.name);
+
     const { id } = req.params;
 
     // Query product detail from database
@@ -130,6 +146,7 @@ class CustomerProductController {
       user,
       product: product,
       relatedProducts: relatedProducts,
+      categories,
     });
   }
 }

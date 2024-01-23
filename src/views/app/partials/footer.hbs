@@ -1,19 +1,66 @@
-<div class='container'>
-  {{! Divider }}
-  <div class='row'>
-    <hr class='mt-5 mb-3' />
+<div class='bg-body-tertiary py-4 mt-4'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-7'>
+        <h4 class='pb-1'>About Us</h4>
+
+        <p>Fusion Furni is a leading furniture store offering a blend of comfort and style. Our unique collection,
+          sourced from the finest materials worldwide, caters to diverse tastes. We are committed to providing quality
+          furniture that enhances your space and stands the test of time.</p>
+      </div>
+      <div class='col'>
+        <h4 class='pb-1'>Shop</h4>
+
+        <ul class='list-unstyled'>
+          <li>
+            <a href='/products' style='text-decoration: none; color:black;'>All products</a>
+          </li>
+
+          {{#each categories}}
+            <li>
+              <a href='/results?search_query={{this}}' style='text-decoration: none; color:black;'>{{this}}</a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class='col'>
+        <h4 class='pb-1'>Contact Us</h4>
+
+        <ul class='list-unstyled'>
+          <li>
+            <span><i class='bi bi-geo-alt'></i></span>
+            <span>Sai Gon, Viet Nam</span>
+          </li>
+
+          <li>
+            <span><i class='bi bi-telephone'></i></span>
+            <span>
+              <a href='tel:+12345678900' style='text-decoration: none; color:black;'>+84 284 737 840</a>
+            </span>
+          </li>
+
+          <li>
+            <span><i class='bi bi-envelope'></i></span>
+            <span><a
+                href='mailto:fusionfurni@gmail.com'
+                style='text-decoration: none; color:black;'
+              >fusionfurni@gmail.com</a></span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class='row'>
-    <footer>
-      <p class='float-end'><a href='#'>Back to top</a></p>
+<div class='bg-dark-subtle'>
+  <div class='container'>
+    <div class='row pt-3'>
+      <footer>
+        <p class='float-end'><a href='#'>Back to top</a></p>
 
-      <p>&copy; Fusion Furni. All rights reserved &middot;
-        <a href='/products'>Products</a>
-        &middot;
-        <a href='#'>Privacy</a>
-        &middot;
-        <a href='#'>Terms</a></p>
-    </footer>
+        <p>&copy; Fusion Furni. All rights reserved</p>
+      </footer>
+    </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<div class='container vh-100'>
+<div class='container min-vh-100'>
   <div class='row pt-5 pb-5'>
     {{! If there is a search query, show the number of results found. If not, show a message to the user. }}
     {{#if searchQuery}}
@@ -10,7 +10,7 @@
 
   {{! If there are results, show them in a grid. If not, show a message to the user. }}
   {{#if results.length}}
-    <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4'>
+    <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
       {{#each results}}
         <div class='col'>{{> product-card this}}</div>
       {{/each}}

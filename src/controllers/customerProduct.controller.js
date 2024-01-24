@@ -1,5 +1,5 @@
 import { db } from '../models/index.js';
-
+import { categories, colors, materials, countryOfOrigin } from '../utils/constants.js';
 class CustomerProductController {
   async index(req, res) {
     const { userId } = req.context;

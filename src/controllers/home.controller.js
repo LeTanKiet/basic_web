@@ -1,5 +1,4 @@
 import { db } from '../models/index.js';
-import { categories } from '../utils/constants.js';
 
 class HomeController {
   async index(req, res) {
@@ -12,9 +11,19 @@ class HomeController {
     // TODO: Query all categories from the database instead of using the constants
     const categories = await db.any('select * FROM "categories" ORDER BY "name" ASC LIMIT 6');
 
+    // Query all categories from the database
+    const categoriesObj = await db.any('select name from "categories"');
+
+    // Query beds from the database
+    const beds = await db.any(
+      'SELECT products.* FROM "products" INNER JOIN "categories" ON products.id_category = categories.id WHERE categories.name = $1 LIMIT 4',
+      ['Bed'],
+    );
+
     return res.render('home', {
       user,
       topProducts,
+      beds,
       categories,
     });
   }

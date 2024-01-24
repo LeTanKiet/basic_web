@@ -1,5 +1,4 @@
 import { db } from '../models/index.js';
-import { categories, colors, materials, countryOfOrigin } from '../utils/constants.js';
 
 class CustomerProductController {
   async index(req, res) {
@@ -94,6 +93,10 @@ class CustomerProductController {
     const { userId } = req.context;
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
+    // Query all categories from the database
+    const categoriesObj = await db.any('select name from "categories"');
+    const categories = categoriesObj.map((category) => category.name);
+
     const { id } = req.params;
 
     // Query product detail from database
@@ -139,6 +142,7 @@ class CustomerProductController {
       user,
       product: product,
       relatedProducts: relatedProducts,
+      categories,
     });
   }
 }

@@ -1,23 +1,25 @@
-<div class='cart-item card my-1 shadow-sm'>
+<div class='cart-item card my-1 shadow-sm w-100'>
   <div class='row g-0'>
     {{! Product image }}
     <div class='col-md-4'>
-      <div class='w-100 overflow-hidden d-flex justify-content-center align-items-center' style='aspect-ratio: 1 / 1;'>
-        <img src='/images/vase.jpg' class='img-fluid rounded-start' alt='Vase' />
+      <div class='image-holder ratio ratio-1x1 position-relative overflow-hidden'>
+        <img src='images/couch.jpg' alt='Couch' class='object-fit-cover' />
       </div>
     </div>
 
     <div class='col-md-8'>
       <div class='card-body d-flex align-items-start justify-content-between'>
         {{! Product name &  price wrapper }}
-        <div>
-          <h5 class='card-title'>Urn Vase</h5>
+        <div class='w-75'>
+          <h6 class='text-truncate'>dat dat datdat dat datdat dat dat</h6>
 
-          <h5 class='card-title' style='color:#85BB65;'>$ 45</h5>
+          <h6 class='card-title' style='color:#85BB65;'>$ 45</h6>
         </div>
 
         {{! Trash can icon }}
-        <i class='bi bi-trash fs-5'></i>
+        <div>
+          <i class='bi bi-trash fs-5'></i>
+        </div>
       </div>
     </div>
   </div>

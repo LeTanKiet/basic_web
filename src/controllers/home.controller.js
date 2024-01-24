@@ -26,6 +26,36 @@ class HomeController {
     });
   }
 
+  async profilePage(req, res) {
+    const { userId } = req.context;
+    const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+
+    return res.render('profile', {
+      ...user,
+    });
+  }
+
+  async updateProfile(req, res) {
+    const {
+      body: { name, email },
+      context: { userId },
+    } = req;
+
+    const result = await db.one('UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *', [
+      name,
+      email,
+      userId,
+    ]);
+
+    return res.render('profile', {
+      ...result,
+    });
+  }
+
+  checkout(req, res) {
+    return res.render('checkout');
+  }
+
   getAll(req, res) {
     return res.render('home');
   }

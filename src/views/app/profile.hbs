@@ -1,0 +1,50 @@
+<div class='p-2 p-md-0 container'>
+  <h2 class='profile-title'>Update your profile</h2>
+
+  <div class='profile-form-group'>
+    <form id='upload_avatar_form' method='POST' action='/file/upload' enctype='multipart/form-data' style="width: 240px;">
+      <div>
+        {{#if avatar}}
+          <div id='image-preview'>
+            <img id='image-preview-img' src='http://localhost:3000/uploads/{{avatar}}' />
+          </div>
+        {{else}}
+          <div id='image-preview'>
+            <img id='image-preview-img' src='https://static.thenounproject.com/png/1211233-200.png' />
+          </div>
+        {{/if}}
+
+        <label for='upload_file' class='btn' style='width: 120px; margin-top: 16px; padding: 8px 4px;'>Change avatar</label>
+        <input
+          style='visibility:hidden;'
+          id='upload_file'
+          type='file'
+          name='upload_image'
+          onchange='getImagePreview(event)'
+          placeholder='Upload'
+        />
+      </div>
+    </form>
+
+    <form action='/profile' method='post' class='row g-4 profile-info'>
+
+      <div class='col-12'>
+        <label>Name<span class='text-danger'>*</span></label>
+        <input name='name' value='{{name}}' type='text' class='form-control' placeholder='Enter name' required />
+      </div>
+
+      <div class='col-12'>
+        <label>Email<span class='text-danger'>*</span></label>
+        <input name='email' value='{{email}}' type='email' class='form-control' placeholder='Enter email' required />
+      </div>
+
+      <div class='col-12'>
+        <button type='submit' class='btn btn-primary px-4'>Save</button>
+      </div>
+
+      <div>
+        <input name='avatar' type='text' style='visibility: hidden;' />
+      </div>
+    </form>
+  </div>
+</div>

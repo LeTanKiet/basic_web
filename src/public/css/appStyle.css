@@ -4,8 +4,19 @@
   box-sizing: border-box;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#content {
+  flex: 1;
+}
+
 .login-form-wrapper {
-  max-width: 480px;
+  width: 520px;
+  max-width: 100%;
   margin: auto;
   height: 100vh;
   display: flex;
@@ -13,6 +24,10 @@
   justify-content: center;
   align-items: center;
   gap: 32px;
+}
+
+.login-form {
+  width: 100%;
 }
 
 label {
@@ -240,6 +255,141 @@ label {
 }
 /** END OF Product card **/
 
+/* Login with vendors */
+.login-vendors {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.login-vendor {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 4px;
+  color: #000;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  flex: 1;
+}
+
+.login-vendor:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.login-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.login-icon > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.role-group {
+  display: inline-flex;
+  gap: 32px;
+  margin-left: 32px;
+}
+
+/* Update profile*/
+.profile-wrapper {
+  margin: 0 40px;
+}
+
+.profile-title {
+  margin: 24px 0 40px;
+  font-weight: 600;
+}
+
+.profile-form-group {
+  display: flex;
+  gap: 8px;
+}
+
+#image-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid;
+  overflow: hidden;
+}
+
+#image-preview > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+/* Checkout */
+.checkout-item {
+  display: flex;
+  gap: 16px;
+  box-shadow: 0 0 6px #888;
+  padding: 16px;
+  width: fit-content;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.checkout-item-image {
+  width: 120px;
+  height: 120px;
+}
+.checkout-item-image > img,
+.checkout-item-delete > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.checkout-item-body {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  font-size: 20px;
+}
+
+.checkout-item-delete {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.checkout-price,
+.checkout-total-price {
+  color: #85bb65;
+  font-size: 20;
+  font-weight: 500;
+}
+
+.checkout-price {
+  margin-top: 8px;
+}
+
+.checkout-separate {
+  height: 1px;
+  background-color: #ccc;
+  margin: 16px 0;
+}
+
+.checkout-total {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.checkout-row {
+  display: flex;
+  gap: 16px;
+}
 /** Cart item **/
 @media (max-width: 768px) {
   .cart-item {

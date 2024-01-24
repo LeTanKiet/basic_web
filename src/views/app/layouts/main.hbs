@@ -22,17 +22,21 @@
   </head>
 
   <body>
-    {{>header}}
+    <div id="root">
+      {{>header}}
 
     {{>category-list}}
 
-    {{>cart}}
+      {{>cart}}
 
-    {{{body}}}
+      <div id="content">
+        {{{body}}}
+      </div>
 
-    {{>toast}}
+      {{>toast}}
 
-    {{>footer}}
+      {{>footer}}
+    </div>
 
     {{!-- Bootstrap JS CDN --}}
     <script

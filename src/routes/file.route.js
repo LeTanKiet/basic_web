@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import { authentication, checkAdminPermission } from '../middlewares/auth.js';
+import { db } from '../models/index.js';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -27,37 +28,32 @@ const upload = multer({
 const fileRoutes = () => {
   const router = express.Router();
 
-  router.get('/upload/test', authentication, checkAdminPermission, (req, res) => {
+  router.get('/upload/test', authentication, (req, res) => {
     res.render('upload', {
       layout: 'no-header-footer-layout',
     });
   });
 
-  router.post('/upload', upload.single('upload_image'), (req, res) => {
-    multer().single('upload_image')(req, res, function (err) {
-      if (req.fileValidationError) {
-        return res.render('upload', {
-          layout: 'no-header-footer-layout',
-          message: 'Validation fail',
-        });
-      } else if (!req.file) {
-        return res.render('upload', {
-          layout: 'no-header-footer-layout',
-          message: 'Please select an image to upload',
-        });
-      } else if (err instanceof multer.MulterError) {
-        return res.render('upload', {
-          layout: 'no-header-footer-layout',
-          message: err.message,
-        });
-      }
+  router.post('/upload', authentication, upload.single('upload_image'), async (req, res) => {
+    try {
+      const { userId } = req.context;
 
-      return res.render('upload', {
-        layout: 'no-header-footer-layout',
-        message: `You have uploaded this image: `,
-        filename: req.file.filename,
+      multer().single('upload_image')(req, res, async function (err) {
+        if (req.fileValidationError) {
+          return res.status(400).send({ message: 'Validation fail' });
+        } else if (!req.file) {
+          return res.status(400).send({ message: 'Please select an image to upload' });
+        } else if (err instanceof multer.MulterError) {
+          return res.status(400).send({ message: 'err.message' });
+        }
+
+        await db.oneOrNone('UPDATE users SET avatar = $1 WHERE id = $2;', [req.file.filename, userId]);
+
+        return res.redirect('/profile');
       });
-    });
+    } catch (error) {
+      return res.status(500).send({ message: 'Internal server error.' });
+    }
   });
 
   return router;

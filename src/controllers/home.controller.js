@@ -22,7 +22,7 @@ class HomeController {
     const { userId } = req.context;
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
-    return res.render('update_profile', {
+    return res.render('profile', {
       ...user,
     });
   }
@@ -39,9 +39,13 @@ class HomeController {
       userId,
     ]);
 
-    return res.render('update_profile', {
+    return res.render('profile', {
       ...result,
     });
+  }
+
+  checkout(req, res) {
+    return res.render('checkout');
   }
 
   getAll(req, res) {

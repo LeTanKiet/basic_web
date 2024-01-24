@@ -1,0 +1,71 @@
+<div class='checkout-row container' style='margin-top: 40px; gap: 40px;'>
+  <div>
+    <h2 style='font-weight: 600;'>Your order</h2>
+
+    <div class='checkout-separate'></div>
+
+    <div class='checkout-cart-body'></div>
+
+    <div class='checkout-separate'></div>
+
+    <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 32px;'>
+      <span class='checkout-total'>Total: </span>
+      <span class='checkout-total-price' style='font-size: 28px;'></span>
+    </div>
+  </div>
+
+  <form action='/' method='post' class='row g-4' style='flex: 1; padding: 0 16px;'>
+    <div class='checkout-row'>
+      <div class='col-6'>
+        <label>First name<span class='text-danger'>*</span></label>
+        <input name='first_name' type='text' class='form-control' placeholder='Enter your first name' required />
+      </div>
+
+      <div class='col-6'>
+        <label>Last name<span class='text-danger'>*</span></label>
+        <input name='last_name' type='text' class='form-control' placeholder='Enter your last name' required />
+      </div>
+    </div>
+
+    <div class='checkout-row'>
+      <div class='col-6'>
+        <label>Phone<span class='text-danger'>*</span></label>
+        <input name='phone' type='text' class='form-control' placeholder='Enter your phone' required />
+      </div>
+
+      <div class='col-6'>
+        <label>Email<span class='text-danger'>*</span></label>
+        <input name='email' type='email' class='form-control' placeholder='Enter your email' required />
+      </div>
+    </div>
+
+    <div class='checkout-separate'></div>
+
+    <div class='col-12'>
+      <label>Street address<span class='text-danger'>*</span></label>
+      <input
+        name='street_address'
+        type='text'
+        class='form-control'
+        placeholder='Street name, building, house no.'
+        required
+      />
+    </div>
+
+    <div class='col-12'>
+      <label>Town / city<span class='text-danger'>*</span></label>
+      <input name='city' type='text' class='form-control' placeholder='Town / city' required />
+    </div>
+
+    <div class='checkout-separate'></div>
+
+    <div class='col-12'>
+      <label>Note</label>
+      <input name='note' type='text' class='form-control' placeholder='Enter your desires here' />
+    </div>
+
+    <div class='col-2' style='margin-left: auto;'>
+      <button type='submit' class='btn btn-primary px-4 w-100'>Checkout</button>
+    </div>
+  </form>
+</div>

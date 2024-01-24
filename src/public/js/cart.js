@@ -31,15 +31,21 @@ $(document).ready(function () {
 
     // Get the offcanvas body
     const offcanvasBody = $('.offcanvas-body');
+    const checkoutBody = $('.checkout-cart-body');
+    const checkoutTotalPrice = $('.checkout-total-price');
 
     // Clear the offcanvas body
     offcanvasBody.empty();
 
+    let totalPrice = 0;
     // Loop through the cart items
     cart.forEach(function (product) {
       // Append the cart item HTML to the offcanvas body
       offcanvasBody.append(createCartItemHtml(product));
+      checkoutBody.append(createCartItemInCheckoutPage(product));
+      totalPrice += Number(product.price);
     });
+    checkoutTotalPrice.text(`$${totalPrice}`);
   }
 
   function createCartItemHtml(product) {
@@ -62,6 +68,23 @@ $(document).ready(function () {
               <i class='bi bi-trash fs-5'></i>
             </div>
           </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function createCartItemInCheckoutPage(product) {
+    return `
+      <div class='checkout-item'>
+        <div class='checkout-item-image'>
+          <img src='http://localhost:3000/${product.image}' alt='' />
+        </div>
+        <div class='checkout-item-body'>
+          <b>${product.name}</b>
+          <span class='checkout-price'>$${product.price}</span>
+        </div>
+        <div class='checkout-item-delete'>
+          <img src='https://static-00.iconduck.com/assets.00/trash-icon-462x512-njvey5nf.png' alt='' />
         </div>
       </div>
     `;

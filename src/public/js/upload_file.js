@@ -1,9 +1,10 @@
-function getImagePreview(event) {
+async function getImagePreview(event) {
   var image = URL.createObjectURL(event.target.files[0]);
-  var imagediv = document.getElementById('image-preview');
-  var newimg = document.createElement('img');
-  imagediv.innerHTML = '';
-  newimg.src = image;
-  newimg.width = '300';
-  imagediv.appendChild(newimg);
+  var imageElement = document.getElementById('image-preview-img');
+  imageElement.innerHTML = '';
+  imageElement.src = image;
+  imageElement.width = '300';
+
+  const formElement = document.getElementById('upload_avatar_form');
+  formElement.submit();
 }

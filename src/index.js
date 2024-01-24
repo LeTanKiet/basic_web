@@ -17,6 +17,4 @@ useEncoded(app);
 usePassportAuth(app);
 useRoutes(app);
 
-app.listen(APP_PORT, () => {
-  console.log(`Server is running on http://localhost:${APP_PORT}`);
-});
+app.listen(APP_PORT);

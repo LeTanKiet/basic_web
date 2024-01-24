@@ -263,9 +263,33 @@
     <main class='col-md-9'>
       <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
         {{#each products}}
-          <div class='col'>{{>product-card this}}</div>
+          <div class='col d-flex'>{{>product-card this}}</div>
         {{/each}}
       </div>
+
+      <nav class='row mt-4'>
+        <ul class='pagination justify-content-center'>
+          <li class='page-item user-select-none {{#if (isFirstPage currentPage)}}disabled{{/if}}'>
+            <a class='page-link' href='?page={{decrement currentPage}}'>
+              Previous
+            </a>
+          </li>
+
+          {{#each pageNumbersArray}}
+            {{#if (eq this '...')}}
+              <li class='page-item disabled'><a class='page-link'>{{this}}</a></li>
+            {{else}}
+              <li class='page-item{{#if (eq this ../currentPage)}} active{{/if}}'><a class='page-link' href='?page={{this}}'>{{this}}</a></li>
+            {{/if}}
+          {{/each}}
+
+          <li class='page-item user-select-none {{#if (isLastPage currentPage totalPages)}}disabled{{/if}}'>
+            <a class='page-link' href='?page={{increment currentPage}}'>
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </main>
   </div>
 </div>

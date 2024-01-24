@@ -67,6 +67,27 @@ $(document).ready(function () {
     `;
   }
 
+  $('#checkoutButton').click(function () {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+
+    $.ajax({
+      url: '/order/checkout', 
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ cart }),
+      success: function (response) {
+        window.location.href = `/order/${response.orderId}`;
+      },
+      error: function (xhr, status, error) {
+        console.error('Checkout failed:', error);
+      },
+    });
+  });
+
   // Initial cart display update
   updateCartDisplay();
 });

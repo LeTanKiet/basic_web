@@ -28,5 +28,5 @@
 
   $(document).ready(function () {
     searchPopup();
-  }); // End of a document ready
+  });
 })(jQuery);

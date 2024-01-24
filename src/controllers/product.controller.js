@@ -2,9 +2,42 @@ import { db } from '../models/index.js';
 import { categories, colors, materials, countryOfOrigin } from '../utils/constants.js';
 
 class ProductController {
+  async getPaginatedProducts(req, res) {
+    try {
+      const { userId } = req.context;
+      const user = await db.oneOrNone('SELECT * FROM "users" WHERE id = $1', userId);
+      const admin = user.role;
+
+      const page = parseInt(req.query.page) || 1;
+      const itemsPerPage = 10; // Adjust the number of items per page as needed
+
+      const offset = (page - 1) * itemsPerPage;
+
+      const products = await db.any('SELECT * FROM products ORDER BY id LIMIT $1 OFFSET $2', [itemsPerPage, offset]);
+
+      const totalProducts = await db.one('SELECT COUNT(*) FROM products');
+      const totalPages = Math.ceil(totalProducts.count / itemsPerPage);
+
+      const pageNumbersArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+      return res.render('product_manager', {
+        user,
+        admin,
+        products,
+        currentPage: page,
+        totalPages,
+        pageNumbersArray,
+      });
+    } catch (error) {
+      return res.status(500).json({ error: `Error getting paginated products: ${error.message}` });
+    }
+  }
+
   async index(req, res) {
     const { userId } = req.context;
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+
+    const admin = user.role;
 
     // Query the database for all products
     const products = await db.any('select * from "products"');
@@ -16,6 +49,7 @@ class ProductController {
 
     return res.render('products', {
       user,
+      admin,
       products,
       categories,
       colors,
@@ -41,8 +75,13 @@ class ProductController {
 
   async getAllProducts(req, res) {
     try {
+      const { userId } = req.context;
+      const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+
+      const admin = user.role;
+
       const products = await db.any('SELECT * FROM products');
-      return res.render('product_manager', { products });
+      return res.render('product_manager', { user, admin, products });
     } catch (error) {
       return res.status(500).json(`Error getting products: ${error.message}`);
     }

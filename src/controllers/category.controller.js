@@ -3,10 +3,49 @@ import { db } from '../models/index.js';
 
 class CategoryController {
   // Display all categories
+  async getPaginatedCategories(req, res) {
+    try {
+      const { userId } = req.context;
+      const user = await db.oneOrNone('SELECT * FROM "users" WHERE id = $1', userId);
+      const admin = user.role;
+
+      const page = parseInt(req.query.page) || 1;
+      const itemsPerPage = 10; // Adjust the number of items per page as needed
+
+      const offset = (page - 1) * itemsPerPage;
+
+      const categories = await db.any('SELECT * FROM categories ORDER BY id LIMIT $1 OFFSET $2', [
+        itemsPerPage,
+        offset,
+      ]);
+
+      const totalCategories = await db.one('SELECT COUNT(*) FROM categories');
+      const totalPages = Math.ceil(totalCategories.count / itemsPerPage);
+
+      const pageNumbersArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+      const paginationData = {
+        user,
+        admin,
+        categories,
+        currentPage: page,
+        totalPages,
+        pageNumbersArray,
+      };
+
+      return res.render('category_manager', paginationData);
+    } catch (error) {
+      return res.status(500).json({ error: `Error getting paginated categories: ${error.message}` });
+    }
+  }
+
   async getAllCategories(req, res) {
     try {
+      const { userId } = req.context;
+      const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+      const admin = user.role;
       const categories = await db.any('SELECT * FROM categories');
-      return res.render('category_manager', { categories });
+      return res.render('category_manager', { user, admin, categories });
     } catch (error) {
       return res.status(500).json({ error: `Error getting categories: ${error.message}` });
     }
@@ -25,7 +64,6 @@ class CategoryController {
 
   // Create a new category
   async createCategory(req, res) {
-    console.log(req.body);
     const categoryData = req.body;
     try {
       const result = await db.one('INSERT INTO categories(name, description) VALUES($1, $2) RETURNING *', [

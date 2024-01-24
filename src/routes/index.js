@@ -6,6 +6,7 @@ import customerProductRoutes from './customerProduct.route.js';
 import searchRoutes from './search.route.js';
 import authPaymentRoutes from './authPayment.route.js';
 import addBalanceRoutes from './addBalance.route.js';
+import adminRoutes from './admin.route.js';
 import { checkPaymentAccount } from '../middlewares/checkPaymentAccount.js';
 
 export function useRoutes(app) {
@@ -14,6 +15,8 @@ export function useRoutes(app) {
   app.use('/products', customerProductRoutes());
 
   app.use('/results', searchRoutes());
+
+  app.use('/admin', adminRoutes());
 
   app.use('/', homeRoutes());
 }

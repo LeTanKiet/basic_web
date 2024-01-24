@@ -22,7 +22,7 @@
           <td>{{name}}</td>
           <td>${{price}}</td>
           <td>{{description}}</td>
-          <td><img src='{{image}}' alt='{{name}}' /></td>
+          <td><img src='{{image}}' alt='{{name}}' width='100px' height='100px' /></td>
           <td>
             <button class='btn-edit' onclick='openEditModal({{id}})'>Edit</button>
             <button class='btn-delete' onclick='deleteProductConfirmation({{id}})'>Delete</button>
@@ -30,6 +30,32 @@
         </tr>
       {{/each}}
     </table>
+
+     <nav class='row mt-4'>
+      <ul class='pagination justify-content-center'>
+        <li class='page-item user-select-none {{#if (isFirstPage currentPage)}}disabled{{/if}}'>
+          <a class='page-link' href='?page={{decrement currentPage}}'>
+            Previous
+          </a>
+        </li>
+
+        {{#each pageNumbersArray}}
+          {{#if (eq this '...')}}
+            <li class='page-item disabled'><span class='page-link'>{{this}}</span></li>
+          {{else}}
+            <li class='page-item{{#if (eq this ../currentPage)}} active{{/if}}'>
+              <a class='page-link' href='?page={{this}}'>{{this}}</a>
+            </li>
+          {{/if}}
+        {{/each}}
+
+        <li class='page-item user-select-none {{#if (isLastPage currentPage totalPages)}}disabled{{/if}}'>
+          <a class='page-link' href='?page={{increment currentPage}}'>
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
 
     <!-- Edit Product Modal -->
     <div id='editProductModal' class='modal'>

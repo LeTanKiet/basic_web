@@ -47,6 +47,9 @@ class AuthController {
       const tokens = createToken(newUser);
       setCookies(res, tokens);
 
+      if (newUser.role === ROLE.admin) {
+        return res.redirect('/admin');
+      }
       return res.redirect('/');
     } catch (error) {
       console.error('error: ', error);
@@ -85,6 +88,10 @@ class AuthController {
 
       const tokens = createToken(existedUser);
       setCookies(res, tokens);
+
+      if (existedUser.role === ROLE.admin) {
+        return res.redirect('/admin');
+      }
 
       return res.redirect('/');
     } catch (error) {

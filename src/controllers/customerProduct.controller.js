@@ -7,9 +7,13 @@ class CustomerProductController {
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
     // TODO: Query all categories from the database instead of using the constants
+    const _categories = await db.any('select * from "categories"');
     // TODO: Query all colors from the database instead of using the constants
+    const _colors = await db.any('select * from "colors"');
     // TODO: Query all materials from the database instead of using the constants
+    const _materials = await db.any('select * from "materials"');
     // TODO: Query all countryOfOrigin from the database instead of using the constants
+    const _countryOfOrigin = await db.any('select * from "countryoforigin"');
 
     // Pagination
 
@@ -39,6 +43,12 @@ class CustomerProductController {
 
     // Query the database for the products on the current page
     const products = await db.any('select * from "products" order by id limit $1 offset $2', [productsPerPage, offset]);
+    products.forEach((product) => {
+      product.categories = _categories.find((category) => category.id === product.id_category).name;
+      product.colors = _colors.find((color) => color.id === product.id_color).name;
+      product.materials = _materials.find((material) => material.id === product.id_material).name;
+      product.countryOfOrigin = _countryOfOrigin.find((country) => country.id === product.id_countryoforigin).name;
+    });
 
     // An array representing all pages: [1, 2, ..., totalPages]
     let pageNumbersArray = [];
@@ -67,7 +77,6 @@ class CustomerProductController {
         pageNumbersArray.push('...');
       }
     }
-
     return res.render('products', {
       user,
       products,

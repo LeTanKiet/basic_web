@@ -77,9 +77,6 @@ function addCategory(event) {
   const categoryName = document.getElementById('categoryName').value;
   const categoryDescription = document.getElementById('categoryDescription').value;
 
-  console.log(categoryName);
-  console.log(categoryDescription);
-
   fetch('/admin/categories', {
     method: 'POST',
     headers: {

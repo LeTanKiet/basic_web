@@ -6,7 +6,7 @@ export const ROLE = {
   admin: 'admin',
 };
 
-export const categories = ['Desks', 'Dresser', 'Sofas', 'Armchairs', 'Beds', 'Nightstands', 'Bookcases'];
+export const categories = ['Desk', 'Dresser', 'Sofa', 'Armchair', 'Bed', 'Nightstand', 'Bookcase'];
 
 export const colors = ['Cadmium Red', 'Antique Gold', 'Dark Academia', 'Deco Silver'];
 

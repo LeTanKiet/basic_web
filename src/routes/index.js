@@ -14,7 +14,6 @@ export function useRoutes(app) {
   app.use('/auth', authRoutes());
 
   // app.use('/admin', adminRoutes());
-  app.use('/products', productRoutes());
   app.use('/file', fileRoutes());
   app.use('/products', customerProductRoutes());
 

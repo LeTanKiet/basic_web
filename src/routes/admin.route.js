@@ -8,6 +8,7 @@ const adminRoutes = () => {
   const router = express.Router();
 
   router.get('/', authentication, AdminController.index);
+  router.get('/dashboard', authentication, AdminController.renderAdminDashboard);
   router.use('/products', authentication, productRoutes());
   router.use('/categories', authentication, categoryRoutes());
 

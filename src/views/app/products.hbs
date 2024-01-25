@@ -95,8 +95,6 @@
               <label>Max</label>
               <input class='form-control' id='maxPriceInput' placeholder='$10,000' type='number' />
             </div>
-            <!-- Apply button -->
-            <button class='btn btn-primary mt-4' id='applyFilterBtn'>Apply</button>
           </div>
         </div>
       </div>
@@ -248,12 +246,14 @@
     <main class='col-md-9'>
       <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
         {{#each products}}
-          <div class='col product-card'
-               data-category='{{categories}}'
-               data-price='{{price}}'
-               data-color='{{colors}}'
-               data-material='{{materials}}'
-               data-country='{{countryOfOrigin}}'>
+          <div 
+            class='col product-wrapper'
+            data-category='{{categories}}'
+            data-price='{{price}}'
+            data-color='{{colors}}'
+            data-material='{{materials}}'
+            data-country='{{countryOfOrigin}}'
+          >
             {{>product-card this}}
           </div>
         {{/each}}

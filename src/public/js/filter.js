@@ -37,7 +37,7 @@ $(document).ready(function () {
     var selectedCountries = getSelectedValues('countryCheckbox');
 
     // Implement your filtering logic here
-    $('.product-card').each(function () {
+    $('.product-wrapper').each(function () {
       var productCategory = $(this).data('category');
       var productPrice = parseFloat($(this).data('price'));
       var productColor = $(this).data('color');

@@ -1,12 +1,12 @@
-function openModal() {
+function openProductModal() {
   $('#addProductModal').css('display', 'flex');
 }
 
-function closeModal() {
+function closeProductModal() {
   $('#addProductModal').css('display', 'none');
 }
 
-function openEditModal(productId) {
+function openProductEditModal(productId) {
   fetch(`/admin/products/${productId}`)
     .then((response) => response.json())
     .then((product) => {
@@ -22,7 +22,7 @@ function openEditModal(productId) {
     });
 }
 
-function closeEditModal() {
+function closeProductEditModal() {
   $('#editProductModal').css('display', 'none');
 }
 
@@ -47,7 +47,7 @@ function saveEditedProduct() {
   })
     .then((response) => response.json())
     .then((editedProduct) => {
-      closeEditModal();
+      closeProductEditModal();
       location.reload(true);
     })
     .catch((error) => {
@@ -103,5 +103,5 @@ function addProduct(event) {
       console.error('Error adding product:', error);
     });
 
-  closeModal();
+  closeProductModal();
 }

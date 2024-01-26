@@ -1,14 +1,14 @@
 // category_manager.js
 
-function openModal() {
+function openCategoryModal() {
   document.getElementById('addCategoryModal').style.display = 'flex';
 }
 
-function closeModal() {
+function closeCategoryModal() {
   document.getElementById('addCategoryModal').style.display = 'none';
 }
 
-function openEditModal(categoryId) {
+function openCategoryEditModal(categoryId) {
   fetch(`/admin/categories/${categoryId}`)
     .then((response) => response.json())
     .then((category) => {
@@ -22,7 +22,7 @@ function openEditModal(categoryId) {
     });
 }
 
-function closeEditModal() {
+function closeCategoryEditModal() {
   document.getElementById('editCategoryModal').style.display = 'none';
 }
 
@@ -43,7 +43,7 @@ function saveEditedCategory() {
   })
     .then((response) => response.json())
     .then((editedCategory) => {
-      closeEditModal();
+      closeCategoryEditModal();
       location.reload(true);
     })
     .catch((error) => {
@@ -95,5 +95,5 @@ function addCategory(event) {
       console.error('Error adding category:', error);
     });
 
-  closeModal();
+  closeCategoryModal();
 }

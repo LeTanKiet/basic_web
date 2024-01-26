@@ -39,30 +39,12 @@
         {{#if user}}
           {{! Buttons wrapper }}
           <div class='d-flex justify-content-around'>
-            {{! User button }}
-            {{! TODO: redirect to user detail page }}
-            <a href='#' class='btn border-0'>
-              <i class='bi bi-person fs-4 align-bottom'></i>
-            </a>
-
-            {{! Cart button }}
-            <button
-              class='btn border-0 mx-2'
-              type='button'
-              data-bs-toggle='offcanvas'
-              data-bs-target='#offcanvasRight'
-              aria-controls='offcanvasRight'
-            >
-              <i class='bi bi-cart2 fs-4'></i>
-            </button>
-
             {{! Logout button }}
             <form method='post' action='{{BASE_URL}}/auth/logout'>
               <button class='btn border-0' type='submit'>
                 <i class='bi bi-box-arrow-right fs-4'></i>
               </button>
             </form>
-
           </div>
         {{else}}
         {{/if}}
@@ -149,6 +131,7 @@
 
           </div>
         {{else}}
+          <a class='btn btn-primary' role='button' href='/auth/login'>Login</a>
         {{/if}}
       </div>
     </div>

@@ -8,11 +8,9 @@ class HomeController {
     // Query top 4 products by sold
     const topProducts = await db.any('select * from "products" order by "sold" desc limit 4');
 
-    // TODO: Query all categories from the database instead of using the constants
-    const categories = await db.any('select * FROM "categories" ORDER BY "name" ASC LIMIT 6');
-
-    // Query all categories from the database
+    // Query all categories from the database to display in the footer
     const categoriesObj = await db.any('select name from "categories"');
+    const categories = categoriesObj.map((category) => category.name);
 
     // Query beds from the database
     const beds = await db.any(
@@ -54,8 +52,18 @@ class HomeController {
     });
   }
 
-  checkout(req, res) {
-    return res.render('checkout');
+  async checkout(req, res) {
+    const { userId } = req.context;
+    const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+
+    // Query all categories from the database to display in the footer
+    const categoriesObj = await db.any('select name from "categories"');
+    const categories = categoriesObj.map((category) => category.name);
+
+    return res.render('checkout', {
+      user,
+      categories,
+    });
   }
 
   getAll(req, res) {

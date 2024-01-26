@@ -83,7 +83,7 @@ $(document).ready(function () {
     // Loop through the cart items
     cart.forEach(function (product) {
       // Append the cart item HTML to the offcanvas body
-      offcanvasBody.append(createCartItemHtml(product));
+      // offcanvasBody.append(createCartItemHtml(product));
       productsContainer.append(createCartItemHtml(product));
       checkoutBody.append(createCartItemInCheckoutPage(product));
       totalPrice += Number(product.price);

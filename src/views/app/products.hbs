@@ -2,12 +2,11 @@
   <h1 class='row d-flex justify-content-center mt-5 mb-3'>Our Products</h1>
 
   <div class='row'>
-    {{! Filter panel }}
+    <!-- Filter panel -->
     <aside class='col-md-3 mb-3'>
-      {{! Categories filter }}
+      <!-- Categories filter -->
       <div class='card mb-3'>
-
-        {{! Card header }}
+        <!-- Card header -->
         <a
           data-bs-toggle='collapse'
           href='#collapse_categories'
@@ -17,7 +16,7 @@
           class='text-decoration-none'
         >
           <h5 class='card-header'>
-            {{! Chevron icon }}
+            <!-- Chevron icon -->
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='16'
@@ -36,27 +35,25 @@
           </h5>
         </a>
 
-        {{! Card body }}
+        <!-- Card body -->
         <div class='collapse show' id='collapse_categories'>
           <div class='card-body'>
             <ul class='list-unstyled'>
               {{#each categories}}
                 <li>
-                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <input class='form-check-input me-1 categoryCheckbox' name='categoryCheckbox' type='checkbox' value='' id='{{this}}' />
                   <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
                 </li>
               {{/each}}
             </ul>
           </div>
         </div>
-
       </div>
-      {{! END OF Categories filter }}
+      <!-- END OF Categories filter -->
 
-      {{! Price range slider }}
+      <!-- Price range slider -->
       <div class='card mb-3'>
-
-        {{! Card header }}
+        <!-- Card header -->
         <a
           data-bs-toggle='collapse'
           href='#collapse_price'
@@ -66,7 +63,7 @@
           class='text-decoration-none'
         >
           <h5 class='card-header'>
-            {{! Chevron icon }}
+            <!-- Chevron icon -->
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='16'
@@ -85,36 +82,27 @@
           </h5>
         </a>
 
-        {{! Card body }}
+        <!-- Card body -->
         <div class='collapse' id='collapse_price'>
           <div class='card-body'>
-            {{! Range slider }}
-            <input type='range' class='custom-range' min='0' max='100' name='' />
-
-            <div class='form-row mt-4'>
-              <div class='form-group col-md-6'>
-                <label>Min</label>
-                <input class='form-control' placeholder='$0' type='number' />
-              </div>
-
-              <div class='form-group text-right col-md-6'>
-                <label>Max</label>
-                <input class='form-control' placeholder='$1,0000' type='number' />
-              </div>
+            <!-- Range slider -->
+            <div class='form-group col-md-6'>
+              <label>Min</label>
+              <input class='form-control' id='minPriceInput' placeholder='$0' type='number' />
             </div>
 
-            {{! Apply button }}
-            <button class='btn btn-primary mt-4'>Apply</button>
+            <div class='form-group text-right col-md-6'>
+              <label>Max</label>
+              <input class='form-control' id='maxPriceInput' placeholder='$10,000' type='number' />
+            </div>
           </div>
         </div>
-
       </div>
-      {{! END OF Price range slider }}
+      <!-- END OF Price range slider -->
 
-      {{! Color filter }}
+      <!-- Color filter -->
       <div class='card mb-3'>
-
-        {{! Card header }}
+        <!-- Card header -->
         <a
           data-bs-toggle='collapse'
           href='#collapse_color'
@@ -124,7 +112,7 @@
           class='text-decoration-none'
         >
           <h5 class='card-header'>
-            {{! Chevron icon }}
+            <!-- Chevron icon -->
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='16'
@@ -143,27 +131,25 @@
           </h5>
         </a>
 
-        {{! Card body }}
+        <!-- Card body -->
         <div class='collapse' id='collapse_color'>
           <div class='card-body'>
             <ul class='list-unstyled'>
               {{#each colors}}
                 <li>
-                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <input class='form-check-input me-1 colorCheckbox' name="colorCheckbox" type='checkbox' value='' id='{{this}}' />
                   <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
                 </li>
               {{/each}}
             </ul>
           </div>
         </div>
-
       </div>
-      {{! END OF Color filter }}
+      <!-- END OF Color filter -->
 
-      {{! Material filter }}
+      <!-- Material filter -->
       <div class='card mb-3'>
-
-        {{! Card header }}
+        <!-- Card header -->
         <a
           data-bs-toggle='collapse'
           href='#collapse_material'
@@ -173,7 +159,7 @@
           class='text-decoration-none'
         >
           <h5 class='card-header'>
-            {{! Chevron icon }}
+            <!-- Chevron icon -->
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='16'
@@ -192,27 +178,25 @@
           </h5>
         </a>
 
-        {{! Card body }}
+        <!-- Card body -->
         <div class='collapse' id='collapse_material'>
           <div class='card-body'>
             <ul class='list-unstyled'>
               {{#each materials}}
                 <li>
-                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <input class='form-check-input me-1 materialCheckbox' name='materialCheckbox' type='checkbox' value='' id='{{this}}Checkbox' />
                   <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
                 </li>
               {{/each}}
             </ul>
           </div>
         </div>
-
       </div>
-      {{! END OF Material filter }}
+      <!-- END OF Material filter -->
 
-      {{! TODO: Country of origin filter }}
+      <!-- Country of origin filter -->
       <div class='card mb-3'>
-
-        {{! Card header }}
+        <!-- Card header -->
         <a
           data-bs-toggle='collapse'
           href='#collapse_countries'
@@ -222,7 +206,7 @@
           class='text-decoration-none'
         >
           <h5 class='card-header'>
-            {{! Chevron icon }}
+            <!-- Chevron icon -->
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='16'
@@ -241,29 +225,37 @@
           </h5>
         </a>
 
-        {{! Card body }}
+        <!-- Card body -->
         <div class='collapse' id='collapse_countries'>
           <div class='card-body'>
             <ul class='list-unstyled'>
               {{#each countryOfOrigin}}
                 <li>
-                  <input class='form-check-input me-1' type='checkbox' value='' id='{{this}}Checkbox' />
+                  <input class='form-check-input me-1 countryCheckbox' name='countryCheckbox' type='checkbox' value='' id='{{this}}Checkbox' />
                   <label class='form-check-label' for='{{this}}Checkbox'>{{this}}</label>
                 </li>
               {{/each}}
             </ul>
           </div>
         </div>
-
       </div>
-      {{! END OF Country of origin filter }}
+      <!-- END OF Country of origin filter -->
     </aside>
 
-    {{! Product grid }}
+    <!-- Product grid -->
     <main class='col-md-9'>
       <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
         {{#each products}}
-          <div class='col d-flex'>{{>product-card this}}</div>
+          <div 
+            class='col product-wrapper'
+            data-category='{{categories}}'
+            data-price='{{price}}'
+            data-color='{{colors}}'
+            data-material='{{materials}}'
+            data-country='{{countryOfOrigin}}'
+          >
+            {{>product-card this}}
+          </div>
         {{/each}}
       </div>
 

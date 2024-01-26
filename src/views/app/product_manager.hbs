@@ -1,0 +1,116 @@
+<div class='product_manager'>
+  {{#if error}}
+    <p class='error'>{{error}}</p>
+  {{else}}
+    <div class='header'>
+      <h1>Products Management</h1>
+      <button onclick='openModal()'>Add New Product</button>
+    </div>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Action</th>
+      </tr>
+      {{#each products}}
+        <tr>
+          <td>{{id}}</td>
+          <td>{{name}}</td>
+          <td>${{price}}</td>
+          <td>{{description}}</td>
+          <td><img src='{{image}}' alt='{{name}}' width='100px' height='100px' /></td>
+          <td>
+            <button class='btn-edit' onclick='openEditModal({{id}})'>Edit</button>
+            <button class='btn-delete' onclick='deleteProductConfirmation({{id}})'>Delete</button>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+
+     <nav class='row mt-4'>
+      <ul class='pagination justify-content-center'>
+        <li class='page-item user-select-none {{#if (isFirstPage currentPage)}}disabled{{/if}}'>
+          <a class='page-link' href='?page={{decrement currentPage}}'>
+            Previous
+          </a>
+        </li>
+
+        {{#each pageNumbersArray}}
+          {{#if (eq this '...')}}
+            <li class='page-item disabled'><span class='page-link'>{{this}}</span></li>
+          {{else}}
+            <li class='page-item{{#if (eq this ../currentPage)}} active{{/if}}'>
+              <a class='page-link' href='?page={{this}}'>{{this}}</a>
+            </li>
+          {{/if}}
+        {{/each}}
+
+        <li class='page-item user-select-none {{#if (isLastPage currentPage totalPages)}}disabled{{/if}}'>
+          <a class='page-link' href='?page={{increment currentPage}}'>
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Edit Product Modal -->
+    <div id='editProductModal' class='modal'>
+      <div class='modal-content'>
+        <span class='close' onclick='closeEditModal()'>&times;</span>
+        <h2>Edit Product</h2>
+        <form id='editProductForm'>
+          <input type='hidden' id='editProductId' name='editProductId' />
+          <label for='editProductName'>Product Name:</label>
+          <input type='text' id='editProductName' name='editProductName' required />
+
+          <label for='editProductPrice'>Product Price:</label>
+          <input type='number' id='editProductPrice' name='editProductPrice' step='0.01' required />
+
+          <label for='editProductDescription'>Product Description:</label>
+          <input type='text' id='editProductDescription' name='editProductDescription' required />
+
+          <label for='editProductImage'>Product Image URL:</label>
+          <input type='text' id='editProductImage' name='editProductImage' required />
+
+          <button type='button' onclick='saveEditedProduct()'>Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id='addProductModal' class='modal'>
+      <div class='modal-content'>
+        <span class='close' onclick='closeModal()'>&times;</span>
+        <h2>Add Product</h2>
+        <form id='addProductForm'>
+          <label for='productName'>Product Name:</label>
+          <input type='text' id='productName' name='productName' required />
+
+          <label for='productPrice'>Product Price:</label>
+          <input type='number' id='productPrice' name='productPrice' step='0.01' required />
+
+          <label for='productDescription'>Product Description:</label>
+          <input type='text' id='productDescription' name='productDescription' required />
+
+          <label for='productImage'>Product Image URL:</label>
+          <input type='text' id='productImage' name='productImage' required />
+
+          <button type='button' onclick='addProduct()'>Add Product</button>
+        </form>
+      </div>
+    </div>
+
+    <div id='confirmDelete' class='modal'>
+      <div class='modal-content'>
+        <span class='close' onclick='closeDeleteModal()'>&times;</span>
+        <h2>Are you sure you want to delete this product?</h2>
+        <button type='button' onclick='deleteProduct()'>Yes</button>
+        <button type='button' onclick='closeDeleteModal()'>No</button>
+      </div>
+    </div>
+  {{/if}}
+</div>

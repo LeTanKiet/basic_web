@@ -40,7 +40,7 @@ class OrderController {
 
       const token = jwt.sign({ order: newOrder }, process.env.PAYMENT_SECRET, { expiresIn: '1h' });
 
-      const response = await axios.post(`https://localhost:3001/payment/initiate`, { token }, { httpsAgent: agent });
+      const response = await axios.post(`${process.env.PAYMENT_URL}/payment/initiate`, { token }, { httpsAgent: agent });
 
       if (response.status === 200) {
         res.json({ redirectUrl: response.data.redirectUrl });

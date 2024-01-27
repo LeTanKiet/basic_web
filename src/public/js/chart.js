@@ -2,7 +2,7 @@
 fetch('/admin/dashboard')
   .then((response) => response.json())
   .then((data) => {
-    console.log(data.totalEarningsByMonth);
+    console.log('console.log', data.totalEarningsByMonth);
     var totalEarningsByMonth = data.totalEarningsByMonth;
 
     // Sample data for the chart

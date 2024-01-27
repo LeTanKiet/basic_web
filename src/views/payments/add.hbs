@@ -10,7 +10,7 @@
 
       <h5 class='card-title text-center mb-4'>Your Balance: ${{userBalance}}</h5>
 
-      <form id='addMoneyForm' class='mb-3'>
+      <form action='/add/{{paymentId}}/send-pin' method='post' class='mb-3'>
         <div class='form-group mb-4'>
           <label for='amount' class='form-label'>Amount</label>
           <input

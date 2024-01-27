@@ -36,7 +36,7 @@ $(document).ready(function () {
   // Function to calculate and display total price
   function updateTotalPrice() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let totalPrice = cart.reduce((total, product) => total + parseFloat(product.price), 0);
+    let totalPrice = cart.reduce((total, product) => total + parseFloat(product.price * product.amount), 0);
 
     $('#total-price span').text(`$ ${totalPrice.toFixed(2)}`);
   }
@@ -86,7 +86,7 @@ $(document).ready(function () {
       // offcanvasBody.append(createCartItemHtml(product));
       productsContainer.append(createCartItemHtml(product));
       checkoutBody.append(createCartItemInCheckoutPage(product));
-      totalPrice += Number(product.price);
+      totalPrice += Number(product.price * product.amount);
     });
     checkoutTotalPrice.text(`$${totalPrice}`);
 

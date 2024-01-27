@@ -1,5 +1,6 @@
 import { db } from '../models/index.js';
 import SendPinEmail from '../models/sendPinEmail.js';
+import jwt from 'jsonwebtoken';
 
 class AddBalanceController {
   constructor() {
@@ -12,15 +13,15 @@ class AddBalanceController {
     try {
       const payment_user = await db.oneOrNone('SELECT balance FROM "payment_users" WHERE id = $1', [paymentId]);
 
-      console.log('payment_user:', payment_user);
-
       if (!payment_user) {
         return res.render('add', { error: 'User not found.' });
       }
 
+      console.log(req.session.transactionId);
+
       return res.render('add', {
         userBalance: payment_user.balance,
-        orderId: req.session.orderId ? req.session.orderId : null,
+        transactionId: req.session.transactionId ? req.session.transactionId : null,
         paymentId: paymentId,
       });
     } catch (error) {
@@ -57,7 +58,7 @@ class AddBalanceController {
       await db.none('INSERT INTO "transactions" (payment_id, amount, type) VALUES ($1, $2, $3)', [
         paymentId,
         amount,
-        'add',
+        'ADD',
       ]);
 
       await db.none('DELETE FROM "pins" WHERE user_id = $1', [user_id]);

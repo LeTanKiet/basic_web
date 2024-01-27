@@ -1,5 +1,9 @@
+import axios from 'axios';
 import { db } from '../models/index.js';
 import SendPinEmail from '../models/sendPinEmail.js';
+import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import https from 'https';
 
 class paymentController {
   index(req, res) {
@@ -11,32 +15,68 @@ class paymentController {
     this.processPaymentCheck = this.processPaymentCheck.bind(this);
   }
 
-  async paymentPage(req, res) {
-    const orderId = req.params.id;
+  async initiatePayment(req, res) {
+    const { token } = req.body;
+
+    const decoded = jwt.verify(token, process.env.PAYMENT_SECRET);
+    const order = decoded.order;
 
     try {
-      const order = await db.oneOrNone('SELECT price, user_id FROM "orders" WHERE id = $1', [orderId]);
+      let paymentUserId;
+      const payment_user = await db.oneOrNone('SELECT id FROM "payment_users" WHERE user_id = $1', [order.user_id]);
 
-      if (!order) {
-        return res.render('error', { error: 'Order not found.' });
+      if (payment_user) {
+        paymentUserId = payment_user.id;
+      } else {
+        paymentUserId = uuidv4();
+        await db.none('INSERT INTO "payment_users" (id, payment_method, balance, user_id) VALUES ($1, $2, $3, $4)', [
+          paymentUserId,
+          'defaultMethod',
+          0,
+          order.user_id,
+        ]);
       }
 
-      const payment_user = await db.oneOrNone('SELECT id, balance FROM "payment_users" WHERE user_id = $1', [
-        order.user_id,
+      const transaction = await db.one(
+        'INSERT INTO "transactions" (payment_id, amount, type, order_id, status) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+        [paymentUserId, order.price, 'payment', order.id, 'TO_PAY'],
+      );
+
+      return res.json({ redirectUrl: `https://localhost:3001/payment/${transaction.id}` });
+    } catch (error) {
+      console.error('Error initiating payment:', error);
+      return res.json({ success: false, error: 'An error occurred while initiating the payment.' });
+    }
+  }
+
+  async paymentPage(req, res) {
+    const transactionId = req.params.id;
+
+    try {
+      const transaction = await db.oneOrNone(
+        'SELECT id, order_id, amount, payment_id FROM "transactions" WHERE id = $1',
+        [transactionId],
+      );
+
+      if (!transaction) {
+        return res.render('error', { error: 'Transaction not found.' });
+      }
+
+      const payment_user = await db.oneOrNone('SELECT id, balance FROM "payment_users" WHERE id = $1', [
+        transaction.payment_id,
       ]);
 
       if (!payment_user) {
         return res.render('error', { error: 'Payment User not found.' });
       }
 
-      req.session.orderId = orderId;
-
-      const totalPayment = order.price;
+      req.session.transactionId = transaction.id;
 
       return res.render('payment', {
-        orderId,
-        totalPayment,
+        orderId: transaction.order_id,
+        totalPayment: transaction.amount,
         userBalance: payment_user.balance,
+        transactionId: transaction.id,
         paymentId: payment_user.id,
         error: null,
       });
@@ -47,18 +87,16 @@ class paymentController {
   }
 
   async sendPaymentPin(req, res) {
-    const orderId = req.params.id;
+    const transactionId = req.params.id;
 
-    const order = await db.oneOrNone('SELECT user_id FROM "orders" WHERE id = $1', [orderId]);
+    const transaction = await db.oneOrNone('SELECT payment_id FROM "transactions" WHERE id = $1', [transactionId]);
 
-    if (!order) {
-      return res.render('error', { error: 'Order not found.' });
-    }
+    const user = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE id = $1', [transaction.payment_id]);
 
     try {
-      await SendPinEmail.sendPinEmail(order.user_id);
+      await SendPinEmail.sendPinEmail(user.user_id);
 
-      res.redirect(`/payment/${orderId}/check`);
+      res.redirect(`/payment/${transactionId}/check`);
     } catch (error) {
       console.error('Error sending PIN email:', error);
       return res.render('payment', { error: 'An error occurred while sending the PIN.' });
@@ -66,10 +104,12 @@ class paymentController {
   }
 
   async paymentCheckPage(req, res) {
-    const orderId = req.params.id;
+    const transactionId = req.params.id;
+
+    const transaction = await db.oneOrNone('SELECT order_id FROM "transactions" WHERE id = $1', [transactionId]);
 
     try {
-      res.render('paymentCheck', { orderId });
+      res.render('paymentCheck', { orderId: transaction.order_id, transactionId: transactionId, error: null });
     } catch (error) {
       console.error('Error in paymentCheckPage:', error);
       res.render('error', { error: 'An error occurred.' });
@@ -77,47 +117,55 @@ class paymentController {
   }
 
   async processPaymentCheck(req, res) {
-    const orderId = req.params.id;
+    const transactionId = req.params.id;
     const { pin } = req.body;
 
     try {
-      const order = await db.oneOrNone('SELECT price, user_id FROM "orders" WHERE id = $1', [orderId]);
+      const transaction = await db.oneOrNone(
+        'SELECT payment_id, amount, type, order_id FROM "transactions" WHERE id = $1',
+        [transactionId],
+      );
 
-      if (!order) {
-        return res.render('error', { error: 'Order not found.' });
+      if (!transaction) {
+        return res.render('error', { error: 'Transaction not found.' });
       }
 
-      const pinRecord = await db.oneOrNone('SELECT pin FROM pins WHERE user_id = $1', [order.user_id]);
+      const user_id = await db.oneOrNone('SELECT user_id FROM "payment_users" WHERE id = $1', [transaction.payment_id]);
+
+      const pinRecord = await db.oneOrNone('SELECT pin FROM pins WHERE user_id = $1', [user_id.user_id]);
 
       if (!pinRecord || pinRecord.pin !== pin) {
-        return res.render('paymentCheck', { error: 'Invalid PIN.', orderId });
+        return res.render('paymentCheck', { error: 'Invalid PIN.', orderId: transaction.order_id });
       }
 
-      await this.processPayment(orderId);
+      await this.processPayment(transactionId);
 
-      return res.redirect(`/payment/${orderId}/success`);
+      return res.redirect(`/payment/${transactionId}/success`);
     } catch (error) {
       console.error('Error verifying PIN:', error);
       return res.render('paymentCheck', { error: 'An error occurred while verifying the PIN.', orderId });
     }
   }
 
-  async processPayment(orderId) {
+  async processPayment(transactionId) {
     try {
-      const order = await db.oneOrNone('SELECT price, user_id FROM "orders" WHERE id = $1', [orderId]);
-      if (!order) throw new Error('Order not found');
+      const transaction = await db.oneOrNone(
+        'SELECT payment_id, amount, type, order_id FROM "transactions" WHERE id = $1',
+        [transactionId],
+      );
+      if (!transaction) throw new Error('Transaction not found');
 
-      const payment_user = await db.oneOrNone('SELECT id, balance FROM "payment_users" WHERE user_id = $1', [
-        order.user_id,
+      const payment_user = await db.oneOrNone('SELECT id, balance, user_id FROM "payment_users" WHERE id = $1', [
+        transaction.payment_id,
       ]);
 
       if (!payment_user) throw new Error('Payment User not found');
 
-      if (parseFloat(payment_user.balance) < parseFloat(order.price)) {
+      if (parseFloat(payment_user.balance) < parseFloat(transaction.amount)) {
         throw new Error('Insufficient balance');
       }
 
-      const updatedBalance = parseFloat(payment_user.balance) - parseFloat(order.price);
+      const updatedBalance = parseFloat(payment_user.balance) - parseFloat(transaction.amount);
 
       await db.none('UPDATE "payment_users" SET balance = $1 WHERE id = $2', [updatedBalance, payment_user.id]);
 
@@ -125,18 +173,26 @@ class paymentController {
 
       const admin = await db.one('SELECT balance FROM "payment_users" WHERE id = $1', [adminId]);
 
-      const adminUpdatedBalance = parseFloat(admin.balance) + parseFloat(order.price);
+      const adminUpdatedBalance = parseFloat(admin.balance) + parseFloat(transaction.amount);
 
       await db.none('UPDATE "payment_users" SET balance = $1 WHERE id = $2', [adminUpdatedBalance, adminId]);
 
-      await db.none('INSERT INTO "transactions" (payment_id, amount, type, order_id) VALUES ($1, $2, $3, $4)', [
-        payment_user.id,
-        order.price,
-        'payment',
-        orderId,
+      await db.none('UPDATE transactions SET status = $1, "completedAt" = NOW() WHERE id = $2', [
+        'PAID',
+        transactionId,
       ]);
 
-      await db.none('DELETE FROM pins WHERE user_id = $1', [order.user_id]);
+      await db.none('DELETE FROM pins WHERE user_id = $1', [payment_user.user_id]);
+
+      const agent = new https.Agent({
+        rejectUnauthorized: false,
+        maxVersion: 'TLSv1.2',
+        minVersion: 'TLSv1.2',
+      });
+
+      const token = jwt.sign({ orderId: transaction.order_id }, process.env.PAYMENT_SECRET, { expiresIn: '1h' });
+
+      await axios.post(`https://localhost:3000/order/update-completed-payment`, { token }, { httpsAgent: agent });
     } catch (error) {
       console.error('Error processing payment:', error);
       return error.message || 'An error occurred while processing the payment.';

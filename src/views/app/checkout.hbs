@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <form action='/' method='post' class='row g-4' style='flex: 1; padding: 0 16px;'>
+  <form id='checkoutForm' class='row g-4' style='flex: 1; padding: 0 16px;'>
     <div class='checkout-row'>
       <div class='col-6'>
         <label>First name<span class='text-danger'>*</span></label>
@@ -35,7 +35,15 @@
 
       <div class='col-6'>
         <label>Email<span class='text-danger'>*</span></label>
-        <input name='email' type='email' class='form-control' placeholder='Enter your email' required />
+        <input
+          name='email'
+          type='email'
+          class='form-control'
+          placeholder='Enter your email'
+          value='{{user.email}}'
+          readonly
+          required
+        />
       </div>
     </div>
 

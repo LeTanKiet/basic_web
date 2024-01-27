@@ -1,0 +1,16 @@
+<!-- order.hbs -->
+<h1>Order Details</h1>
+<p>Order ID: <span id='orderId' data-order-id='{{order.id}}'>{{order.id}}</span></p>
+<p>User ID: {{order.user_id}}</p>
+<p>Total Price: ${{order.price}}</p>
+<p>Order Items:</p>
+<ul>
+  {{#each orderItems}}
+    <li>
+      Product ID:
+      {{this.product_id}}, Quantity:
+      {{this.quantity}}, Price per item: ${{this.price}}
+    </li>
+  {{/each}}
+</ul>
+<button id='payButton' class='btn btn-success'>Pay</button>

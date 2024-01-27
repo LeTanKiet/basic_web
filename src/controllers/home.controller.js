@@ -54,8 +54,11 @@ class HomeController {
     });
   }
 
-  checkout(req, res) {
-    return res.render('checkout');
+  async checkout(req, res) {
+    const { userId } = req.context;
+    const user = await db.oneOrNone('select * from "users" where id = $1', userId);
+
+    return res.render('checkout', { user });
   }
 
   getAll(req, res) {

@@ -4,7 +4,7 @@
   <h2>Verify Payment for Order #{{orderId}}</h2>
   <p>Please enter the PIN sent to your email to proceed with the payment.</p>
 
-  <form action='/payment/{{orderId}}/check' method='post'>
+  <form action='/payment/{{transactionId}}/check' method='post'>
     <div class='input-group'>
       <label for='pin'>PIN:</label>
       <input type='number' id='pin' name='pin' placeholder='Enter your PIN' required />

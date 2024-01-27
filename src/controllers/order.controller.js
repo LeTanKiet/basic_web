@@ -56,15 +56,11 @@ class OrderController {
   async updateCompletedPayment(req, res) {
     try {
       const { token } = req.body;
-      console.log('token: ', token);
 
       const decoded = jwt.verify(token, process.env.PAYMENT_SECRET);
-      console.log ('decoded: ', decoded)
+
       const orderId = decoded.orderId;
-
-      console.log('orderId: ', orderId);
-
-      await db.none('UPDATE orders SET status = $1 WHERE id = $2', ['PAID', orderId]);
+      await db.none('UPDATE orders SET status = $1, "completedAt" = NOW() WHERE id = $2', ['PAID', orderId]);
 
       res.sendStatus(200, 'update status completed');
     } catch (error) {

@@ -85,13 +85,11 @@ $(document).ready(function () {
     cart.forEach(function (product) {
       // Append the cart item HTML to the cart product container
       cartProductsContainer.append(createCartItemHtml(product));
-      totalPrice += Number(product.price);
-
       // Append the cart item HTML to the checkout-cart-body
       checkoutBody.append(createCartItemInCheckoutPage(product));
       totalPrice += Number(product.price * product.amount);
     });
-    checkoutTotalPrice.text(`$${totalPrice}`);
+    checkoutTotalPrice.text(`$${totalPrice.toFixed(2)}`);
 
     updateTotalPrice();
   }

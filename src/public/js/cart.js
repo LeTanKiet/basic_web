@@ -1,5 +1,3 @@
-import { BASE_APP_URL } from "../../utils/constants.js";
-
 $(document).ready(function () {
   $('.addToCart').click(function (event) {
     event.preventDefault();
@@ -56,7 +54,7 @@ $(document).ready(function () {
   $('#remove-all').click(removeAllProducts);
 
   // Event listener for buttons to remove individual products
-  $('.products-container').on('click', '.remove-product', function () {
+  $('.cart-products-container').on('click', '.remove-product', function () {
     let id = $(this).data('id').toString();
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -126,7 +124,7 @@ $(document).ready(function () {
     return `
       <div class='checkout-item'>
         <div class='checkout-item-image'>
-          <img src='${BASE_APP_URL}/${product.image}' alt='' />
+          <img src='https://localhost:3000/${product.image}' alt='' />
         </div>
         <div class='checkout-item-body'>
           <b>${product.name}</b>

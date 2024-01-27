@@ -6,6 +6,8 @@ import { useRoutes } from './routes/index.js';
 import useEncoded from './hooks/useEncoded.js';
 import { useHandlebars } from './hooks/useHandlebars.js';
 import { BASE_APP_URL } from './utils/constants.js';
+import fs from 'fs';
+import https from 'https';
 import usePassportAuth from './hooks/usePassportAuth.js';
 
 app.locals.BASE_URL = BASE_APP_URL;
@@ -17,4 +19,10 @@ useEncoded(app);
 usePassportAuth(app);
 useRoutes(app);
 
-app.listen(APP_PORT);
+const privateKey = fs.readFileSync('key.pem', 'utf8');
+const certificate = fs.readFileSync('cert.pem', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+
+https.createServer(credentials, app).listen(process.env.APP_PORT || 3000, () => {
+  console.log(`Server is running on https://localhost:${process.env.APP_PORT || 3000}`);
+});

@@ -17,8 +17,8 @@
           </div>
         </div>
       </form>
-      {{#if orderId}}
-        <form action='/payment/{{orderId}}' method='get'>
+      {{#if transactionId}}
+        <form action='/payment/{{transactionId}}' method='get'>
           <button class='btn btn-secondary' type='submit'>Back To Payment</button>
         </form>
       {{/if}}

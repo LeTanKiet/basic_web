@@ -4,22 +4,25 @@ import axios from 'axios';
 import https from 'https';
 
 class OrderController {
-  async createOrder(req, res) {
+  async startPayment(req, res) {
     try {
+      const { formData, checkoutItems } = req.body;
+      const { first_name, last_name, phone, email, street_address, city, note } = formData;
+
       const { userId } = req.context;
-      const cartItems = req.body.cart;
 
       const newOrder = await db.tx(async (transaction) => {
-        const totalPrice = cartItems.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
+        const totalPrice = checkoutItems.reduce((acc, item) => acc + item.price * item.amount, 0);
 
-        const order = await transaction.one('INSERT INTO orders (user_id, price) VALUES ($1, $2) RETURNING id', [
-          userId,
-          totalPrice,
-        ]);
-        const orderItemsPromises = cartItems.map((item) => {
+        const order = await transaction.one(
+          'INSERT INTO orders (user_id, first_name, last_name, phone, street_address, city, note, price) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+          [userId, first_name, last_name, phone, street_address, city, note, totalPrice],
+        );
+
+        const orderItemsPromises = checkoutItems.map((item) => {
           return transaction.none(
             'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4)',
-            [order.id, item.id, 1, item.price],
+            [order.id, item.id, item.amount, item.price],
           );
         });
 
@@ -28,39 +31,14 @@ class OrderController {
         return order;
       });
 
-      res.json({ orderId: newOrder.id });
-    } catch (error) {
-      console.error('Error creating order:', error);
-      res.status(500).send('Error creating order');
-    }
-  }
-  async displayOrder(req, res) {
-    try {
-      const orderId = req.params.orderId;
-      console.log('orderId:', orderId);
-      const order = await db.one('SELECT * FROM orders WHERE id = $1', [orderId]);
-      const orderItems = await db.any('SELECT * FROM order_items WHERE order_id = $1', [orderId]);
-
-      res.render('order', { order, orderItems });
-    } catch (error) {
-      console.error('Error displaying order:', error);
-      res.status(500).send('Error displaying order');
-    }
-  }
-
-  async startPayment(req, res) {
-    try {
-      const { orderId } = req.body;
-
-      const order = await db.one('SELECT * FROM orders WHERE id = $1', [orderId]);
-
+      // Initiate payment
       const agent = new https.Agent({
         rejectUnauthorized: false,
         maxVersion: 'TLSv1.2',
         minVersion: 'TLSv1.2',
       });
 
-      const token = jwt.sign({ order }, process.env.PAYMENT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ order: newOrder }, process.env.PAYMENT_SECRET, { expiresIn: '1h' });
 
       const response = await axios.post(`https://localhost:3001/payment/initiate`, { token }, { httpsAgent: agent });
 
@@ -72,6 +50,26 @@ class OrderController {
     } catch (error) {
       console.error('Error initiating payment:', error);
       res.status(500).send('Error initiating payment');
+    }
+  }
+
+  async updateCompletedPayment(req, res) {
+    try {
+      const { token } = req.body;
+      console.log('token: ', token);
+
+      const decoded = jwt.verify(token, process.env.PAYMENT_SECRET);
+      console.log ('decoded: ', decoded)
+      const orderId = decoded.orderId;
+
+      console.log('orderId: ', orderId);
+
+      await db.none('UPDATE orders SET status = $1 WHERE id = $2', ['PAID', orderId]);
+
+      res.sendStatus(200, 'update status completed');
+    } catch (error) {
+      console.error('Error updating completed payment:', error);
+      res.status(500).send('Error updating completed payment');
     }
   }
 }

@@ -1,7 +1,9 @@
+import axios from 'axios';
 import { db } from '../models/index.js';
 import SendPinEmail from '../models/sendPinEmail.js';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
+import https from 'https';
 
 class paymentController {
   index(req, res) {
@@ -175,9 +177,22 @@ class paymentController {
 
       await db.none('UPDATE "payment_users" SET balance = $1 WHERE id = $2', [adminUpdatedBalance, adminId]);
 
-      await db.none('UPDATE transactions SET status = $1, "completedAt" = NOW() WHERE id = $2', ['PAID', transactionId]);
+      await db.none('UPDATE transactions SET status = $1, "completedAt" = NOW() WHERE id = $2', [
+        'PAID',
+        transactionId,
+      ]);
 
       await db.none('DELETE FROM pins WHERE user_id = $1', [payment_user.user_id]);
+
+      const agent = new https.Agent({
+        rejectUnauthorized: false,
+        maxVersion: 'TLSv1.2',
+        minVersion: 'TLSv1.2',
+      });
+
+      const token = jwt.sign({ orderId: transaction.order_id }, process.env.PAYMENT_SECRET, { expiresIn: '1h' });
+
+      await axios.post(`https://localhost:3000/order/update-completed-payment`, { token }, { httpsAgent: agent });
     } catch (error) {
       console.error('Error processing payment:', error);
       return error.message || 'An error occurred while processing the payment.';

@@ -120,32 +120,11 @@ $(document).ready(function () {
     `;
   }
 
-  $('#checkoutButton').click(function () {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (cart.length === 0) {
-      alert('Your cart is empty.');
-      return;
-    }
-
-    $.ajax({
-      url: '/order/checkout', 
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({ cart }),
-      success: function (response) {
-        window.location.href = `/order/${response.orderId}`;
-      },
-      error: function (xhr, status, error) {
-        console.error('Checkout failed:', error);
-      },
-    });
-  });
-
   function createCartItemInCheckoutPage(product) {
     return `
       <div class='checkout-item'>
         <div class='checkout-item-image'>
-          <img src='http://localhost:3000/${product.image}' alt='' />
+          <img src='https://localhost:3000/${product.image}' alt='' />
         </div>
         <div class='checkout-item-body'>
           <b>${product.name}</b>
@@ -157,6 +136,58 @@ $(document).ready(function () {
       </div>
     `;
   }
+
+  function prepareCheckoutData() {
+    // Get form data
+    var formData = {
+      first_name: $('input[name="first_name"]').val(),
+      last_name: $('input[name="last_name"]').val(),
+      phone: $('input[name="phone"]').val(),
+      email: $('input[name="email"]').val(),
+      street_address: $('input[name="street_address"]').val(),
+      city: $('input[name="city"]').val(),
+      note: $('input[name="note"]').val(),
+    };
+
+    var cart = JSON.parse(localStorage.getItem('cart')) || [];
+    var checkoutItems = cart.map(function (item) {
+      return {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        amount: item.amount,
+      };
+    });
+
+    return {
+      formData: formData,
+      checkoutItems: checkoutItems,
+    };
+  }
+
+  // Event listener for the checkout form submission
+  $('#checkoutForm').on('submit', function (event) {
+    event.preventDefault();
+
+    var checkoutData = prepareCheckoutData();
+
+    // AJAX request
+    $.ajax({
+      url: '/order/start-payment',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(checkoutData),
+      success: function (response) {
+        console.log('Success:', response);
+        if (response.redirectUrl) {
+          window.location.href = response.redirectUrl;
+        }
+      },
+      error: function (error) {
+        console.log('Error:', error);
+      },
+    });
+  });
 
   // Initial cart display update
   updateCartDisplay();

@@ -5,16 +5,17 @@ class AdminController {
     const totalEarningsByMonthResult = await db.any(`
     SELECT 
     EXTRACT(MONTH FROM "completedAt") as month,
-    SUM(amount) as total_earnings
+    SUM(price) as total_earnings
   FROM 
-    "transactions"
+    "orders"
   WHERE 
-    "completedAt" >= NOW() - INTERVAL '1 year'
+    "completedAt" >= NOW() - INTERVAL '1 year' AND "status" = 'PAID'
   GROUP BY 
     month
   ORDER BY 
     month
     `);
+
 
     // Create an array with earnings for each month
     const totalEarningsByMonth = Array.from({ length: 12 }, (_, index) => {
@@ -38,10 +39,10 @@ class AdminController {
     const totalProductsResult = await db.one('SELECT COUNT(*) FROM "products"');
     const totalProducts = totalProductsResult.count;
 
-    const totalEarningsResult = await db.one('SELECT SUM(amount) FROM "transactions"');
+    const totalEarningsResult = await db.one('SELECT SUM(price) FROM "orders" where status = $1', ['PAID']);
     const totalEarnings = totalEarningsResult.sum;
 
-    const deliveredOrdersResult = await db.one('SELECT COUNT(*) FROM "orders" WHERE status = $1', ['"COMPLETED"']);
+    const deliveredOrdersResult = await db.one('SELECT COUNT(*) FROM "orders" WHERE status = $1', ['PAID']);
     const deliveredOrders = deliveredOrdersResult.count;
 
     const recentOrdersResult = await db.any(
@@ -56,11 +57,11 @@ class AdminController {
     const totalEarningsByMonthResult = await db.any(`
     SELECT 
     EXTRACT(MONTH FROM "completedAt") as month,
-    SUM(amount) as total_earnings
+    SUM(price) as total_earnings
   FROM 
-    "transactions"
+    "orders"
   WHERE 
-    "completedAt" >= NOW() - INTERVAL '1 year'
+    "completedAt" >= NOW() - INTERVAL '1 year' AND "status" = 'PAID'
   GROUP BY 
     month
   ORDER BY 

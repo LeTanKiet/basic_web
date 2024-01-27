@@ -1,17 +1,31 @@
 <!-- addBalanceCheck.hbs -->
-<a href='/'>Back</a>
-{{#if error}}
-  <div class='alert alert-danger' role='alert'>{{error}}</div>
-{{/if}}
-<div class='pin-card'>
-  <h2>Enter PIN</h2>
-  <p>Please enter the PIN sent to your email to proceed with adding balance.</p>
+<div class='container d-flex justify-content-center align-items-center' style='height: 100vh;'>
+  <div class='card' style='width: 22rem; border: 1px solid #ccc; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);'>
+    <div class='card-body'>
+      <div class='row'>
+        <div class='col-2 d-flex justify-content-start'>
+          <a href='/' class='btn btn-link'><i class='bi bi-arrow-left'></i></a>
+        </div>
+        <div class='col-8'>
+          <h2 class='text-center mb-3'>Enter PIN</h2>
+        </div>
+        <div class='col-2'></div>
+      </div>
 
-  <form action='/add/{{paymentId}}/check' method='post'>
-    <div class='input-group'>
-      <label for='pin'>PIN:</label>
-      <input type='number' id='pin' name='pin' placeholder='Enter your PIN' required />
+      {{#if error}}
+        <div class='alert alert-danger' role='alert'>{{error}}</div>
+      {{/if}}
+      <p class='text-center'>Please enter the PIN sent to your email to proceed with adding balance.</p>
+
+      <form action='/add/{{paymentId}}/check' method='post'>
+        <div class='form-group mb-4'>
+          <label for='pin' class='form-label'>PIN:</label>
+          <input type='number' id='pin' name='pin' class='form-control' placeholder='Enter your PIN' required />
+        </div>
+        <div class='d-grid gap-2'>
+          <button type='submit' class='btn btn-primary'>Verify</button>
+        </div>
+      </form>
     </div>
-    <button type='submit' class='add-button'>Verify</button>
-  </form>
+  </div>
 </div>

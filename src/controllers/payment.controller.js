@@ -4,6 +4,7 @@ import SendPinEmail from '../models/sendPinEmail.js';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import https from 'https';
+import { BASE_APP_URL } from '../utils/constants.js';
 
 class paymentController {
   index(req, res) {
@@ -42,7 +43,7 @@ class paymentController {
         [paymentUserId, order.price, 'payment', order.id, 'TO_PAY'],
       );
 
-      return res.json({ redirectUrl: `https://localhost:3001/payment/${transaction.id}` });
+      return res.json({ redirectUrl: `${proocess.env.PAYMENT_URL}/payment/${transaction.id}` });
     } catch (error) {
       console.error('Error initiating payment:', error);
       return res.json({ success: false, error: 'An error occurred while initiating the payment.' });
@@ -107,6 +108,10 @@ class paymentController {
     const transactionId = req.params.id;
 
     const transaction = await db.oneOrNone('SELECT order_id FROM "transactions" WHERE id = $1', [transactionId]);
+
+    if (!transaction) return res.render('error', { error: 'Transaction not found.' });
+
+    if (transaction.status === 'PAID') return res.redirect(`/payment/${transactionId}/success`);
 
     try {
       res.render('paymentCheck', { orderId: transaction.order_id, transactionId: transactionId, error: null });
@@ -192,7 +197,7 @@ class paymentController {
 
       const token = jwt.sign({ orderId: transaction.order_id }, process.env.PAYMENT_SECRET, { expiresIn: '1h' });
 
-      await axios.post(`https://localhost:3000/order/update-completed-payment`, { token }, { httpsAgent: agent });
+      await axios.post(`${BASE_APP_URL}/order/update-completed-payment`, { token }, { httpsAgent: agent });
     } catch (error) {
       console.error('Error processing payment:', error);
       return error.message || 'An error occurred while processing the payment.';

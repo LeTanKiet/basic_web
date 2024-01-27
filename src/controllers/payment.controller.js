@@ -43,7 +43,7 @@ class paymentController {
         [paymentUserId, order.price, 'payment', order.id, 'TO_PAY'],
       );
 
-      return res.json({ redirectUrl: `${proocess.env.PAYMENT_URL}/payment/${transaction.id}` });
+      return res.json({ redirectUrl: `${process.env.PAYMENT_URL}/payment/${transaction.id}` });
     } catch (error) {
       console.error('Error initiating payment:', error);
       return res.json({ success: false, error: 'An error occurred while initiating the payment.' });

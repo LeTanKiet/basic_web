@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { BASE_APP_URL } from './constants.js';
 
 export const createToken = (user) => {
   const formattedUser = {
@@ -40,3 +41,7 @@ export function generateNewAccessToken(refreshToken) {
     return '';
   }
 }
+
+export const getFileUrl = (filename) => {
+  return `${BASE_APP_URL}/uploads/${filename}`;
+};

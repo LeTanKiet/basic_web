@@ -1,25 +1,37 @@
-<!-- add.hbs -->
 <div class='container d-flex justify-content-center align-items-center' style='height: 100vh;'>
-  <div class='card payment-card' style='width: 400px; border: 1px solid #ccc;'>
+  <div
+    class='card payment-card'
+    style='width: 22rem; border: 1px solid #ccc; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);'
+  >
     <div class='card-body'>
       {{#if error}}
         <div class='alert alert-danger' role='alert'>{{error}}</div>
       {{/if}}
 
-      <h5 class='card-title text-center'>Your Balance: ${{userBalance}}</h5>
+      <h5 class='card-title text-center mb-4'>Your Balance: ${{userBalance}}</h5>
 
-      <form action='/add/{{paymentId}}/send-pin' method='post'>
-        <div class='mb-3'>
-          <label for='amount' class='form-label'>Amount:</label>
-          <div class='input-group'>
-            <input type='number' class='form-control' id='amount' name='amount' placeholder='Enter amount' required />
-            <button class='btn btn-primary' type='submit'>Add</button>
-          </div>
+      <form action='/add/{{paymentId}}/send-pin' method='post' class='mb-3'>
+        <div class='form-group mb-4'>
+          <label for='amount' class='form-label'>Amount</label>
+          <input
+            type='number'
+            class='form-control'
+            id='amount'
+            name='amount'
+            placeholder='Enter the amount of money in USD'
+            required
+          />
+        </div>
+        <div class='d-grid gap-2'>
+          <button class='btn btn-primary' type='submit'>Add</button>
         </div>
       </form>
+
       {{#if transactionId}}
         <form action='/payment/{{transactionId}}' method='get'>
-          <button class='btn btn-secondary' type='submit'>Back To Payment</button>
+          <div class='d-grid gap-2'>
+            <button class='btn btn-secondary' type='submit'>Back to Payment</button>
+          </div>
         </form>
       {{/if}}
     </div>

@@ -17,8 +17,6 @@ class AddBalanceController {
         return res.render('add', { error: 'User not found.' });
       }
 
-      console.log(req.session.transactionId);
-
       return res.render('add', {
         userBalance: payment_user.balance,
         transactionId: req.session.transactionId ? req.session.transactionId : null,

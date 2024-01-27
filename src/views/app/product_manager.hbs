@@ -4,7 +4,7 @@
   {{else}}
     <div class='header'>
       <h1>Products Management</h1>
-      <button onclick='openModal()'>Add New Product</button>
+      <button onclick='openProductModal()'>Add New Product</button>
     </div>
 
     <table>
@@ -24,7 +24,7 @@
           <td>{{description}}</td>
           <td><img src='{{image}}' alt='{{name}}' width='100px' height='100px' /></td>
           <td>
-            <button class='btn-edit' onclick='openEditModal({{id}})'>Edit</button>
+            <button class='btn-edit' onclick='openProductEditModal({{id}})'>Edit</button>
             <button class='btn-delete' onclick='deleteProductConfirmation({{id}})'>Delete</button>
           </td>
         </tr>
@@ -60,7 +60,7 @@
     <!-- Edit Product Modal -->
     <div id='editProductModal' class='modal'>
       <div class='modal-content'>
-        <span class='close' onclick='closeEditModal()'>&times;</span>
+        <span class='close' onclick='closeProductEditModal()'>&times;</span>
         <h2>Edit Product</h2>
         <form id='editProductForm'>
           <input type='hidden' id='editProductId' name='editProductId' />
@@ -84,7 +84,7 @@
     <!-- Add Product Modal -->
     <div id='addProductModal' class='modal'>
       <div class='modal-content'>
-        <span class='close' onclick='closeModal()'>&times;</span>
+        <span class='close' onclick='closeProductModal()'>&times;</span>
         <h2>Add Product</h2>
         <form id='addProductForm'>
           <label for='productName'>Product Name:</label>

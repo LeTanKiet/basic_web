@@ -4,7 +4,7 @@
   {{else}}
     <div class='header'>
       <h1>Categories Management</h1>
-      <button onclick='openModal()'>Add New Category</button>
+      <button onclick='openCategoryModal()'>Add New Category</button>
     </div>
 
     <table>
@@ -20,7 +20,7 @@
           <td>{{name}}</td>
           <td>{{description}}</td>
           <td>
-            <button class='btn-edit' onclick='openEditModal({{id}})'>Edit</button>
+            <button class='btn-edit' onclick='openCategoryEditModal({{id}})'>Edit</button>
             <button class='btn-delete' onclick='deleteCategoryConfirmation({{id}})'>Delete</button>
           </td>
         </tr>
@@ -57,7 +57,7 @@
     <!-- Edit Category Modal -->
     <div id='editCategoryModal' class='modal'>
       <div class='modal-content'>
-        <span class='close' onclick='closeEditModal()'>&times;</span>
+        <span class='close' onclick='closeCategoryEditModal()'>&times;</span>
         <h2>Edit Category</h2>
         <form id='editCategoryForm'>
           <input type='hidden' id='editCategoryId' name='editCategoryId' />
@@ -75,7 +75,7 @@
     <!-- Add Category Modal -->
     <div id='addCategoryModal' class='modal'>
       <div class='modal-content'>
-        <span class='close' onclick='closeModal()'>&times;</span>
+        <span class='close' onclick='closeCategoryModal()'>&times;</span>
         <h2>Add Category</h2>
         <form id='addCategoryForm'>
           <label for='categoryName'>Category Name:</label>

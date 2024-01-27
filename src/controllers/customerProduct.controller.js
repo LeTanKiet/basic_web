@@ -1,18 +1,20 @@
 import { db } from '../models/index.js';
-import { categories, colors, materials, countryOfOrigin } from '../utils/constants.js';
+
 class CustomerProductController {
   async index(req, res) {
     const { userId } = req.context;
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
-    // TODO: Query all categories from the database instead of using the constants
+    // Query all categories, colors, materials, countryOfOrigin from the database instead of using the constants
     const _categories = await db.any('select * from "categories"');
-    // TODO: Query all colors from the database instead of using the constants
     const _colors = await db.any('select * from "colors"');
-    // TODO: Query all materials from the database instead of using the constants
     const _materials = await db.any('select * from "materials"');
-    // TODO: Query all countryOfOrigin from the database instead of using the constants
     const _countryOfOrigin = await db.any('select * from "countryoforigin"');
+
+    const categories = _categories.map((category) => category.name);
+    const colors = _colors.map((category) => category.name);
+    const materials = _materials.map((category) => category.name);
+    const countryOfOrigin = _countryOfOrigin.map((category) => category.name);
 
     // Pagination
 
@@ -41,7 +43,11 @@ class CustomerProductController {
     const offset = (currentPage - 1) * productsPerPage;
 
     // Query the database for the products on the current page
-    const products = await db.any('select * from "products" order by id limit $1 offset $2', [productsPerPage, offset]);
+    const products = await db.any(
+      'SELECT products.*, categories.name AS category FROM "products" INNER JOIN "categories" ON products.id_category = categories.id ORDER BY products.id LIMIT $1 OFFSET $2',
+      [productsPerPage, offset],
+    );
+
     products.forEach((product) => {
       product.categories = _categories.find((category) => category.id === product.id_category).name;
       product.colors = _colors.find((color) => color.id === product.id_color).name;
@@ -76,6 +82,7 @@ class CustomerProductController {
         pageNumbersArray.push('...');
       }
     }
+
     return res.render('products', {
       user,
       products,

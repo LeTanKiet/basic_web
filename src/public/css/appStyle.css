@@ -396,22 +396,8 @@ label {
     max-width: 70%;
   }
 }
-.horizontal-list {
-  display: flex;
-  background-color: #fff;
-  list-style-type: none;
-  margin: 0;
-  padding: 0 11.5rem;
-  li {
-    margin-right: 15px;
-  }
-  a {
-    text-decoration: none;
-    color: #333;
-  }
-}
-
 /** END OF Cart item **/
+
 .category_manager,
 .product_manager,
 .dashboard_admin {
@@ -460,7 +446,7 @@ label {
   }
 
   .header {
-    color: #00000;
+    color: #000000;
     padding: 20px;
     text-align: center;
     display: flex;

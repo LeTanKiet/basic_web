@@ -30,11 +30,15 @@ $(document).ready(function () {
 
   function filterProducts() {
     var selectedCategories = getSelectedValues('categoryCheckbox');
+    console.log(selectedCategories);
     var minPrice = parseFloat($('#minPriceInput').val()) || 0;
     var maxPrice = parseFloat($('#maxPriceInput').val()) || Number.MAX_VALUE;
     var selectedColors = getSelectedValues('colorCheckbox');
+    console.log(selectedColors);
     var selectedMaterials = getSelectedValues('materialCheckbox');
+    console.log(selectedMaterials);
     var selectedCountries = getSelectedValues('countryCheckbox');
+    console.log(selectedCountries);
 
     // Implement your filtering logic here
     $('.product-wrapper').each(function () {
@@ -53,7 +57,6 @@ $(document).ready(function () {
 
       // Show/hide the product based on the matching criteria
       if (categoryMatch && priceMatch && colorMatch && materialMatch && countryMatch) {
-        console.log($(this));
         $(this).show();
       } else {
         $(this).hide();

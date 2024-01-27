@@ -45,7 +45,7 @@ $(document).ready(function () {
   function removeAllProducts() {
     localStorage.removeItem('cart');
 
-    $('.products-container').empty();
+    $('.cart-products-container').empty();
 
     updateTotalPrice();
   }
@@ -70,21 +70,24 @@ $(document).ready(function () {
     // Get the cart from local storage
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Get the offcanvas body
-    const offcanvasBody = $('.offcanvas-body');
+    // Get the cart product container
+    const cartProductsContainer = $('.cart-products-container');
+
+    // Get the checkout cart body and checkout total price
     const checkoutBody = $('.checkout-cart-body');
     const checkoutTotalPrice = $('.checkout-total-price');
-    const productsContainer = $('.products-container');
 
     // Clear the offcanvas body
-    productsContainer.empty();
+    cartProductsContainer.empty();
 
     let totalPrice = 0;
     // Loop through the cart items
     cart.forEach(function (product) {
-      // Append the cart item HTML to the offcanvas body
-      // offcanvasBody.append(createCartItemHtml(product));
-      productsContainer.append(createCartItemHtml(product));
+      // Append the cart item HTML to the cart product container
+      cartProductsContainer.append(createCartItemHtml(product));
+      totalPrice += Number(product.price);
+
+      // Append the cart item HTML to the checkout-cart-body
       checkoutBody.append(createCartItemInCheckoutPage(product));
       totalPrice += Number(product.price * product.amount);
     });

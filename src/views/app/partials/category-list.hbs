@@ -1,0 +1,7 @@
+{{#if admin}}{{else}}
+  <ul class='horizontal-list'>
+    {{#each categories}}
+      <li><a href='/results?search_query={{name}}'>{{name}}</a></li>
+    {{/each}}
+  </ul>
+{{/if}}

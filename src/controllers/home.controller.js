@@ -8,9 +8,11 @@ class HomeController {
     // Query top 4 products by sold
     const topProducts = await db.any('select * from "products" order by "sold" desc limit 4');
 
+    // TODO: Query all categories from the database instead of using the constants
+    const categories = await db.any('select * FROM "categories" ORDER BY "name" ASC LIMIT 6');
+
     // Query all categories from the database
     const categoriesObj = await db.any('select name from "categories"');
-    const categories = categoriesObj.map((category) => category.name);
 
     // Query beds from the database
     const beds = await db.any(

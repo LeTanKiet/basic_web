@@ -1,70 +1,158 @@
-<nav id='navbar' class='navbar navbar-expand-lg bg-body-tertiary'>
-  <div class='container container-fluid'>
-    {{! Logo }}
-    <a class='navbar-brand' href='/'>
-      <img src='/images/Logo.svg' alt='Fusion Furni' />
-    </a>
+{{#if admin}}
+  <nav id='navbar' class='navbar navbar-expand-lg bg-body-tertiary'>
+    <div class='container container-fluid'>
+      {{! Logo }}
+      <a class='navbar-brand' href='/admin'>
+        <img src='/images/Logo.svg' alt='Fusion Furni' />
+      </a>
 
-    {{! Toggle button to show/hide navbar items when the screen size is small }}
-    <button
-      class='navbar-toggler'
-      type='button'
-      data-bs-toggle='collapse'
-      data-bs-target='#navbarSupportedContent'
-      aria-controls='navbarSupportedContent'
-      aria-expanded='false'
-      aria-label='Toggle navigation'
-    >
-      <span class='navbar-toggler-icon'></span>
-    </button>
+      {{! Toggle button to show/hide navbar items when the screen size is small }}
+      <button
+        class='navbar-toggler'
+        type='button'
+        data-bs-toggle='collapse'
+        data-bs-target='#navbarSupportedContent'
+        aria-controls='navbarSupportedContent'
+        aria-expanded='false'
+        aria-label='Toggle navigation'
+      >
+        <span class='navbar-toggler-icon'></span>
+      </button>
 
-    <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-      <ul class='navbar-nav me-auto mb-2 mb-lg-0 fw-medium'>
-        <li class='nav-item'>
-          <a class='nav-link active' aria-current='page' href='/'>Home</a>
-        </li>
+      <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+        <ul class='navbar-nav me-auto mb-2 mb-lg-0 fw-medium'>
 
-        <li class='nav-item'>
-          <a class='nav-link' href='/products'>Products</a>
-        </li>
+          <li class='nav-item' style='float: right'>
+            <a class='nav-link active' aria-current='page' href='/admin/'>Home</a>
+          </li>
 
-        <li class='nav-item'>
-          <a class='search-button nav-link' href='#'>Search</a>
-        </li>
-      </ul>
+          <li class='nav-item' style='float: right'>
+            <a class='nav-link' aria-current='page' href='/admin/categories'>Categories</a>
+          </li>
 
-      {{! If user is logged in, show cart and logout button }}
-      {{#if user}}
-        {{! Buttons wrapper }}
-        <div class='d-flex justify-content-around'>
-          {{! User button }}
-          {{! TODO: redirect to user detail page }}
-          <a href='/profile' class='btn border-0'>
-            <i class="bi bi-person fs-4 align-bottom"></i>
-          </a>
+          <li class='nav-item'>
+            <a class='nav-link' href='/admin/products'>Products</a>
+          </li>
+        </ul>
 
-          {{! Cart button }}
-          <button
-            class='btn border-0 mx-2'
-            type='button'
-            data-bs-toggle='offcanvas'
-            data-bs-target='#offcanvasRight'
-            aria-controls='offcanvasRight'
-          >
-            <i class='bi bi-cart2 fs-4'></i>
-          </button>
+        {{! If user is logged in, show cart and logout button }}
+        {{#if user}}
+          {{! Buttons wrapper }}
+          <div class='d-flex justify-content-around'>
+            {{! User button }}
+            {{! TODO: redirect to user detail page }}
+            <a href='#' class='btn border-0'>
+              <i class='bi bi-person fs-4 align-bottom'></i>
+            </a>
 
-          {{! Logout button }}
-          <form method='post' action='{{BASE_URL}}/auth/logout'>
-            <button class='btn border-0' type='submit'>
-              <i class='bi bi-box-arrow-right fs-4'></i>
+            {{! Cart button }}
+            <button
+              class='btn border-0 mx-2'
+              type='button'
+              data-bs-toggle='offcanvas'
+              data-bs-target='#offcanvasRight'
+              aria-controls='offcanvasRight'
+            >
+              <i class='bi bi-cart2 fs-4'></i>
             </button>
-          </form>
 
-        </div>
-      {{else}}
-        <a class='btn btn-primary' role='button' href='/auth/login'>Log in</a>
-      {{/if}}
+            {{! Logout button }}
+            <form method='post' action='{{BASE_URL}}/auth/logout'>
+              <button class='btn border-0' type='submit'>
+                <i class='bi bi-box-arrow-right fs-4'></i>
+              </button>
+            </form>
+
+          </div>
+        {{else}}
+          <a class='btn btn-primary' role='button' href='/auth/login'>Log in</a>
+        {{/if}}
+      </div>
     </div>
-  </div>
-</nav>
+    <div>
+  </nav>
+{{else}}
+  <nav id='navbar' class='navbar navbar-expand-lg bg-body-tertiary'>
+    <div class='container container-fluid'>
+      {{! Logo }}
+      <a class='navbar-brand' href='/'>
+        <img src='/images/Logo.svg' alt='Fusion Furni' />
+      </a>
+
+      {{! Toggle button to show/hide navbar items when the screen size is small }}
+      <button
+        class='navbar-toggler'
+        type='button'
+        data-bs-toggle='collapse'
+        data-bs-target='#navbarSupportedContent'
+        aria-controls='navbarSupportedContent'
+        aria-expanded='false'
+        aria-label='Toggle navigation'
+      >
+        <span class='navbar-toggler-icon'></span>
+      s</button>
+
+      <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+        <ul class='navbar-nav me-auto mb-2 mb-lg-0 fw-medium'>
+
+          <li class='nav-item' style='margin-right: 6rem;'>
+            <form action='/results' method='get' class='d-flex align-items-center'>
+              <input
+                type='search'
+                id='search-form'
+                class='search-field form-control me-2'
+                placeholder='Type and press Enter'
+                name='search_query'
+                value='{{searchQuery}}'
+                style='width: 50rem;'
+              />
+              <button class='btn btn-outline-success' type='submit'>Search</button>
+            </form>
+          </li>
+
+          <li class='nav-item' style='float: right'>
+            <a class='nav-link active' aria-current='page' href='/'>Home</a>
+          </li>
+
+          <li class='nav-item'>
+            <a class='nav-link' href='/products'>Products</a>
+          </li>
+        </ul>
+
+        {{! If user is logged in, show cart and logout button }}
+        {{#if user}}
+          {{! Buttons wrapper }}
+          <div class='d-flex justify-content-around'>
+            {{! User button }}
+            {{! TODO: redirect to user detail page }}
+            <a href='#' class='btn border-0'>
+              <i class='bi bi-person fs-4 align-bottom'></i>
+            </a>
+
+            {{! Cart button }}
+            <button
+              class='btn border-0 mx-2'
+              type='button'
+              data-bs-toggle='offcanvas'
+              data-bs-target='#offcanvasRight'
+              aria-controls='offcanvasRight'
+            >
+              <i class='bi bi-cart2 fs-4'></i>
+            </button>
+
+            {{! Logout button }}
+            <form method='post' action='{{BASE_URL}}/auth/logout'>
+              <button class='btn border-0' type='submit'>
+                <i class='bi bi-box-arrow-right fs-4'></i>
+              </button>
+            </form>
+
+          </div>
+        {{else}}
+          <a class='btn btn-primary' role='button' href='/auth/login'>Log in</a>
+        {{/if}}
+      </div>
+    </div>
+    <div>
+  </nav>
+{{/if}}

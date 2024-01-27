@@ -1,0 +1,68 @@
+<div
+  class='dashboard_admin'
+  style='display: flex; flex-direction: column; align-items: center; gap: 10px;padding: 2rem;'
+>
+  <div class='top' style='display: flex; justify-content: space-between; width: 100%; gap: 10px;'>
+    <div
+      class='sale-overview'
+      style='width: 50%; height: 20rem; border: 1px solid gray; padding: 1rem; border-radius: 10px;'
+    >
+      <h1 style='font-size: 24px;'>Sale Overview</h1>
+      <canvas id='myChart' style=' margin: auto; width: 60%;'></canvas>
+      <!-- Bar graph here -->
+    </div>
+
+    <div
+      class='right'
+      style='display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between; width: 50%;'
+    >
+
+      <div class='total-earnings'>
+        <h1 style='font-size: 24px;'>Total Earnings</h1>
+        <p style='font-size: 36px;'>${{totalEarnings}}</p>
+      </div>
+
+      <div class='total-earnings'>
+        <h1 style='font-size: 24px;'>Delivered</h1>
+        <p style='font-size: 36px;'>{{deliveredOrders}}</p>
+      </div>
+      <div class='products'>
+        <h1 style='font-size: 24px;'>Products</h1>
+        <p style='font-size: 36px;'>{{totalProducts}}</p>
+      </div>
+
+      <div class='products'>
+        <h1 style='font-size: 24px;'>User</h1>
+        <p style='font-size: 36px;'>{{totalUsers}}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div
+    class='recent-orders'
+    style='width: 100%; height: fit-content; border: 1px solid gray; padding: 1rem; border-radius: 10px;'
+  >
+    <h1 style='font-size: 24px; margin-bottom: 10px;'>Recent Orders</h1>
+    <table style='width: 100%;'>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Price</th>
+        <th>Status</th>
+      </tr>
+      <!-- Rows of orders here -->
+      {{#each recentOrders}}
+        <tr>
+          <td>{{id}}</td>
+          <td>{{user_name}}</td>
+          <td>{{price}}</td>
+          <td>{{status}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>

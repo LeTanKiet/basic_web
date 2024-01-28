@@ -607,18 +607,5 @@ label {
 }
 
 body.dark-mode {
-  background-color: #1a1a1a;
-  color: #fff;
-}
-
-/* Dark Mode Styles for Header */
-body.dark-mode #header {
-  background-color: #333; /* Adjust the color as needed */
-  color: #fff;
-}
-
-/* Dark Mode Styles for Footer */
-body.dark-mode #footer {
-  background-color: #333; /* Adjust the color as needed */
-  color: #fff;
+  background-color: #aaaaaa;
 }

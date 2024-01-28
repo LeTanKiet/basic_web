@@ -9,7 +9,15 @@
   <form action='/auth/login' method='post' class='row g-4 login-form'>
     <div class='col-12'>
       <label>Email<span class='text-danger'>*</span></label>
-      <input name='email' type='email' class='form-control' placeholder='Enter email' required value='{{email}}' />
+      <input
+        name='email'
+        type='email'
+        class='form-control'
+        placeholder='Enter email'
+        value='{{email}}'
+        oninput='validateEmail(event.target)'
+      />
+      <span class='email-error' style='color: red;'></span>
     </div>
 
     <div class='col-12'>
@@ -19,27 +27,28 @@
         type='password'
         class='form-control'
         placeholder='Enter password'
-        required
         value='{{password}}'
+        oninput='validatePassword(event.target)'
       />
+      <span class='password-error' style='color: red;'></span>
     </div>
 
     <span style='color: red; margin-top: 8px;'>{{error}}</span>
 
     <div class='col-12'>
-      <button type='submit' class='btn btn-primary px-4 w-100'>Login</button>
+      <button class='btn btn-primary px-4 w-100' onclick='handleLogin(event)'>Login</button>
     </div>
 
-    <div class="login-vendors">
-      <a href="/auth/google" class='login-vendor'>
-        <div class="login-icon">
-          <img src="/images/login/google.png" alt="">
+    <div class='login-vendors'>
+      <a href='/auth/google' class='login-vendor'>
+        <div class='login-icon'>
+          <img src='/images/login/google.png' alt='' />
         </div>
         Login with Google
       </a>
-      <a href="/auth/facebook" class='login-vendor'>
-        <div class="login-icon">
-          <img src="/images/login/facebook.png" alt="">
+      <a href='/auth/facebook' class='login-vendor'>
+        <div class='login-icon'>
+          <img src='/images/login/facebook.png' alt='' />
         </div>
         Login with Facebook
       </a>

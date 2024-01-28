@@ -9,12 +9,28 @@
   <form action='/auth/sign-up' method='post' class='row g-4 login-form'>
     <div class='col-12'>
       <label>Name<span class='text-danger'>*</span></label>
-      <input name='name' value='{{name}}' type='text' class='form-control' placeholder='Enter name' required />
+      <input
+        name='name'
+        value='{{name}}'
+        type='text'
+        class='form-control'
+        placeholder='Enter name'
+        oninput='validateName(event.target)'
+      />
+      <span class='name-error' style='color: red;'></span>
     </div>
 
     <div class='col-12'>
       <label>Email<span class='text-danger'>*</span></label>
-      <input name='email' value='{{email}}' type='email' class='form-control' placeholder='Enter email' required />
+      <input
+        name='email'
+        value='{{email}}'
+        type='email'
+        class='form-control'
+        placeholder='Enter email'
+        oninput='validateEmail(event.target)'
+      />
+      <span class='email-error' style='color: red;'></span>
     </div>
 
     <div class='col-12'>
@@ -25,8 +41,9 @@
         type='password'
         class='form-control'
         placeholder='Enter password'
-        required
+        oninput='validatePassword(event.target)'
       />
+      <span class='password-error' style='color: red;'></span>
     </div>
 
     <div class='col-12'>
@@ -37,21 +54,22 @@
         type='password'
         class='form-control'
         placeholder='Enter confirm password'
-        required
+        oninput='validateConfirmPassword(event.target)'
       />
+      <span class='confirm-password-error' style='color: red;'></span>
     </div>
 
     <div class='col-12'>
       <label>Role<span class='text-danger'>*</span></label>
-      <div class="role-group">
+      <div class='role-group'>
         <div class='form-check'>
-          <input class='form-check-input' type='radio' name='role' value="user" id='role_user' checked />
+          <input class='form-check-input' type='radio' name='role' value='user' id='role_user' checked />
           <label class='form-check-label' for='role_user'>
             User
           </label>
         </div>
         <div class='form-check'>
-          <input class='form-check-input' type='radio' name='role' value="admin" id='role_admin' />
+          <input class='form-check-input' type='radio' name='role' value='admin' id='role_admin' />
           <label class='form-check-label' for='role_admin'>
             Admin
           </label>
@@ -62,7 +80,7 @@
     <span style='color: red; margin-top: 8px;'>{{error}}</span>
 
     <div class='col-12'>
-      <button type='submit' class='btn btn-primary px-4 w-100'>Get started</button>
+      <button class='btn btn-primary px-4 w-100' onclick="handleSignup(event)">Get started</button>
     </div>
 
     <div class='login-vendors'>

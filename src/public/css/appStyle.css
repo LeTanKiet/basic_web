@@ -591,6 +591,13 @@ label {
   color: #fff;
 }
 
+.product-detail-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .product-detail__add:hover {
   opacity: 0.8;
 }
@@ -604,4 +611,35 @@ label {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media only screen and (max-width: 575px) {
+  .product-detail {
+    flex-direction: column-reverse !important;
+    gap: 0 !important;
+  }
+
+  .product-detail-body {
+    padding: 32px 0 0 !important;
+  }
+
+  .product-detail-img {
+    height: 400px;
+  }
+
+  .profile-form-group {
+    flex-direction: column;
+  }
+
+  #upload_avatar_form {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  #upload_avatar_form > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }

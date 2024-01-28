@@ -31,6 +31,7 @@ class HomeController {
     const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
     return res.render('profile', {
+      user,
       ...user,
     });
   }
@@ -40,6 +41,7 @@ class HomeController {
       body: { name, email },
       context: { userId },
     } = req;
+    const user = await db.oneOrNone('select * from "users" where id = $1', userId);
 
     const result = await db.one('UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *', [
       name,
@@ -48,6 +50,7 @@ class HomeController {
     ]);
 
     return res.render('profile', {
+      user,
       ...result,
     });
   }

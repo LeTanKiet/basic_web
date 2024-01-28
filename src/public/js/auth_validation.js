@@ -84,7 +84,6 @@ async function handleLogin(event) {
 }
 
 async function handleSignup(event) {
-  event.preventDefault();
   const nameElement = document.querySelector("input[name='name']");
   const emailElement = document.querySelector("input[name='email']");
   const passwordElement = document.querySelector("input[name='password']");
@@ -97,10 +96,11 @@ async function handleSignup(event) {
     validatePassword(passwordElement) ||
     validateConfirmPassword(confirmPasswordElement)
   ) {
+    event.preventDefault();
     return;
   }
 
-  fetch('https://localhost:3000/auth/sign-up', {
+  await fetch('https://localhost:3000/auth/sign-up', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -109,6 +109,7 @@ async function handleSignup(event) {
       name: nameElement.value,
       email: emailElement.value,
       password: passwordElement.value,
+      confirmPassword: confirmPasswordElement.value,
       role: roleElement.value,
     }),
   });
